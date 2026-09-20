@@ -16,7 +16,7 @@ Users can filter Pokemon by generation, type, region, and more, or use the searc
 | Mason Shipton | 100910175 | Masonshipton25 | **Pokemon Browsing and Discovery**: Main Pokemon catalogue, browsing through Pokemon, navigation, and sorting or other ways of exploring the collection. |
 | Rayan Alam | 100908385 | Rayan-Alam-UOIT | **Pokemon Details**: Individual Pokemon pages with moves, abilities, types, egg groups, cries, sprites, height, weight, etc. |
 | Wingfung Hu | 100922729 | WingfungHu | **Pokemon Favourites**: Favourite and unfavourite functionality, favourites list, and persistence to saved Pokemon |
-| Aryan Kashe | TBD | Aryan-KA | **Pokemon Search and Filtering**: Search bar, search results, and filters such as generation, type, and region |
+| Aryan Kashe | 100878631 | Aryan-KA | **Pokemon Search and Filtering**: Search bar, search results, and filters such as generation, type, and region |
 
 
 ## API
