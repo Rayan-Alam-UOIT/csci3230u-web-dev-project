@@ -2,9 +2,30 @@
 
 ![Photo of Pokemon and the series logo](images/pokemon.png)
 
+
+## Contents
+
++ [About](#about)
++ [Authors](#authors)
++ [API](#api)
++ [Bonus](#bonus)
+
+
+## About
+
 **PokéWeb** is an online, accessible encyclopedia for Pokemon fans to explore information about all 1025 Pokemon, including their moves, abilities, types, egg groups, cries, and animated sprites from decades of video games. 
 
 Users can filter Pokemon by generation, type, region, and more, or use the search bar to find a particular Pokemon or category fast. Users can favourite Pokemon and access their information at any time, which is especially useful when keeping track of Pokemon on an in-game team.
+
+Inspirations:
+- [Pokemon Database](https://pokemondb.net/): Excellent user interface that is clean, fast, and intuitive. The website aggregates stats, movesets, and evolution lines into well-structured tables that are easy to read.
+- [Serebii.net](https://www.serebii.net/): Operated almost entirely by [one person](https://www.polygon.com/pokemon-serebii-joe-merrick-interview/), the website is an exhaustive record of every game mechanic, event distribution, item location, and even anime episode. But, the website is quite old (created in 1999!), and the layout does not seem to have been updated since the early 2000s. The website is very dense, can be visually overwhelming, and difficult to navigate on mobile devices.
+- [Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/Main_Page): Wikipedia for Pokemon. The website focuses deeply on lore, etymology, historical trivia, anime synopsis, and manga appearances. Bulbapedia is the most in-depth Pokemon website. However, the website has a heavy ad load, slower page speeds, and the website's strict adherence to a wiki format does not allow for fast data filtering, degrading the user experience.
+
+PokéWeb will display the same information as the three inspiration websites, and we intend on using Pokemon Database as a reference for our user interface, though our website will differ in a few key areas:
+1. **API** - None of these websites use PokeAPI or any other Pokemon API. Instead, they either have their own proprietary custom databases (Pokemon Database and Serebii.net) or the data is entirely inputted and maintained by hundreds of contributors (Bulbapedia). Using PokeAPI will remove the need for our team to do data collection, maintenance, and handle the database server infrastructure. We can build a website that has the same data depth as our inspirations but in a fraction of the time, and which will enable our team to focus entirely on building the best frontend layout for the user experience and developing our other differentiating features.
+2. **Games** - All three inspiration websites act as passive reference hubs for text and tables. PokéWeb will feature games that will test the user's knowledge of Pokemon designs, type, height, weight, ability, egg group, and more. Our website will provide a fun way for users to dive deeper into and learn more about the world of Pokemon.
+3. **Favourites** - While Pokemon Database has a "Rate my Team" forum, none of the three inspiration websites include a favourite Pokemon system like PokéWeb will. This system will allow users to keep track of their chosen Pokemon and dive into their information fast, useful for building Pokemon teams in casual playthroughs or competitive play, especially now that there are over 1000 different Pokemon and 38 core series games.
 
 
 ## Authors
