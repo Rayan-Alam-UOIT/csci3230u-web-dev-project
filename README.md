@@ -8,14 +8,13 @@
 + [About](#about)
 + [Authors](#authors)
 + [API](#api)
++ [Wireframes](#wireframes)
 + [Bonus](#bonus)
 
 
 ## About
 
-**PokéWeb** is an online, accessible encyclopedia for Pokemon fans to explore information about all 1025 Pokemon, including their moves, abilities, types, egg groups, cries, and animated sprites from decades of video games. 
-
-Users can filter Pokemon by generation, type, region, and more, or use the search bar to find a particular Pokemon or category fast. Users can favourite Pokemon and access their information at any time, which is especially useful when keeping track of Pokemon on an in-game team.
+**PokéWeb** is an online, accessible encyclopedia designed for Pokemon fans, including both casual players and longtime enthusiasts of the franchise. This website allows users to explore detailed information about all 1,025 Pokemon, including their moves, abilities, types, egg groups, cries, and animated sprites from decades of beloved video games. Users can also filter Pokemon by generation, type, region, and more, or use the search bar to quickly find a particular Pokemon or category. Users can favourite Pokemon and access their information at any time, as well as play interactive games that test and improve their Pokemon knowledge. By combining the depth of a traditional Pokemon database with a more modern, accessible, and interactive interface, PokéWeb aims to make exploring Pokemon information faster, easier, and more engaging!
 
 Inspirations:
 - [Pokemon Database](https://pokemondb.net/): Excellent user interface that is clean, fast, and intuitive. The website aggregates stats, movesets, and evolution lines into well-structured tables that are easy to read.
@@ -1316,6 +1315,15 @@ PokéWeb uses [PokeAPI](https://pokeapi.co/), a free and publicly available API 
   
 </details>
 
+## Wireframes
+
+Below are the low-fidelity wireframes for the key pages of PokéWeb, which our static HTML and CSS layouts are based on.
+
+### Browse Page (Key Page #1)
+![Browse Page Wireframe Diagram](images/Browse-Page-Wireframe.png)
+
+### Detail Page (Key Page #2)
+![Detail Page Wireframe Diagram](images/Detail-Page-Wireframe.png)
 
 ## Bonus
 
