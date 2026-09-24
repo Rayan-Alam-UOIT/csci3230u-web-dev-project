@@ -3262,10 +3262,16 @@ Each member owns one vertical slice end to end (UI components, state, API calls,
 
 ## Wireframes
 
-Below are the low-fidelity wireframes for the key pages of PokéWeb, which our static HTML and CSS layouts are based on.
+Below are the low-fidelity wireframes for the four key pages of PokéWeb, which the static HTML and CSS pages for M2 are based on.
 
-### Browse Page (Key Page #1)
+### Browse / Catalogue Page (Key Page #1)
 ![Browse Page Wireframe Diagram](images/Browse-Page-Wireframe.png)
 
 ### Detail Page (Key Page #2)
 ![Detail Page Wireframe Diagram](images/Detail-Page-Wireframe.png)
+
+### Favourites Page (Key Page #3)
+![Favourites Page Wireframe Diagram](images/Favourites-Page-Wireframe.png)
+
+### Games Page (Key Page #4)
+![Games Page Wireframe Diagram](images/Games-Page-Wireframe.png)
