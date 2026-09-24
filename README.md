@@ -8,6 +8,7 @@
 + [About](#about)
 + [Authors](#authors)
 + [API](#api)
++ [Wireframes](#wireframes)
 + [Bonus](#bonus)
 
 
@@ -1314,6 +1315,15 @@ PokéWeb uses [PokeAPI](https://pokeapi.co/), a free and publicly available API 
   
 </details>
 
+## Wireframes
+
+Below are the low-fidelity wireframes for the key pages of PokéWeb, which our static HTML and CSS layouts are based on.
+
+### Browse Page (Key Page #1)
+![Browse Page Wireframe Diagram](images/Browse-Page-Wireframe.png)
+
+### Detail Page (Key Page #2)
+![Detail Page Wireframe Diagram](images/Detail-Page-Wireframe.png)
 
 ## Bonus
 
