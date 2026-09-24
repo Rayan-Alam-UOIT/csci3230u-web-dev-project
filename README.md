@@ -9,12 +9,11 @@
 + [Authors](#authors)
 + [API](#api)
 + [Wireframes](#wireframes)
-+ [Bonus](#bonus)
 
 
 ## About
 
-**PokéWeb** is an online, accessible encyclopedia designed for Pokemon fans, including both casual players and longtime enthusiasts of the franchise. This website allows users to explore detailed information about all 1,025 Pokemon, including their moves, abilities, types, egg groups, cries, and animated sprites from decades of beloved video games. Users can also filter Pokemon by generation, type, region, and more, or use the search bar to quickly find a particular Pokemon or category. Users can favourite Pokemon and access their information at any time, as well as play interactive games that test and improve their Pokemon knowledge. By combining the depth of a traditional Pokemon database with a more modern, accessible, and interactive interface, PokéWeb aims to make exploring Pokemon information faster, easier, and more engaging!
+**PokéWeb** is an online, accessible encyclopedia designed for Pokemon fans, including both casual players and longtime enthusiasts of the franchise. This website allows users to explore detailed information about all 1,025 Pokemon, including their moves, abilities, types, egg groups, cries, and animated sprites from decades of beloved video games. Users can also filter Pokemon by generation, type, region, and more, or use the search bar to quickly find a particular Pokemon or category. Users can favourite Pokemon and access their information at any time, as well as play interactive games (Who's That Pokemon? and Pokemon Clues) that test and improve their Pokemon knowledge. By combining the depth of a traditional Pokemon database with a more modern, accessible, and interactive interface, PokéWeb aims to make exploring Pokemon information faster, easier, and more engaging!
 
 Inspirations:
 - [Pokemon Database](https://pokemondb.net/): Excellent user interface that is clean, fast, and intuitive. The website aggregates stats, movesets, and evolution lines into well-structured tables that are easy to read.
@@ -31,12 +30,14 @@ PokéWeb will display the same information as the three inspiration websites, an
 
 **Team Name**: Team Rocket
 
-| Member | Banner ID | User Name | Role |
-|---|---|---|---|
-| Mason Shipton | 100910175 | Masonshipton25 | **Pokemon Browsing and Discovery**: Main Pokemon catalogue, browsing through Pokemon, navigation, and sorting or other ways of exploring the collection. |
-| Rayan Alam | 100908385 | Rayan-Alam-UOIT | **Pokemon Details**: Individual Pokemon pages with moves, abilities, types, egg groups, cries, sprites, height, weight, etc. |
-| Wingfung Hu | 100922729 | WingfungHu | **Pokemon Favourites**: Favourite and unfavourite functionality, favourites list, and persistence to saved Pokemon |
-| Aryan Kashe | 100878631 | Aryan-KA | **Pokemon Search and Filtering**: Search bar, search results, and filters such as generation, type, and region |
+Each member owns one vertical slice end to end (UI components, state, API calls, and tests), plus one half of a game (logic or UI).
+
+| Member | Banner ID | User Name | Vertical Slice | Game Role | Team Role |
+|---|---|---|---|---|---|
+| Mason Shipton | 100910175 | Masonshipton25 | **Pokemon Favourites**: `FavouriteButton`, `useFavourites` hook, `/favourites` page, `localStorage` persistence | **Pokemon Clues** logic (`generateClues`, `useCluesGame`) | Project Manager (board upkeep, milestone tags, `AI-USAGE.md`) |
+| Rayan Alam | 100908385 | Rayan-Alam-UOIT | **Pokemon Search and Filtering**: `SearchBar`, `FilterPanel`, search results, type/generation/region filters | **Who's That Pokemon?** UI (silhouette screen, reveal, feedback) | Testing Lead |
+| Wingfung Hu | 100922729 | WingfungHu | **Pokemon Browsing and Discovery**: main catalogue, `PokemonCard`/`PokemonGrid`, navigation, sorting, pagination | **Pokemon Clues** UI (`ClueList`, shared `GuessInput`) | Repo & Deployment Lead (Vite, router, Netlify) |
+| Aryan Kashe | 100878631 | Aryan-KA | **Pokemon Details**: `/pokemon/:id` with moves, abilities, types, egg groups, cries, sprites, height, weight | **Who's That Pokemon?** logic (`useWhosThatPokemon`, guess matching, scoring) | Accessibility & Styling Lead |
 
 
 ## API
@@ -1324,9 +1325,3 @@ Below are the low-fidelity wireframes for the key pages of PokéWeb, which our s
 
 ### Detail Page (Key Page #2)
 ![Detail Page Wireframe Diagram](images/Detail-Page-Wireframe.png)
-
-## Bonus
-
-In addition to Pokemon information, PokéWeb includes interactive games, such as:
-- **Who's That Pokemon?** - Guess the Pokemon from a black-and-white silhouette, like the question-and-answer segment on the old TV show!
-- **Pokemon Clues** - Guess the Pokemon using clues such as its type, height, weight, ability, egg group, and more.
