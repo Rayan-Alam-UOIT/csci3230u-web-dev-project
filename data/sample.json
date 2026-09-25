@@ -1,0 +1,647 @@
+{
+    "pokemon": [
+        {
+            "id": 1,
+            "name": "bulbasaur",
+            "is_favourite": true,
+            "height": 7,
+            "weight": 69,
+            "abilities": [
+                {
+                "is_hidden": false,
+                "slot": 1,
+                "ability": {
+                    "name": "overgrow"
+                }
+                },
+                {
+                "is_hidden": true,
+                "slot": 3,
+                "ability": {
+                    "name": "chlorophyll"
+                }
+                }
+            ],
+            "moves": [
+                {
+                "move": {
+                    "name": "growl"
+                }
+                },
+                {
+                "move": {
+                    "name": "tackle"
+                }
+                },
+                {
+                "move": {
+                    "name": "vine whip"
+                }
+                },
+                {
+                "move": {
+                    "name": "growth"
+                }
+                },
+                {
+                "move": {
+                    "name": "leech seed"
+                }
+                },
+                {
+                "move": {
+                    "name": "razor leaf"
+                }
+                },
+                {
+                "move": {
+                    "name": "poison powder"
+                }
+                },
+                {
+                "move": {
+                    "name": "sleep powder"
+                }
+                },
+                {
+                "move": {
+                    "name": "take down"
+                }
+                },
+                {
+                "move": {
+                    "name": "magical leaf"
+                }
+                },
+                {
+                "move": {
+                    "name": "synthesis"
+                }
+                },
+                {
+                "move": {
+                    "name": "amnesia"
+                }
+                },
+                {
+                "move": {
+                    "name": "sludge wave"
+                }
+                },
+                {
+                "move": {
+                    "name": "double-edge"
+                }
+                },
+                {
+                "move": {
+                    "name": "solar beam"
+                }
+                }
+            ],
+            "sprites": {
+                "other": {
+                "official-artwork": {
+                    "front_shiny": "data/sprites/official-artwork/front_shiny/bulbasaur.png",
+                    "front_default": "data/sprites/official-artwork/front_default/bulbasaur.png"
+                }
+                },
+                "versions": {
+                "generation-iv": {
+                    "heartgold-soulsilver": {
+                    "back_shiny": "data/sprites/heartgold-soulsilver/back_shiny/bulbasaur.png",
+                    "back_female": null,
+                    "front_shiny": "data/sprites/heartgold-soulsilver/front_shiny/bulbasaur.png",
+                    "back_default": "data/sprites/heartgold-soulsilver/back_default/bulbasaur.png",
+                    "front_female": null,
+                    "front_default": "data/sprites/heartgold-soulsilver/front_default/bulbasaur.png",
+                    "back_shiny_female": null,
+                    "front_shiny_female": null
+                    }
+                }
+                }
+            },
+            "cries": {
+                "latest": "data/cries/bulbasaur.ogg"
+            },
+            "stats": [
+                {
+                "base_stat": 45,
+                "stat": {
+                    "name": "hp"
+                }
+                },
+                {
+                "base_stat": 49,
+                "stat": {
+                    "name": "attack"
+                }
+                },
+                {
+                "base_stat": 49,
+                "stat": {
+                    "name": "defense"
+                }
+                },
+                {
+                "base_stat": 65,
+                "stat": {
+                    "name": "special-attack"
+                }
+                },
+                {
+                "base_stat": 65,
+                "stat": {
+                    "name": "special-defense"
+                }
+                },
+                {
+                "base_stat": 45,
+                "stat": {
+                    "name": "speed"
+                }
+                }
+            ],
+            "types": [
+                {
+                "slot": 1,
+                "type": {
+                    "name": "grass"
+                }
+                },
+                {
+                "slot": 2,
+                "type": {
+                    "name": "poison"
+                }
+                }
+            ],
+            "pokedex_numbers": [
+                {
+                "entry_number": 1,
+                "pokedex": {
+                    "name": "national"
+                }
+                }
+            ],
+            "egg_groups": [
+                {
+                "name": "monster"
+                },
+                {
+                "name": "plant"
+                }
+            ],
+            "generation": {
+                "name": "generation-i"
+            }
+        },
+        {
+            "id": 4,
+            "name": "charmander",
+            "is_favourite": true,
+            "height": 6,
+            "weight": 85,
+            "abilities": [
+                {
+                "is_hidden": false,
+                "slot": 1,
+                "ability": {
+                    "name": "blaze"
+                }
+                },
+                {
+                "is_hidden": true,
+                "slot": 3,
+                "ability": {
+                    "name": "solar power"
+                }
+                }
+            ],
+            "moves": [
+                {
+                "move": {
+                    "name": "growl"
+                }
+                },
+                {
+                "move": {
+                    "name": "tackle"
+                }
+                },
+                {
+                "move": {
+                    "name": "ember"
+                }
+                },
+                {
+                "move": {
+                    "name": "smokescreen"
+                }
+                },
+                {
+                "move": {
+                    "name": "dragon breath"
+                }
+                },
+                {
+                "move": {
+                    "name": "fire fang"
+                }
+                },
+                {
+                "move": {
+                    "name": "fire spin"
+                }
+                },
+                {
+                "move": {
+                    "name": "slash"
+                }
+                },
+                {
+                "move": {
+                    "name": "flamethrower"
+                }
+                },
+                {
+                "move": {
+                    "name": "dragon rush"
+                }
+                },
+                {
+                "move": {
+                    "name": "flare blitz"
+                }
+                }
+            ],
+            "sprites": {
+                "other": {
+                "official-artwork": {
+                    "front_shiny": "data/sprites/official-artwork/front_shiny/charmander.png",
+                    "front_default": "data/sprites/official-artwork/front_default/charmander.png"
+                }
+                },
+                "versions": {
+                "generation-iv": {
+                    "heartgold-soulsilver": {
+                    "back_shiny": "data/sprites/heartgold-soulsilver/back_shiny/charmander.png",
+                    "back_female": null,
+                    "front_shiny": "data/sprites/heartgold-soulsilver/front_shiny/charmander.png",
+                    "back_default": "data/sprites/heartgold-soulsilver/back_default/charmander.png",
+                    "front_female": null,
+                    "front_default": "data/sprites/heartgold-soulsilver/front_default/charmander.png",
+                    "back_shiny_female": null,
+                    "front_shiny_female": null
+                    }
+                }
+                }
+            },
+            "cries": {
+                "latest": "data/cries/charmander.ogg"
+            },
+            "stats": [
+                {
+                "base_stat": 39,
+                "stat": {
+                    "name": "hp"
+                }
+                },
+                {
+                "base_stat": 52,
+                "stat": {
+                    "name": "attack"
+                }
+                },
+                {
+                "base_stat": 43,
+                "stat": {
+                    "name": "defense"
+                }
+                },
+                {
+                "base_stat": 60,
+                "stat": {
+                    "name": "special-attack"
+                }
+                },
+                {
+                "base_stat": 50,
+                "stat": {
+                    "name": "special-defense"
+                }
+                },
+                {
+                "base_stat": 60,
+                "stat": {
+                    "name": "speed"
+                }
+                }
+            ],
+            "types": [
+                {
+                "slot": 1,
+                "type": {
+                    "name": "fire"
+                }
+                }
+            ],
+            "pokedex_numbers": [
+                {
+                "entry_number": 4,
+                "pokedex": {
+                    "name": "national"
+                }
+                }
+            ],
+            "egg_groups": [
+                {
+                "name": "monster"
+                },
+                {
+                "name": "dragon"
+                }
+            ],
+            "generation": {
+                "name": "generation-i"
+            }
+        },
+        {
+            "id": 7,
+            "name": "squirtle",
+            "is_favourite": true,
+            "height": 5,
+            "weight": 90,
+            "abilities": [
+                {
+                "is_hidden": false,
+                "slot": 1,
+                "ability": {
+                    "name": "torrent"
+                }
+                },
+                {
+                "is_hidden": true,
+                "slot": 3,
+                "ability": {
+                    "name": "rain-dish"
+                }
+                }
+            ],
+            "moves": [
+                {
+                "move": {
+                    "name": "tackle"
+                }
+                },
+                {
+                "move": {
+                    "name": "tail whip"
+                }
+                },
+                {
+                "move": {
+                    "name": "water gun"
+                }
+                },
+                {
+                "move": {
+                    "name": "bite"
+                }
+                },
+                {
+                "move": {
+                    "name": "bubble beam"
+                }
+                },
+                {
+                "move": {
+                    "name": "icy wind"
+                }
+                },
+                {
+                "move": {
+                    "name": "aqua ring"
+                }
+                },
+                {
+                "move": {
+                    "name": "iron defense"
+                }
+                },
+                {
+                "move": {
+                    "name": "liquidation"
+                }
+                }
+            ],
+            "sprites": {
+                "other": {
+                "official-artwork": {
+                    "front_shiny": "data/sprites/official-artwork/front_shiny/squirtle.png",
+                    "front_default": "data/sprites/official-artwork/front_default/squirtle.png"
+                }
+                },
+                "versions": {
+                "generation-iv": {
+                    "heartgold-soulsilver": {
+                    "back_shiny": "data/sprites/heartgold-soulsilver/back_shiny/squirtle.png",
+                    "back_female": null,
+                    "front_shiny": "data/sprites/heartgold-soulsilver/front_shiny/squirtle.png",
+                    "back_default": "data/sprites/heartgold-soulsilver/back_default/squirtle.png",
+                    "front_female": null,
+                    "front_default": "data/sprites/heartgold-soulsilver/front_default/squirtle.png",
+                    "back_shiny_female": null,
+                    "front_shiny_female": null
+                    }
+                }
+                }
+            },
+            "cries": {
+                "latest": "data/cries/squirtle.ogg"
+            },
+            "stats": [
+                {
+                "base_stat": 44,
+                "stat": {
+                    "name": "hp"
+                }
+                },
+                {
+                "base_stat": 48,
+                "stat": {
+                    "name": "attack"
+                }
+                },
+                {
+                "base_stat": 65,
+                "stat": {
+                    "name": "defense"
+                }
+                },
+                {
+                "base_stat": 50,
+                "stat": {
+                    "name": "special-attack"
+                }
+                },
+                {
+                "base_stat": 64,
+                "stat": {
+                    "name": "special-defense"
+                }
+                },
+                {
+                "base_stat": 43,
+                "stat": {
+                    "name": "speed"
+                }
+                }
+            ],
+            "types": [
+                {
+                "slot": 1,
+                "type": {
+                    "name": "water"
+                }
+                }
+            ],
+            "pokedex_numbers": [
+                {
+                "entry_number": 7,
+                "pokedex": {
+                    "name": "national"
+                }
+                }
+            ],
+            "egg_groups": [
+                {
+                "name": "monster"
+                },
+                {
+                "name": "water1"
+                }
+            ],
+            "generation": {
+                "name": "generation-i"
+            }
+        },
+        {
+            "id": 132,
+            "name": "ditto",
+            "is_favourite": false,
+            "height": 3,
+            "weight": 40,
+            "abilities": [
+                {
+                "is_hidden": false,
+                "slot": 1,
+                "ability": {
+                    "name": "limber"
+                }
+                },
+                {
+                "is_hidden": true,
+                "slot": 3,
+                "ability": {
+                    "name": "imposter"
+                }
+                }
+            ],
+            "moves": [
+                {
+                "move": {
+                    "name": "transform"
+                }
+                }
+            ],
+            "sprites": {
+                "other": {
+                "official-artwork": {
+                    "front_shiny": "data/sprites/official-artwork/front_shiny/ditto.png",
+                    "front_default": "data/sprites/official-artwork/front_default/ditto.png"
+                }
+                },
+                "versions": {
+                "generation-iv": {
+                    "heartgold-soulsilver": {
+                    "back_shiny": "data/sprites/heartgold-soulsilver/back_shiny/ditto.png",
+                    "back_female": null,
+                    "front_shiny": "data/sprites/heartgold-soulsilver/front_shiny/ditto.png",
+                    "back_default": "data/sprites/heartgold-soulsilver/back_default/ditto.png",
+                    "front_female": null,
+                    "front_default": "data/sprites/heartgold-soulsilver/front_default/ditto.png",
+                    "back_shiny_female": null,
+                    "front_shiny_female": null
+                    }
+                }
+                }
+            },
+            "cries": {
+                "latest": "data/cries/ditto.ogg"
+            },
+            "stats": [
+                {
+                "base_stat": 48,
+                "stat": {
+                    "name": "hp"
+                }
+                },
+                {
+                "base_stat": 48,
+                "stat": {
+                    "name": "attack"
+                }
+                },
+                {
+                "base_stat": 48,
+                "stat": {
+                    "name": "defense"
+                }
+                },
+                {
+                "base_stat": 48,
+                "stat": {
+                    "name": "special-attack"
+                }
+                },
+                {
+                "base_stat": 48,
+                "stat": {
+                    "name": "special-defense"
+                }
+                },
+                {
+                "base_stat": 48,
+                "stat": {
+                    "name": "speed"
+                }
+                }
+            ],
+            "types": [
+                {
+                "slot": 1,
+                "type": {
+                    "name": "normal"
+                }
+                }
+            ],
+            "pokedex_numbers": [
+                {
+                "entry_number": 132,
+                "pokedex": {
+                    "name": "national"
+                }
+                }
+            ],
+            "egg_groups": [
+                {
+                "name": "ditto"
+                }
+            ],
+            "generation": {
+                "name": "generation-i"
+            }
+        }
+    ]
+}
