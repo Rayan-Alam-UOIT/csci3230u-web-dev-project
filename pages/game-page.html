@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>Pokéweb - Games</title>
+      <link rel="stylesheet" href="../css/global-styles.css" />
+      <link rel="stylesheet" href="../css/game-styles.css" />
+      <link
+         rel="stylesheet"
+         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
+      />
+   </head>
+   <body>
+      <a class="skip-link" href="#main-content">Skip to main content</a>
+
+      <header class="site-header">
+         <a class="site-header__brand" href="../index.html">
+            <span class="site-header__logo">POKÉWEB</span>
+            <img
+               class="site-header__icon-img"
+               src="../images/Poké_Ball_icon.svg"
+               alt=""
+            />
+         </a>
+
+         <nav class="site-nav__list">
+            <a class="site-nav__link" href="../index.html">Pokemon</a>
+            <a class="site-nav__link" href="favourites-page.html">Favourites</a>
+            <a class="site-nav__link" href="game-page.html" aria-current="page"
+               >Games</a
+            >
+         </nav>
+
+         <search>
+            <form
+               class="site-search"
+               action="/search-results-page"
+               method="GET"
+            >
+               <label for="site-search" class="visually-hidden"
+                  >Search Pokémon</label
+               >
+               <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+               <input
+                  type="search"
+                  id="site-search"
+                  name="q"
+                  placeholder="Search Pokemon..."
+                  required
+               />
+            </form>
+         </search>
+      </header>
+
+      <main id="main-content" class="page container">
+         <h1 class="page-title">Games</h1>
+         <p class="page-subtitle">Choose a game to play.</p>
+
+         <ul class="games-grid">
+            <li class="game-card">
+               <div class="game-card__image">
+                  <img
+                     src="../images/pokemon-game-1.png"
+                     alt="A Pokémon silhouette next to a question mark, in the style of the &quot;Who's That Pokémon?&quot; TV segment"
+                  />
+               </div>
+               <h2 class="game-card__name">Who's That Pokémon?</h2>
+               <p class="game-card__desc">
+                  Identify the Pokémon shown from its silhouette or image.
+               </p>
+               <button class="play-btn" type="button" data-game="silhouette">
+                  <span>PLAY</span>
+                  <span class="play-btn__icon" aria-hidden="true">
+                     <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 2.5v11l10-5.5z" />
+                     </svg>
+                  </span>
+               </button>
+            </li>
+
+            <li class="game-card">
+               <div class="game-card__image">
+                  <img
+                     src="../images/pokemon-game-2.png"
+                     alt="Pokémon Trivia banner with a grid of Pokémon character icons"
+                  />
+               </div>
+               <h2 class="game-card__name">Pokémon Clues</h2>
+               <p class="game-card__desc">
+                  Guess the Pokémon using clues about its type, stats, and
+                  abilities.
+               </p>
+               <button class="play-btn" type="button" data-game="clues">
+                  <span>PLAY</span>
+                  <span class="play-btn__icon" aria-hidden="true">
+                     <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 2.5v11l10-5.5z" />
+                     </svg>
+                  </span>
+               </button>
+            </li>
+         </ul>
+
+         <h2 class="section-label">Game play area</h2>
+         <section class="game-play-area" aria-label="Game play area">
+            <p class="game-play-area__prompt">
+               Selected game interface / question appears here
+            </p>
+            <div class="game-play-area__answers" aria-label="Answer choices">
+               [ answer choices ]
+            </div>
+            <button class="submit-btn" type="button">Submit</button>
+         </section>
+      </main>
+
+      <footer class="site-footer">
+         <p>Copyright @ 2026 Team Rocket. All rights reserved.</p>
+      </footer>
+   </body>
+</html>
