@@ -1,8 +1,7 @@
 /* =========================================================
    POKÉWEB — CATALOGUE PAGE STYLES
    This file only adds what's specific to this page: the
-   filter bar, the results grid, the favourite toggle, and
-   pagination.
+   filter bar, and the results grid.
    ========================================================= */
 
 /* ---------- Page wrapper ---------- */
@@ -10,13 +9,6 @@
    this just adds page's vertical rhythm. */
 .page {
    padding-block: var(--space-4) var(--space-5);
-}
-
-/* ---------- Header search icon ---------- */
-.search-icon {
-   font-size: var(--font-size-sm);
-   color: var(--color-text-muted);
-   line-height: 1;
 }
 
 /* ---------- Filters ---------- */
