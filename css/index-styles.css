@@ -37,12 +37,24 @@
    appearance: none;
    padding: var(--space-1) 1.1rem var(--space-1) 0;
    border: 0;
-   background: transparent
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='6' viewBox='0 0 8 6'%3E%3Cpath d='M0 0h8L4 6z' fill='%231a1a1a'/%3E%3C/svg%3E")
-      no-repeat right center;
+   background: transparent;
    color: var(--color-text);
    font: inherit;
    cursor: pointer;
+}
+
+.select-wrapper {
+   position: relative;
+   display: inline-block;
+}
+
+.select-wrapper i {
+   position: absolute;
+   right: 0;
+   top: 50%;
+   transform: translateY(-50%);
+   font-size: 0.7rem;
+   pointer-events: none;
 }
 
 /* ---------- Results heading ---------- */
