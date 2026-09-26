@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>Pokéweb - Browse Pokémon</title>
+      <link rel="stylesheet" href="css/global-styles.css" />
+      <link rel="stylesheet" href="css/index-styles.css" />
+      <link
+         rel="stylesheet"
+         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
+      />
+   </head>
+   <body>
+      <header class="site-header">
+         <a class="site-header__brand" href="../index.html">
+            <span class="site-header__logo">POKÉWEB</span>
+            <img
+               class="site-header__icon-img"
+               src="images/Poké_Ball_icon.svg"
+               alt=""
+            />
+         </a>
+
+         <nav class="site-nav__list">
+            <a class="site-nav__link" href="../index.html" aria-current="page"
+               >Pokemon</a
+            >
+            <a class="site-nav__link" href="favourites-page.html">Favourites</a>
+            <a class="site-nav__link" href="game-page.html">Games</a>
+         </nav>
+
+         <search>
+            <form
+               class="site-search"
+               action="/search-results-page"
+               method="GET"
+            >
+               <label for="site-search" class="visually-hidden"
+                  >Search Pokémon</label
+               >
+               <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+               <input
+                  type="search"
+                  id="site-search"
+                  name="q"
+                  placeholder="Search Pokemon..."
+                  required
+               />
+            </form>
+         </search>
+      </header>
+
+      <main id="main-content" class="page container">
+         <section class="filters" aria-label="Filters">
+            <h2 class="filters-title">FILTERS</h2>
+            <div class="filters-row">
+               <label class="visually-hidden" for="generation"
+                  >Generation</label
+               >
+               <div class="select-wrapper">
+                  <select id="generation">
+                     <option value="">Generation</option>
+                     <option>I</option>
+                     <option>II</option>
+                     <option>III</option>
+                     <option>IV</option>
+                     <option>V</option>
+                     <option>VI</option>
+                     <option>VII</option>
+                     <option>VIII</option>
+                     <option>IX</option>
+                  </select>
+                  <i class="fa-solid fa-chevron-down"></i>
+               </div>
+
+               <label class="visually-hidden" for="type">Type</label>
+               <div class="select-wrapper">
+                  <select id="type">
+                     <option value="">Type</option>
+                     <option>Normal</option>
+                     <option>Fire</option>
+                     <option>Water</option>
+                     <option>Electric</option>
+                     <option>Grass</option>
+                     <option>Ice</option>
+                     <option>Fighting</option>
+                     <option>Poison</option>
+                     <option>Ground</option>
+                     <option>Flying</option>
+                     <option>Psychic</option>
+                     <option>Bug</option>
+                     <option>Rock</option>
+                     <option>Ghost</option>
+                     <option>Dragon</option>
+                     <option>Dark</option>
+                     <option>Steel</option>
+                     <option>Fairy</option>
+                  </select>
+                  <i class="fa-solid fa-chevron-down"></i>
+               </div>
+
+               <label class="visually-hidden" for="region">Region</label>
+               <div class="select-wrapper">
+                  <select id="region">
+                     <option value="">Region</option>
+                     <option>Kanto</option>
+                     <option>Johto</option>
+                     <option>Hoenn</option>
+                     <option>Sinnoh</option>
+                     <option>Unova</option>
+                     <option>Kalos</option>
+                     <option>Alola</option>
+                     <option>Galar</option>
+                     <option>Paldea</option>
+                  </select>
+                  <i class="fa-solid fa-chevron-down"></i>
+               </div>
+
+               <label class="visually-hidden" for="sort">Sort</label>
+               <div class="select-wrapper">
+                  <select id="sort">
+                     <option value="">Sort</option>
+                     <option>Number (low to high)</option>
+                     <option>Number (high to low)</option>
+                     <option>Name (A–Z)</option>
+                     <option>Name (Z–A)</option>
+                  </select>
+                  <i class="fa-solid fa-chevron-down"></i>
+               </div>
+            </div>
+         </section>
+
+         <h1 class="results-heading">
+            Pokémon <span aria-hidden="true">•</span> 1,025 results
+         </h1>
+
+         <ul class="card-grid">
+            <li class="card">
+               <div class="card-image">
+                  <img
+                     src="./data/sprites/official-artwork/front_default/bulbasaur.png"
+                     alt="Bulbasaur"
+                  />
+               </div>
+               <div class="card-info">
+                  <h2 class="card-name">
+                     <span class="dex-number">#001</span> Bulbasaur
+                  </h2>
+                  <label class="fav">
+                     <input type="checkbox" aria-label="Favourite Bulbasaur" />
+                     <i
+                        class="fa-regular fa-heart fav-heart-outline"
+                        aria-hidden="true"
+                     ></i>
+                     <i
+                        class="fa-solid fa-heart fav-heart-solid"
+                        aria-hidden="true"
+                     ></i>
+                  </label>
+               </div>
+            </li>
+
+            <li class="card">
+               <div class="card-image">
+                  <img
+                     src="./data/sprites/official-artwork/front_default/charmander.png"
+                     alt="Charmander"
+                  />
+               </div>
+               <div class="card-info">
+                  <h2 class="card-name">
+                     <span class="dex-number">#004</span> Charmander
+                  </h2>
+                  <label class="fav">
+                     <input type="checkbox" aria-label="Favourite Charmander" />
+                     <i
+                        class="fa-regular fa-heart fav-heart-outline"
+                        aria-hidden="true"
+                     ></i>
+                     <i
+                        class="fa-solid fa-heart fav-heart-solid"
+                        aria-hidden="true"
+                     ></i>
+                  </label>
+               </div>
+            </li>
+
+            <li class="card">
+               <div class="card-image">
+                  <img
+                     src="./data/sprites/official-artwork/front_default/squirtle.png"
+                     alt="Squirtle"
+                  />
+               </div>
+               <div class="card-info">
+                  <h2 class="card-name">
+                     <span class="dex-number">#007</span> Squirtle
+                  </h2>
+                  <label class="fav">
+                     <input type="checkbox" aria-label="Favourite Squirtle" />
+                     <i
+                        class="fa-regular fa-heart fav-heart-outline"
+                        aria-hidden="true"
+                     ></i>
+                     <i
+                        class="fa-solid fa-heart fav-heart-solid"
+                        aria-hidden="true"
+                     ></i>
+                  </label>
+               </div>
+            </li>
+
+            <li class="card">
+               <div class="card-image">
+                  <img
+                     src="./data/sprites/official-artwork/front_default/pikachu.png"
+                     alt="Pikachu"
+                  />
+               </div>
+               <div class="card-info">
+                  <h2 class="card-name">
+                     <span class="dex-number">#025</span> Pikachu
+                  </h2>
+                  <label class="fav">
+                     <input type="checkbox" aria-label="Favourite Pikachu" />
+                     <i
+                        class="fa-regular fa-heart fav-heart-outline"
+                        aria-hidden="true"
+                     ></i>
+                     <i
+                        class="fa-solid fa-heart fav-heart-solid"
+                        aria-hidden="true"
+                     ></i>
+                  </label>
+               </div>
+            </li>
+
+            <li class="card">
+               <div class="card-image">
+                  <img
+                     src="./data/sprites/official-artwork/front_default/eevee.png"
+                     alt="Eevee"
+                  />
+               </div>
+               <div class="card-info">
+                  <h2 class="card-name">
+                     <span class="dex-number">#133</span> Eevee
+                  </h2>
+                  <label class="fav">
+                     <input type="checkbox" aria-label="Favourite Eevee" />
+                     <i
+                        class="fa-regular fa-heart fav-heart-outline"
+                        aria-hidden="true"
+                     ></i>
+                     <i
+                        class="fa-solid fa-heart fav-heart-solid"
+                        aria-hidden="true"
+                     ></i>
+                  </label>
+               </div>
+            </li>
+
+            <li class="card">
+               <div class="card-image">
+                  <img
+                     src="./data/sprites/official-artwork/front_default/mewtwo.png"
+                     alt="Mewtwo"
+                  />
+               </div>
+               <div class="card-info">
+                  <h2 class="card-name">
+                     <span class="dex-number">#150</span> Mewtwo
+                  </h2>
+                  <label class="fav">
+                     <input type="checkbox" aria-label="Favourite Mewtwo" />
+                     <i
+                        class="fa-regular fa-heart fav-heart-outline"
+                        aria-hidden="true"
+                     ></i>
+                     <i
+                        class="fa-solid fa-heart fav-heart-solid"
+                        aria-hidden="true"
+                     ></i>
+                  </label>
+               </div>
+            </li>
+
+            <li class="card">
+               <div class="card-image">
+                  <img
+                     src="./data/sprites/official-artwork/front_default/chikorita.png"
+                     alt="Chikorita"
+                  />
+               </div>
+               <div class="card-info">
+                  <h2 class="card-name">
+                     <span class="dex-number">#152</span> Chikorita
+                  </h2>
+                  <label class="fav">
+                     <input type="checkbox" aria-label="Favourite Chikorita" />
+                     <i
+                        class="fa-regular fa-heart fav-heart-outline"
+                        aria-hidden="true"
+                     ></i>
+                     <i
+                        class="fa-solid fa-heart fav-heart-solid"
+                        aria-hidden="true"
+                     ></i>
+                  </label>
+               </div>
+            </li>
+
+            <li class="card">
+               <div class="card-image">
+                  <img
+                     src="./data/sprites/official-artwork/front_default/cyndaquil.png"
+                     alt="Cyndaquil"
+                  />
+               </div>
+               <div class="card-info">
+                  <h2 class="card-name">
+                     <span class="dex-number">#155</span> Cyndaquil
+                  </h2>
+                  <label class="fav">
+                     <input type="checkbox" aria-label="Favourite Cyndaquil" />
+                     <i
+                        class="fa-regular fa-heart fav-heart-outline"
+                        aria-hidden="true"
+                     ></i>
+                     <i
+                        class="fa-solid fa-heart fav-heart-solid"
+                        aria-hidden="true"
+                     ></i>
+                  </label>
+               </div>
+            </li>
+
+            <li class="card">
+               <div class="card-image">
+                  <img
+                     src="./data/sprites/official-artwork/front_default/totodile.png"
+                     alt="Totodile"
+                  />
+               </div>
+               <div class="card-info">
+                  <h2 class="card-name">
+                     <span class="dex-number">#158</span> Totodile
+                  </h2>
+                  <label class="fav">
+                     <input type="checkbox" aria-label="Favourite Totodile" />
+                     <i
+                        class="fa-regular fa-heart fav-heart-outline"
+                        aria-hidden="true"
+                     ></i>
+                     <i
+                        class="fa-solid fa-heart fav-heart-solid"
+                        aria-hidden="true"
+                     ></i>
+                  </label>
+               </div>
+            </li>
+         </ul>
+
+         <nav class="pagination" aria-label="Pagination">
+            <a href="#" aria-label="Previous page">‹</a>
+            <a href="#" aria-current="page">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">5</a>
+            <a href="#" aria-label="Next page">›</a>
+         </nav>
+      </main>
+
+      <footer class="site-footer">
+         <p>Copyright @ 2026 Team Rocket. All rights reserved.</p>
+      </footer>
+   </body>
+</html>
