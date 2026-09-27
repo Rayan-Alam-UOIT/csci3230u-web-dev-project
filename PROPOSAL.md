@@ -170,7 +170,7 @@ Each member owns one vertical slice end to end (UI components, state, API calls,
 |---|---|---|---|---|---|
 | Mason Shipton | 100910175 | Masonshipton25 | **Pokemon Favourites**: `FavouriteButton`, `useFavourites` hook, `/favourites` page, `localStorage` persistence | **Pokemon Clues** logic (`generateClues`, `useCluesGame`) | Project Manager (board upkeep, milestone tags, `AI-USAGE.md`) |
 | Rayan Alam | 100908385 | Rayan-Alam-UOIT | **Pokemon Search and Filtering**: `SearchBar`, `FilterPanel`, search results, type/generation/region filters | **Who's That Pokemon?** UI (silhouette screen, reveal, feedback) | Testing Lead |
-| Wingfung Hu | 100922729 | WingfungHu | **Pokemon Browsing and Discovery**: main catalogue, `PokemonCard`/`PokemonGrid`, navigation, sorting, pagination | **Pokemon Clues** UI (`ClueList`, shared `GuessInput`) | Repo & Deployment Lead (Vite, router, Netlify) |
+| Wingfung Hu | 100922729 | WingfungHu | **Pokemon Browsing and Discovery**: main list, `PokemonCard`/`PokemonGrid`, navigation, sorting, pagination | **Pokemon Clues** UI (`ClueList`, shared `GuessInput`) | Repo & Deployment Lead (Vite, router, Netlify) |
 | Aryan Kashe | 100878631 | Aryan-KA | **Pokemon Details**: `/pokemon/:id` with moves, abilities, types, egg groups, cries, sprites, height, weight | **Who's That Pokemon?** logic (`useWhosThatPokemon`, guess matching, scoring) | Accessibility & Styling Lead |
 
 
@@ -178,8 +178,8 @@ Each member owns one vertical slice end to end (UI components, state, API calls,
 
 Below are the low-fidelity wireframes for the four key pages of PokéWeb, which the static HTML and CSS pages for M1 are based on.
 
-### Browse / Catalogue Page (Key Page #1)
-![Browse Page Wireframe Diagram](images/Browse-Page-Wireframe.png)
+### List Page (Key Page #1)
+![Page Wireframe Diagram](images/List-Page-Wireframe.png)
 
 ### Detail Page (Key Page #2)
 ![Detail Page Wireframe Diagram](images/Detail-Page-Wireframe.png)
