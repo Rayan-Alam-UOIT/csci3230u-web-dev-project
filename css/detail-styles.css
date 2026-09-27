@@ -1,0 +1,157 @@
+/* ---------- Results heading ---------- */
+.back-button {
+    display: inline-block;
+    margin: var(--space-4) 0 var(--space-3);
+    font-size: var(--font-size-base);
+    font-weight: 400;
+    opacity: 0.80;
+    color: black;
+    text-decoration: none;
+}
+
+.back-button:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.head {
+   display: flex;
+   flex-direction: row;
+   gap: var(--space-3);
+   /* extra bottom padding leaves room for type badges etc. later */
+   padding-left: var(--space-3);
+   padding-right: var(--space-3);
+   border: var(--border-width) solid var(--color-border);
+   border-radius: var(--radius-md);
+   background: var(--color-bg);
+}
+
+.head-image {
+    margin-top: 17px;
+    margin-bottom: 17px;
+    aspect-ratio: 7 / 7;
+    width: 30%;
+    background: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: 30, 30;
+}
+
+/* .card-image img {
+   width: 100%;
+   height: 100%;
+   object-fit: contain;
+} */
+
+.head-info {
+    padding-top: 18px;
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+}
+
+
+.head-name {
+    margin: 0;
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+}
+
+.head-stats {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 30px;
+    padding-bottom: 120px;
+}
+
+.detail-type {
+    font-weight: bold;
+    font-size: large;
+    padding-right: 20px;
+}
+
+.card-row{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding-bottom: 19px;
+}
+
+.card-label {
+  text-align: left;
+}
+
+.card-value {
+  text-align: left;
+}
+
+.body-row {
+  /* this li just wraps the nested ul, no card styling needed here */
+}
+
+.body-list {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  list-style: none;
+  
+}
+
+.body-stats {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 30px;
+    padding-bottom: 250px;
+}
+
+.body {
+    flex: 1; /* makes both body cards equal width, splitting the space */
+    border: var(--border-width) solid var(--color-border);
+    padding: 21px;
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+}
+
+.details-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1100px;   /* match this to your card's max-width */
+  margin: 0 auto;     /* centers it, same as your card likely does */
+  padding: 16px 0;
+}
+
+.nav-prev,
+.nav-next {
+  text-decoration: none;
+  font-weight: 600;
+  color: inherit;
+}
+
+.nav-prev:hover,
+.nav-next:hover {
+  text-decoration: underline;
+}
+
+.play-sound {
+    display: flex;
+    padding-top: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+}
+
+.play-sound:hover {
+  text-decoration: underline;
+}
