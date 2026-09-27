@@ -20,6 +20,7 @@ from [PokéAPI](https://pokeapi.co/).
 - HTML
 - CSS
 - PokéAPI
+- More to be added (M2 onward)
 
 ## Team Rocket
 
