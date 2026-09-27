@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>Pokéweb - Details</title>
+      <link rel="stylesheet" href="../css/global-styles.css" />
+      <link rel="stylesheet" href="../css/detail-styles.css" />
+      <link
+         rel="stylesheet"
+         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
+      />
+   </head>
+   <body>
+      <header class="site-header">
+         <a class="site-header__brand" href="../index.html">
+            <span class="site-header__logo">POKÉWEB</span>
+            <img
+               class="site-header__icon-img"
+               src="../images/Poké_Ball_icon.svg"
+               alt=""
+            />
+         </a>
+
+         <nav class="site-nav__list">
+            <a class="site-nav__link" href="../index.html">Pokemon</a>
+            <a class="site-nav__link" href="favourites-page.html">Favourites</a>
+            <a class="site-nav__link" href="game-page.html">Games</a>
+         </nav>
+
+         <search>
+            <form
+               class="site-search"
+               action="/search-results-page"
+               method="GET"
+            >
+               <label for="site-search" class="visually-hidden"
+                  >Search Pokémon</label
+               >
+               <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+               <input
+                  type="search"
+                  id="site-search"
+                  name="q"
+                  placeholder="Search Pokemon..."
+                  required
+               />
+            </form>
+         </search>
+      </header>
+
+      <main id="main-content" class="page container">
+         <nav>
+            <a href="../index.html" class="back-button">
+               ‹ &nbsp Back to Pokémon
+            </a>
+         </nav>
+
+         <ul class="card-list">
+            <li class="head">
+                <div class="head-image">
+                    <img id="pokemon-img"
+                        src="../data/sprites/official-artwork/front_default/pikachu.png"
+                        alt="Pikachu"
+                        class="pokecard-image"
+                    />
+                    <div class="toggle-buttons">
+                        <a href="#" id="toggle-shiny" class="toggle-btn">✨ Shiny</a>
+                        <a href="#" id="toggle-back" class="toggle-btn">🔄 Back</a>
+                     </div>
+                </div>
+                <div class="head-info">
+                  <h1 class="head-name">
+                     <span class="dex-number">#025</span> Pikachu
+                  </h1>
+                  <div class="card-row">
+                     <span class="detail-type">ELECTRIC</span>
+                     <label class="fav">
+                           <input type="checkbox" aria-label="Favourite Pikachu" />
+                           <i
+                              class="fa-regular fa-heart fav-heart-outline"
+                              aria-hidden="true"
+                           ></i>
+                           <i
+                              class="fa-solid fa-heart fav-heart-solid"
+                              aria-hidden="true"
+                           ></i>
+                     </label>
+                     <span>Favourite</span>
+                  </div>
+                  <div class="head-stats">
+                     <span class="card-label">Height:</span>
+                     <span class="card-value">0.4m</span>
+
+                     <span class="card-label">Weight:</span>
+                     <span class="card-value">6.0 kg</span>
+
+                     <span class="card-label">Abilities:</span>
+                     <span class="card-value">Static, Lightning Rod</span>
+
+                     <span class="card-label">Egg Group:</span>
+                     <span class="card-value">Field / Fairy</span>
+                  </div>
+                </div>
+            </li>
+            <li class="body-row">
+               <ul class="body-list">
+                  <li class="body">
+                     <div class="card-row">
+                        <span class="detail-type">BASE STATS</span>
+                     </div>
+                     <div class="body-stats">
+                        <span class="card-label">HP:</span>
+                        <span class="card-value">35</span>
+
+                        <span class="card-label">Attack:</span>
+                        <span class="card-value">55</span>
+
+                        <span class="card-label">Defense:</span>
+                        <span class="card-value">40</span>
+
+                        <span class="card-label">Sp. Atk</span>
+                        <span class="card-value">50</span>
+
+                        <span class="card-label">Sp. Def:</span>
+                        <span class="card-value">50</span>
+
+                        <span class="card-label">Speed:</span>
+                        <span class="card-value">90</span>
+                     </div>
+                  </li>
+                  <li class="body">
+                     <div class="card-row">
+                        <span class="detail-type">MOVES</span>
+                     </div>
+                     <div class="body-stats">
+                        <span class="card-label">Thunderbolt:</span>
+                        <span class="card-value">Electric</span>
+
+                        <span class="card-label">Quick Attack:</span>
+                        <span class="card-value">Normal</span>
+
+                        <span class="card-label">Iron Tail:</span>
+                        <span class="card-value">Steel</span>
+
+                        <span class="card-label">Electro Ball:</span>
+                        <span class="card-value">Electric</span>
+
+                        <span class="card-label">Volt Tackle:</span>
+                        <span class="card-value">Electric</span>
+
+                        <span class="card-label">Agility:</span>
+                        <span class="card-value">Psychic</span>
+                     </div>
+                  </li>
+               </ul>
+            </li>
+        </ul>
+         <a href="#" class="play-sound" onclick="document.getElementById('pokemon-cry').play(); return false;">
+            ▶ Play Cry
+         </a>
+         <audio id="pokemon-cry" src="../data/cries/pikachu.ogg" preload="auto"></audio>
+
+      </main>
+
+      <footer class="footer">
+         <nav class="details-nav">
+            <a href="#" class="nav-prev">&larr; Previous Pokemon</a>
+            <a href="#" class="nav-next">Next Pokemon &rarr;</a>
+         </nav>
+         <div class="site-footer">
+            <p>Copyright @ 2026 Team Rocket. All rights reserved.</p>
+         </div>
+      </footer>
+   </body>
+</html>

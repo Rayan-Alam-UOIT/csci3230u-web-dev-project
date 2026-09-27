@@ -29,7 +29,7 @@ from [PokéAPI](https://pokeapi.co/).
 | Mason Shipton | [Masonshipton25](https://github.com/Masonshipton25) | Favourites |
 | Rayan Alam | [Rayan-Alam-UOIT](https://github.com/Rayan-Alam-UOIT) | Search & Filtering |
 | Wingfung Hu | [WingfungHu](https://github.com/WingfungHu) | Browsing & Discovery |
-| Aryan Kashe | [Aryan-KA](https://github.com/Aryan-KA) | Pokémon Details |
+| Aryan Kashefi-Aazam | [Aryan-KA](https://github.com/Aryan-KA) | Pokémon Details |
 
 See the [Proposal](PROPOSAL.md#scaled-feature-plan) for full ownership
 details.
