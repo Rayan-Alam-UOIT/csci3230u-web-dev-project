@@ -169,10 +169,11 @@ Each member owns one vertical slice end to end (UI components, state, API calls,
 | Member | Banner ID | User Name | Vertical Slice | Game Role | Team Role |
 |---|---|---|---|---|---|
 | Mason Shipton | 100910175 | Masonshipton25 | **Pokémon Favourites**: `FavouriteButton`, `useFavourites` hook, `/favourites` page, `localStorage` persistence | **Pokémon Clues** logic (`generateClues`, `useCluesGame`) | Project Manager (board upkeep, milestone tags, `AI-USAGE.md`) |
-| Rayan Alam | 100908385 | Rayan-Alam-UOIT | **Pokémon Search and Filtering**: `SearchBar`, `FilterPanel`, search results, type/generation/region filters | **Who's That Pokémon?** UI (silhouette screen, reveal, feedback) | Testing Lead |
+| Rayan Alam | 100908385 | Rayan-Alam-UOIT | **Pokémon Search and Filtering**: `SearchBar`, `FilterPanel`, search results, type/generation/region filters | **Who's That Pokémon?** UI (silhouette screen, reveal, feedback) | Styling Lead (cross-browser/responsive QA) |
 | Wingfung Hu | 100922729 | WingfungHu | **Pokémon Browsing and Discovery**: main list, `PokemonCard`/`PokemonGrid`, navigation, sorting, pagination | **Pokémon Clues** UI (`ClueList`, shared `GuessInput`) | Repo & Deployment Lead (Vite, router, Netlify) |
-| Aryan Kashe | 100878631 | Aryan-KA | **Pokémon Details**: `/pokemon/:id` with moves, abilities, types, egg groups, cries, sprites, height, weight | **Who's That Pokémon?** logic (`useWhosThatPokemon`, guess matching, scoring) | Accessibility & Styling Lead |
+| Aryan Kashe | 100878631 | Aryan-KA | **Pokémon Details**: `/pokemon/:id` with moves, abilities, types, egg groups, cries, sprites, height, weight | **Who's That Pokémon?** logic (`useWhosThatPokemon`, guess matching, scoring) | Testing Lead (W3C validation, PR testing) |
 
+Team roles above are lead responsibilities, not exclusive ownership. Since every member is building a full vertical slice (UI, state, API calls, and tests), everyone touches a bit of everything, and no one is short on work. Things like accessibility are a shared responsibility across all slices, not just one person's job.
 
 ## Wireframes
 
