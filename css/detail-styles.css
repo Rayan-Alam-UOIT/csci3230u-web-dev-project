@@ -55,7 +55,6 @@
     width: 30%;
     background: var(--color-surface);
     border: var(--border-width) solid var(--color-border);
-    border-radius: 30, 30;
 }
 
 /* .card-image img {
