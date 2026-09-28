@@ -215,6 +215,7 @@
     background: var(--color-surface);
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--radius-md);
+    image-rendering: pixelated;
 }
 
 .play-sound {
@@ -242,6 +243,7 @@
     background: var(--color-surface);
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--radius-md);
+    image-rendering: pixelated;
 }
 
 .sprite-popover:not(:popover-open) {
