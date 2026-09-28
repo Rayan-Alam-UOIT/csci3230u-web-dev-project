@@ -203,10 +203,8 @@
                </li>
             </ul>
 
-            <a href="#" class="play-sound" onclick="document.getElementById('pokemon-cry').play(); return false;">
-               ▶ Play Cry
-            </a>
-            <audio id="pokemon-cry" src="../data/cries/pikachu.ogg" preload="auto"></audio>
+            <button type="button" class="play-sound">▶ Play Cry</button>
+            <input type="range" class="cry-slider" min="0" max="100" value="0" aria-label="Cry progress" disabled />
          </div>
          </section>
 
