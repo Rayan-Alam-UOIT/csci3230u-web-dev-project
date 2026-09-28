@@ -248,8 +248,35 @@
     background: rgb(0 0 0 / 0.6);
 }
 
+.type-normal {
+    color: var(--type-normal);
+    text-shadow:
+        -1px -1px 0 #000,
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000;
+}
+
 .type-electric {
     color: var(--type-electric);
+    text-shadow:
+        -1px -1px 0 #000,
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000;
+}
+
+.type-psychic {
+    color: var(--type-psychic);
+    text-shadow:
+        -1px -1px 0 #000,
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000;
+}
+
+.type-steel {
+    color: var(--type-steel);
     text-shadow:
         -1px -1px 0 #000,
          1px -1px 0 #000,
