@@ -302,3 +302,10 @@
     margin-left: -14px; 
     accent-color: #000;
 }
+
+
+.head-stats .card-value,
+.base-stats .card-value {
+    color: #5c5b5b;
+    font-weight: 650;
+}
