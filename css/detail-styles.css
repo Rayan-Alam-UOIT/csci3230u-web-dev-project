@@ -1,3 +1,16 @@
+/* =========================================================
+   POKÉWEB — DETAIL PAGE STYLES
+   This file only adds what's specific to this page: the 
+   back button, head card (image and info), stats cards, 
+   previous/next navigation, and the sprites and cry section
+   with its enlarge-on-click popovers.
+   ========================================================= */
+
+/* ---------- Page wrapper ---------- */
+.page {
+   padding-block: var(--space-4) var(--space-5);
+}
+
 /* ---------- Results heading ---------- */
 .back-button {
     display: inline-block;
@@ -211,13 +224,28 @@
 }
 
 .sprite-link {
-    color: black;
-    text-decoration: none;
-    font-weight: 600;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: zoom-in;
+    display: block;
 }
 
-.sprite-link:hover {
-    text-decoration: underline;
+.sprite-popover {
+    width: min(90vw, 320px);
+    height: auto;
+    padding: var(--space-3);
+    background: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+.sprite-popover:not(:popover-open) {
+    display: none;
+}
+
+.sprite-popover::backdrop {
+    background: rgb(0 0 0 / 0.6);
 }
 
 .type-electric {
