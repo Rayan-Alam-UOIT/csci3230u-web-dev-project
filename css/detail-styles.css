@@ -155,3 +155,76 @@
 .play-sound:hover {
   text-decoration: underline;
 }
+
+/* ---------- Sprites & Cry section ---------- */
+.sprites-heading {
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin: 0 0 var(--space-3);
+}
+
+.sprites-section {
+    margin-top: var(--space-4);
+    margin-bottom: 100px;
+    padding-top: var(--space-3);
+}
+
+.sprites-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.sprites-list {
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-3);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sprite-link {
+    display: block;
+}
+
+.sprite-img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    background: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+.play-sound {
+    display: flex;
+    align-items: center;
+    padding-top: 0;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+}
+
+.sprite-link {
+    color: black;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.sprite-link:hover {
+    text-decoration: underline;
+}
+
+.type-electric {
+    color: var(--type-electric);
+    text-shadow:
+        -1px -1px 0 #000,
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000;
+}
