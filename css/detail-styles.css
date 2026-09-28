@@ -105,6 +105,9 @@
 
 .card-value {
   text-align: left;
+  font-weight: bold;
+  font-size: large;
+  padding-right: 20px;
 }
 
 .body-row {
