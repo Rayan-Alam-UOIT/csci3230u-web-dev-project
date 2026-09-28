@@ -59,22 +59,18 @@
          <ul class="card-list">
             <li class="head">
                 <div class="head-image">
-                    <img id="pokemon-img"
-                        src="../data/sprites/official-artwork/front_default/pikachu.png"
-                        alt="Pikachu"
-                        class="pokecard-image"
-                    />
-                    <div class="toggle-buttons">
-                        <a href="#" id="toggle-shiny" class="toggle-btn">✨ Shiny</a>
-                        <a href="#" id="toggle-back" class="toggle-btn">🔄 Back</a>
-                     </div>
-                </div>
+                  <img id="pokemon-img"
+                     src="../data/sprites/official-artwork/front_default/pikachu.png"
+                     alt="Pikachu"
+                     class="pokecard-image"
+                  />
+               </div>
                 <div class="head-info">
                   <h1 class="head-name">
                      <span class="dex-number">#025</span> Pikachu
                   </h1>
                   <div class="card-row">
-                     <span class="detail-type">ELECTRIC</span>
+                     <span class="detail-type type-electric">ELECTRIC</span>
                      <label class="fav">
                            <input type="checkbox" aria-label="Favourite Pikachu" />
                            <i
@@ -156,18 +152,52 @@
                </ul>
             </li>
         </ul>
-         <a href="#" class="play-sound" onclick="document.getElementById('pokemon-cry').play(); return false;">
-            ▶ Play Cry
-         </a>
-         <audio id="pokemon-cry" src="../data/cries/pikachu.ogg" preload="auto"></audio>
+
+        <nav class="details-nav">
+            <a href="#" class="nav-prev">&larr; Previous Pokemon</a>
+            <a href="#" class="nav-next">Next Pokemon &rarr;</a>
+         </nav>
+
+         <section class="sprites-section" aria-labelledby="sprites-heading">
+            <h2 id="sprites-heading" class="sprites-heading">Sprites &amp; Cry</h2>
+
+         <div class="sprites-row">
+            <ul class="sprites-list">
+               <li>
+                  <a href="#" id="toggle-front" class="sprite-link">
+                     <img src="../data/sprites/heartgold-soulsilver/front_default/pikachu.png"
+                        alt="Pikachu front sprite" class="sprite-img" />
+                  </a>
+               </li>
+               <li>
+                  <a href="#" id="toggle-back" class="sprite-link">
+                     <img src="../data/sprites/heartgold-soulsilver/back_default/pikachu.png"
+                        alt="Pikachu back sprite" class="sprite-img" />
+                  </a>
+               </li>
+               <li>
+                  <a href="#" id="toggle-shiny" class="sprite-link">
+                     <img src="../data/sprites/heartgold-soulsilver/front_shiny/pikachu.png"
+                        alt="Pikachu shiny sprite" class="sprite-img" />
+                  </a>
+               <li>
+                  <a href="#" id="toggle-shiny" class="sprite-link">
+                     <img src="../data/sprites/heartgold-soulsilver/back_shiny/pikachu.png"
+                        alt="Pikachu shiny sprite" class="sprite-img" />
+                  </a>
+               </li>
+            </ul>
+
+            <a href="#" class="play-sound" onclick="document.getElementById('pokemon-cry').play(); return false;">
+               ▶ Play Cry
+            </a>
+            <audio id="pokemon-cry" src="../data/cries/pikachu.ogg" preload="auto"></audio>
+         </div>
+         </section>
 
       </main>
 
       <footer class="footer">
-         <nav class="details-nav">
-            <a href="#" class="nav-prev">&larr; Previous Pokemon</a>
-            <a href="#" class="nav-next">Next Pokemon &rarr;</a>
-         </nav>
          <div class="site-footer">
             <p>Copyright @ 2026 Team Rocket. All rights reserved.</p>
          </div>
