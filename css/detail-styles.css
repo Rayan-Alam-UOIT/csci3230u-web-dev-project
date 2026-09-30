@@ -1,5 +1,5 @@
 /* =========================================================
-   POKÉWEB — DETAIL PAGE STYLES
+   POKÉWEB - DETAIL PAGE STYLES
    This file only adds what's specific to this page: the 
    back button, head card (image and info), stats cards, 
    previous/next navigation, and the sprites and cry section
@@ -8,13 +8,15 @@
 
 /* ---------- Page wrapper ---------- */
 .page {
-   padding-block: var(--space-4) var(--space-5);
+    padding-block: var(--space-3) var(--space-4);
 }
 
 /* ---------- Results heading ---------- */
 .back-button {
-    display: inline-block;
-    margin: var(--space-4) 0 var(--space-3);
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    margin-block: var(--space-2);
     font-size: var(--font-size-base);
     font-weight: 400;
     opacity: 0.80;
@@ -28,151 +30,137 @@
 }
 
 .card-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .head {
-   display: flex;
-   flex-direction: row;
-   gap: var(--space-3);
-   /* extra bottom padding leaves room for type badges etc. later */
-   padding-left: var(--space-3);
-   padding-right: var(--space-3);
-   border: var(--border-width) solid var(--color-border);
-   border-radius: var(--radius-md);
-   background: var(--color-bg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
 }
 
 .head-image {
-    margin-top: 17px;
-    margin-bottom: 17px;
-    aspect-ratio: 7 / 7;
-    width: 30%;
+    aspect-ratio: 1;
+    width: 100%;
+    max-width: 16rem;
+    margin-inline: auto;
     background: var(--color-surface);
     border: var(--border-width) solid var(--color-border);
-    border-radius: 30, 30;
 }
 
-/* .card-image img {
-   width: 100%;
-   height: 100%;
-   object-fit: contain;
-} */
+.head-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
 
 .head-info {
-    padding-top: 18px;
-    padding-left: 10px;
     display: flex;
     flex-direction: column;
-    align-items:flex-start;
+    align-items: flex-start;
 }
 
-
 .head-name {
-    margin: 0;
+    margin: 0 0 var(--space-2);
     font-size: var(--font-size-2xl);
     font-weight: 700;
 }
 
-.head-stats {
+.head-stats,
+.body-stats {
     display: grid;
     grid-template-columns: auto 1fr;
-    column-gap: 30px;
-    padding-bottom: 120px;
+    column-gap: var(--space-3);
+    row-gap: var(--space-2);
+    margin: 0;
 }
 
 .detail-type {
     font-weight: bold;
     font-size: large;
-    padding-right: 20px;
+    padding-right: var(--space-2);
 }
 
-.card-row{
+.card-row {
     display: flex;
     align-items: center;
-    gap: 5px;
-    padding-bottom: 19px;
+    gap: 0.3125rem;
 }
 
 .card-label {
-  text-align: left;
+    text-align: left;
 }
 
 .card-value {
-  text-align: left;
-  font-weight: bold;
-  font-size: large;
-  padding-right: 20px;
+    min-width: 0;
+    text-align: left;
+    font-weight: bold;
+    font-size: large;
+    overflow-wrap: anywhere;
 }
 
-.body-row {
-  /* this li just wraps the nested ul, no card styling needed here */
+.head-stats .card-value,
+.base-stats .card-value {
+    color: #5c5b5b;
+    font-weight: 650;
 }
 
 .body-list {
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
-  list-style: none;
-  
-}
-
-.body-stats {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    column-gap: 30px;
-    padding-bottom: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    list-style: none;
+    padding: 0;
+    margin: var(--space-3) 0 0;
 }
 
 .body {
-    flex: 1; /* makes both body cards equal width, splitting the space */
+    padding: var(--space-3);
     border: var(--border-width) solid var(--color-border);
-    padding: 21px;
     border-radius: var(--radius-md);
     background: var(--color-bg);
 }
 
 .details-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  max-width: 1100px;   /* match this to your card's max-width */
-  margin: 0 auto;     /* centers it, same as your card likely does */
-  padding: 16px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 68.75rem;
+    margin-inline: auto;
+    padding-block: var(--space-2);
 }
 
 .nav-prev,
 .nav-next {
-  text-decoration: none;
-  font-weight: 600;
-  color: inherit;
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    text-decoration: none;
+    font-weight: 600;
+    color: inherit;
 }
 
 .nav-prev:hover,
 .nav-next:hover {
-  text-decoration: underline;
-}
-
-.play-sound {
-    display: flex;
-    padding-top: 10px;
-    cursor: pointer;
-    text-decoration: none;
-    color: black;
-    font-weight: 600;
-}
-
-.play-sound:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 /* ---------- Sprites & Cry section ---------- */
+.sprites-section {
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-4);
+    padding-top: var(--space-3);
+}
+
 .sprites-heading {
     font-size: var(--font-size-base);
     font-weight: 700;
@@ -181,36 +169,34 @@
     margin: 0 0 var(--space-3);
 }
 
-.sprites-section {
-    margin-top: var(--space-4);
-    margin-bottom: 100px;
-    padding-top: var(--space-3);
-}
-
 .sprites-row {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: var(--space-4);
+    flex-direction: column;
+    gap: var(--space-3);
 }
 
 .sprites-list {
-    display: flex;
-    flex-direction: row;
-    gap: var(--space-3);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr));
+    gap: var(--space-2);
     list-style: none;
     padding: 0;
     margin: 0;
-    margin-right: var(--space-2);
 }
 
 .sprite-link {
     display: block;
+    width: 100%;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: zoom-in;
 }
 
 .sprite-img {
-    width: 64px;
-    height: 64px;
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
     object-fit: contain;
     background: var(--color-surface);
     border: var(--border-width) solid var(--color-border);
@@ -218,27 +204,14 @@
     image-rendering: pixelated;
 }
 
-.play-sound {
-    display: flex;
-    align-items: center;
-    padding-top: 0;
-    cursor: pointer;
-    text-decoration: none;
-    color: black;
-    font-weight: 600;
-}
-
-.sprite-link {
-    background: none;
-    border: 0;
-    padding: 0;
-    cursor: zoom-in;
-    display: block;
-}
-
 .sprite-popover {
-    width: min(90vw, 320px);
+    box-sizing: border-box;
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    width: min(90vw, 20rem);
     height: auto;
+    max-height: 90dvh;
     padding: var(--space-3);
     background: var(--color-surface);
     border: var(--border-width) solid var(--color-border);
@@ -252,6 +225,36 @@
 
 .sprite-popover::backdrop {
     background: rgb(0 0 0 / 0.6);
+}
+
+.play-sound {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 2.75rem;
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    font-weight: 600;
+    color: black;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.play-sound:hover {
+    text-decoration: underline;
+}
+
+.cry-slider {
+    flex: 1;
+    min-width: 0;
+}
+
+.cry-slider:disabled {
+    cursor: default;
+    opacity: 1;
+    accent-color: #000;
 }
 
 .type-normal {
@@ -290,27 +293,136 @@
          1px  1px 0 #000;
 }
 
-.play-sound {
-    background: none;
-    border: none;
-    padding: 0;
-    font: inherit;
-    font-weight: 600;
-    color: black;
-    cursor: pointer;
-}
 
-.cry-slider:disabled {
-    cursor: default;
-    opacity: 1;
-    padding-left: 1px;
-    margin-left: -14px; 
-    accent-color: #000;
-}
+@media (min-width: 40em) {
+    .page {
+        padding-block: var(--space-4) var(--space-5);
+    }
 
+    .back-button {
+        display: inline-block;
+        min-height: 0;
+        margin: var(--space-4) 0 var(--space-3);
+    }
 
-.head-stats .card-value,
-.base-stats .card-value {
-    color: #5c5b5b;
-    font-weight: 650;
+    .head {
+        flex-direction: row;
+        padding: 0 var(--space-3);
+    }
+
+    .head-image {
+        width: 30%;
+        max-width: none;
+        margin: 1.0625rem 0;
+    }
+
+    .head-image img {
+        width: auto;
+        height: auto;
+        object-fit: fill;
+    }
+
+    .head-info {
+        padding: 1.125rem 0 0 0.625rem;
+    }
+
+    .head-name {
+        margin: 0;
+    }
+
+    .head-stats,
+    .body-stats {
+        column-gap: 1.875rem;
+        row-gap: 0;
+        margin: revert;
+    }
+
+    .head-stats {
+        padding-bottom: 7.5rem;
+    }
+
+    .body-stats {
+        padding-bottom: 15.625rem;
+    }
+
+    .detail-type {
+        padding-right: 1.25rem;
+    }
+
+    .card-row {
+        padding-bottom: 1.1875rem;
+    }
+
+    .card-value {
+        padding-right: 1.25rem;
+        min-width: auto;
+        overflow-wrap: normal;
+    }
+
+    .body-list {
+        flex-direction: row;
+        gap: 1rem;
+        margin: 1em 0;
+    }
+
+    .body {
+        flex: 1;
+        padding: 1.3125rem;
+    }
+
+    .details-nav {
+        padding-block: 1rem;
+    }
+
+    .nav-prev,
+    .nav-next {
+        min-height: 0;
+    }
+
+    .sprites-section {
+        margin-bottom: 6.25rem;
+    }
+
+    .sprites-row {
+        flex-direction: row;
+        align-items: center;
+        gap: var(--space-4);
+    }
+
+    .sprites-list {
+        display: flex;
+        gap: var(--space-3);
+        margin-right: var(--space-2);
+    }
+
+    .sprite-link {
+        width: auto;
+    }
+
+    .sprite-img {
+        display: inline;
+        width: 4rem;
+        height: 4rem;
+        aspect-ratio: auto;
+    }
+
+    .sprite-popover {
+        box-sizing: content-box;
+        max-height: none;
+    }
+
+    .play-sound {
+        gap: 0;
+        min-height: 0;
+    }
+
+    .cry-slider {
+        flex: 0 1 auto;
+        min-width: auto;
+    }
+
+    .cry-slider:disabled {
+        padding-left: 1px;
+        margin-left: -14px;
+    }
 }
