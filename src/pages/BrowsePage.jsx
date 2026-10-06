@@ -1,77 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PokemonGrid from "../components/PokemonGrid";
 
-const initialPokemon = [
-  {
-    id: 1,
-    name: "Bulbasaur",
-    image: "/data/sprites/official-artwork/front_default/bulbasaur.png",
-    favourite: true,
-  },
-  {
-    id: 4,
-    name: "Charmander",
-    image: "/data/sprites/official-artwork/front_default/charmander.png",
-    favourite: true,
-  },
-  {
-    id: 7,
-    name: "Squirtle",
-    image: "/data/sprites/official-artwork/front_default/squirtle.png",
-    favourite: true,
-  },
-  {
-    id: 25,
-    name: "Pikachu",
-    image: "/data/sprites/official-artwork/front_default/pikachu.png",
-    favourite: true,
-  },
-  {
-    id: 132,
-    name: "Ditto",
-    image: "/data/sprites/official-artwork/front_default/ditto.png",
-    favourite: false,
-  },
-  {
-    id: 133,
-    name: "Eevee",
-    image: "/data/sprites/official-artwork/front_default/eevee.png",
-    favourite: true,
-  },
-  {
-    id: 150,
-    name: "Mewtwo",
-    image: "/data/sprites/official-artwork/front_default/mewtwo.png",
-    favourite: true,
-  },
-  {
-    id: 152,
-    name: "Chikorita",
-    image: "/data/sprites/official-artwork/front_default/chikorita.png",
-    favourite: false,
-  },
-  {
-    id: 155,
-    name: "Cyndaquil",
-    image: "/data/sprites/official-artwork/front_default/cyndaquil.png",
-    favourite: false,
-  },
-  {
-    id: 158,
-    name: "Totodile",
-    image: "/data/sprites/official-artwork/front_default/totodile.png",
-    favourite: false,
-  },
-];
-
 function BrowsePage() {
-  const [pokemon, setPokemon] = useState(initialPokemon);
+  const [pokemon, setPokemon] = useState([]);
+
+  useEffect(() => {
+    document.title = "Pokéweb - Browse Pokémon";
+
+    fetch("/data/sample.json")
+      .then((response) => response.json())
+      .then((data) => setPokemon(data.pokemon));
+  }, []);
 
   function toggleFavourite(id) {
     setPokemon((currentPokemon) =>
       currentPokemon.map((item) =>
         item.id === id
-          ? { ...item, favourite: !item.favourite }
+          ? { ...item, is_favourite: !item.is_favourite }
           : item
       )
     );
@@ -182,7 +127,7 @@ function BrowsePage() {
       </section>
 
       <h1 className="results-heading">
-        Pokémon <span aria-hidden="true">•</span> 1,025 results
+        Pokémon <span aria-hidden="true">•</span> {pokemon.length} results
       </h1>
 
       <PokemonGrid

@@ -1,9 +1,59 @@
-import { useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 function DetailPage() {
+  const [pokemon, setPokemon] = useState(null);
+
   useEffect(() => {
     document.title = "Pokéweb - Details";
+
+    fetch("/data/sample.json")
+      .then((response) => response.json())
+      .then((data) => setPokemon(data.pokemon[3]));
   }, []);
+
+  if (!pokemon) {
+    return null;
+  }
+
+  const formattedName = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
+  
+  const types = pokemon.types.map((item) => item.type.name);
+  
+  const abilities = pokemon.abilities
+    .map((item) => {
+      const formattedAbility = item.ability.name
+        .replace(/-/g, " ")
+        .split(" ")
+        .map(
+          (word) =>
+            word.charAt(0).toUpperCase() + word.slice(1)
+        )
+        .join(" ");
+
+      return formattedAbility;
+    })
+    .join(", ");
+  
+  const eggGroups = pokemon.egg_groups
+    .map((item) =>
+      item.name
+        .split("-")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ")
+    )
+    .join(" / ");
+  
+  const stats = pokemon.stats;
+  
+  const moves = pokemon.moves;
+  
+  const sprites = pokemon.sprites.versions["generation-iv"]["heartgold-soulsilver"];
+  
+  const officialArtwork = pokemon.sprites.other["official-artwork"].front_default;
+  
+  const shinyArtwork = pokemon.sprites.other["official-artwork"].front_shiny;
+  
+  const cry = pokemon.cries.latest;
 
   return (
     <div className="page container">
@@ -18,25 +68,27 @@ function DetailPage() {
           <div className="head-image">
             <img
               id="pokemon-img"
-              src="/data/sprites/official-artwork/front_default/pikachu.png"
-              alt="Pikachu"
+              src={`/${officialArtwork}`}
+              alt={formattedName}
               className="pokecard-image"
             />
           </div>
 
           <div className="head-info">
             <h1 className="head-name">
-              <span className="dex-number">#025</span> Pikachu
+              <span className="dex-number">#{String(pokemon.id).padStart(3, "0")}</span>{" "} {formattedName}
             </h1>
 
             <div className="card-row">
-              <span className="detail-type type-electric">ELECTRIC</span>
+              {types.map((type) => (
+                <span key={type} className={`card-value type type-${type}`} > {type.toUpperCase()} </span>
+              ))}
 
               <label className="fav">
                 <input
                   type="checkbox"
-                  aria-label="Favourite Pikachu"
-                  defaultChecked
+                  aria-label={`Favourite ${formattedName}`}
+                  checked={pokemon.is_favourite}
                 />
 
                 <i
@@ -55,18 +107,16 @@ function DetailPage() {
 
             <div className="head-stats">
               <span className="card-label">Height:</span>
-              <span className="card-value">0.4m</span>
+              <span className="card-value">{(pokemon.height / 10).toFixed(1)}m</span>
 
               <span className="card-label">Weight:</span>
-              <span className="card-value">6.0 kg</span>
+              <span className="card-value">{(pokemon.weight / 10).toFixed(1)} kg</span>
 
               <span className="card-label">Abilities:</span>
-              <span className="card-value">
-                Static, Lightning Rod
-              </span>
+              <span className="card-value">{abilities}</span>
 
               <span className="card-label">Egg Group:</span>
-              <span className="card-value">Field / Fairy</span>
+              <span className="card-value">{eggGroups}</span>
             </div>
           </div>
         </li>
@@ -80,22 +130,22 @@ function DetailPage() {
 
               <div className="body-stats base-stats">
                 <span className="card-label">HP:</span>
-                <span className="card-value">35</span>
+                <span className="card-value"> {stats.find((item) => item.stat.name === "hp").base_stat} </span>
 
                 <span className="card-label">Attack:</span>
-                <span className="card-value">55</span>
+                <span className="card-value"> { stats.find( (item) => item.stat.name === "attack" ).base_stat } </span>
 
                 <span className="card-label">Defense:</span>
-                <span className="card-value">40</span>
+                <span className="card-value"> { stats.find( (item) => item.stat.name === "defense" ).base_stat } </span>
 
-                <span className="card-label">Sp. Atk</span>
-                <span className="card-value">50</span>
+                <span className="card-label">Sp. Atk:</span>
+                <span className="card-value"> { stats.find( (item) => item.stat.name === "special-attack" ).base_stat } </span>
 
                 <span className="card-label">Sp. Def:</span>
-                <span className="card-value">50</span>
+                <span className="card-value"> { stats.find( (item) => item.stat.name === "special-defense" ).base_stat } </span>
 
                 <span className="card-label">Speed:</span>
-                <span className="card-value">90</span>
+                <span className="card-value"> { stats.find( (item) => item.stat.name === "speed" ).base_stat } </span>
               </div>
             </li>
 
@@ -105,35 +155,30 @@ function DetailPage() {
               </div>
 
               <div className="body-stats">
-                <span className="card-label">Thunderbolt:</span>
-                <span className="card-value type-electric">
-                  Electric
-                </span>
+                {moves.map((item) => (
+                  <Fragment key={item.move.name}>
+                    <span className="card-label">
+                      {item.move.name
+                        .split(/[ -]+/)
+                        .map(
+                          (word) =>
+                            word.charAt(0).toUpperCase() + word.slice(1)
+                        )
+                        .join(" ")}
+                      :
+                    </span>
 
-                <span className="card-label">Quick Attack:</span>
-                <span className="card-value type-normal">
-                  Normal
-                </span>
-
-                <span className="card-label">Iron Tail:</span>
-                <span className="card-value type-steel">
-                  Steel
-                </span>
-
-                <span className="card-label">Electro Ball:</span>
-                <span className="card-value type-electric">
-                  Electric
-                </span>
-
-                <span className="card-label">Volt Tackle:</span>
-                <span className="card-value type-electric">
-                  Electric
-                </span>
-
-                <span className="card-label">Agility:</span>
-                <span className="card-value type-psychic">
-                  Psychic
-                </span>
+                    <span className={`card-value type type-${item.move.type}`}>
+                      {item.move.type
+                        .split("-")
+                        .map(
+                          (word) =>
+                            word.charAt(0).toUpperCase() + word.slice(1)
+                        )
+                        .join(" ")}
+                    </span>
+                  </Fragment>
+                ))}
               </div>
             </li>
           </ul>
@@ -167,8 +212,8 @@ function DetailPage() {
                 popovertarget="sprite-front"
               >
                 <img
-                  src="/data/sprites/heartgold-soulsilver/front_default/pikachu.png"
-                  alt="Pikachu front sprite"
+                  src={`/${sprites.front_default}`}
+                  alt={`${formattedName} front sprite`}
                   className="sprite-img"
                 />
               </button>
@@ -177,8 +222,8 @@ function DetailPage() {
                 popover="auto"
                 id="sprite-front"
                 className="sprite-popover"
-                src="/data/sprites/heartgold-soulsilver/front_default/pikachu.png"
-                alt="Pikachu front sprite, enlarged"
+                src={`/${sprites.front_default}`}
+                alt={`${formattedName} front sprite, enlarged`}
               />
             </li>
 
@@ -189,8 +234,8 @@ function DetailPage() {
                 popovertarget="sprite-back"
               >
                 <img
-                  src="/data/sprites/heartgold-soulsilver/back_default/pikachu.png"
-                  alt="Pikachu back sprite"
+                  src={`/${sprites.back_default}`}
+                  alt={`${formattedName} back sprite`}
                   className="sprite-img"
                 />
               </button>
@@ -199,8 +244,8 @@ function DetailPage() {
                 popover="auto"
                 id="sprite-back"
                 className="sprite-popover"
-                src="/data/sprites/heartgold-soulsilver/back_default/pikachu.png"
-                alt="Pikachu back sprite, enlarged"
+                src={`/${sprites.back_default}`}
+                alt={`${formattedName} back sprite, enlarged`}
               />
             </li>
 
@@ -211,8 +256,8 @@ function DetailPage() {
                 popovertarget="sprite-shiny-front"
               >
                 <img
-                  src="/data/sprites/heartgold-soulsilver/front_shiny/pikachu.png"
-                  alt="Pikachu shiny front sprite"
+                  src={`/${sprites.front_shiny}`}
+                  alt={`${formattedName} shiny front sprite`}
                   className="sprite-img"
                 />
               </button>
@@ -221,8 +266,8 @@ function DetailPage() {
                 popover="auto"
                 id="sprite-shiny-front"
                 className="sprite-popover"
-                src="/data/sprites/heartgold-soulsilver/front_shiny/pikachu.png"
-                alt="Pikachu shiny front sprite, enlarged"
+                src={`/${sprites.front_shiny}`}
+                alt={`${formattedName} shiny front sprite, enlarged`}
               />
             </li>
 
@@ -233,8 +278,8 @@ function DetailPage() {
                 popovertarget="sprite-shiny-back"
               >
                 <img
-                  src="/data/sprites/heartgold-soulsilver/back_shiny/pikachu.png"
-                  alt="Pikachu shiny back sprite"
+                  src={`/${sprites.back_shiny}`}
+                  alt={`${formattedName} shiny back sprite`}
                   className="sprite-img"
                 />
               </button>
@@ -243,13 +288,13 @@ function DetailPage() {
                 popover="auto"
                 id="sprite-shiny-back"
                 className="sprite-popover"
-                src="/data/sprites/heartgold-soulsilver/back_shiny/pikachu.png"
-                alt="Pikachu shiny back sprite, enlarged"
+                src={`/${sprites.back_shiny}`}
+                alt={`${formattedName} shiny back sprite, enlarged`}
               />
             </li>
           </ul>
 
-          <button type="button" className="play-sound">
+          <button type="button" className="play-sound" onClick={() => new Audio(`/${cry}`).play()}>
             ▶ Play Cry
           </button>
 

@@ -1,8 +1,10 @@
 function PokemonCard({ pokemon, onToggleFavourite }) {
+  const formattedName = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
+
   return (
     <li className="card">
       <div className="card-image">
-        <img src={pokemon.image} alt={pokemon.name} />
+        <img src={pokemon.sprites.other["official-artwork"].front_default} alt={formattedName} />
       </div>
 
       <div className="card-info">
@@ -10,14 +12,14 @@ function PokemonCard({ pokemon, onToggleFavourite }) {
           <span className="dex-number">
             #{String(pokemon.id).padStart(3, "0")}
           </span>{" "}
-          {pokemon.name}
+          {formattedName}
         </h2>
 
         <label className="fav">
           <input
             type="checkbox"
-            aria-label={`Favourite ${pokemon.name}`}
-            checked={pokemon.favourite}
+            aria-label={`Favourite ${formattedName}`}
+            checked={pokemon.is_favourite}
             onChange={() =>
               onToggleFavourite?.(pokemon.id)
             }
