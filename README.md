@@ -1,6 +1,6 @@
 # PokéWeb: The Ultimate Digital Pokémon Encyclopedia
 
-![Photo of Pokémon and the series logo](images/pokemon.png)
+![Photo of Pokémon and the series logo](public/images/pokemon.png)
 
 PokéWeb is an accessible online encyclopedia for Pokémon fans. Browse all
 1,025 Pokémon, search and filter by type, generation, and region, save
