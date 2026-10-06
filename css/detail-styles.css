@@ -257,40 +257,84 @@
     accent-color: #000;
 }
 
-.type-normal {
-    color: var(--type-normal);
+.type {
     text-shadow:
         -1px -1px 0 #000,
          1px -1px 0 #000,
         -1px  1px 0 #000,
-         1px  1px 0 #000;
+         1px  1px 0 #000;    
+}
+
+.type-normal {
+    color: var(--type-normal);
+}
+
+.type-fire {
+    color: var(--type-fire);
+}
+
+.type-water {
+    color: var(--type-water);
 }
 
 .type-electric {
     color: var(--type-electric);
-    text-shadow:
-        -1px -1px 0 #000,
-         1px -1px 0 #000,
-        -1px  1px 0 #000,
-         1px  1px 0 #000;
+}
+
+.type-grass {
+    color: var(--type-grass);
+}
+
+.type-ice {
+    color: var(--type-ice);
+}
+
+.type-fighting {
+    color: var(--type-fighting);
+}
+
+.type-poison {
+    color: var(--type-poison);
+}
+
+.type-ground {
+    color: var(--type-ground);
+}
+
+.type-flying {
+    color: var(--type-flying);
 }
 
 .type-psychic {
     color: var(--type-psychic);
-    text-shadow:
-        -1px -1px 0 #000,
-         1px -1px 0 #000,
-        -1px  1px 0 #000,
-         1px  1px 0 #000;
+}
+
+.type-bug {
+    color: var(--type-bug);
+}
+
+.type-rock {
+    color: var(--type-rock);
+}
+
+.type-ghost {
+    color: var(--type-ghost);
+}
+
+.type-dragon {
+    color: var(--type-dragon);
+}
+
+.type-dark {
+    color: var(--type-dark);
 }
 
 .type-steel {
     color: var(--type-steel);
-    text-shadow:
-        -1px -1px 0 #000,
-         1px -1px 0 #000,
-        -1px  1px 0 #000,
-         1px  1px 0 #000;
+}
+
+.type-fairy {
+    color: var(--type-fairy);
 }
 
 

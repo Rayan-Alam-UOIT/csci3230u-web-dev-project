@@ -25,77 +25,92 @@
             "moves": [
                 {
                 "move": {
-                    "name": "growl"
+                    "name": "growl",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "tackle"
+                    "name": "tackle",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "vine whip"
+                    "name": "vine whip",
+                    "type": "grass"
                 }
                 },
                 {
                 "move": {
-                    "name": "growth"
+                    "name": "growth",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "leech seed"
+                    "name": "leech seed",
+                    "type": "grass"
                 }
                 },
                 {
                 "move": {
-                    "name": "razor leaf"
+                    "name": "razor leaf",
+                    "type": "grass"
                 }
                 },
                 {
                 "move": {
-                    "name": "poison powder"
+                    "name": "poison powder",
+                    "type": "poison"
                 }
                 },
                 {
                 "move": {
-                    "name": "sleep powder"
+                    "name": "sleep powder",
+                    "type": "grass"
                 }
                 },
                 {
                 "move": {
-                    "name": "take down"
+                    "name": "take down",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "magical leaf"
+                    "name": "magical leaf",
+                    "type": "grass"
                 }
                 },
                 {
                 "move": {
-                    "name": "synthesis"
+                    "name": "synthesis",
+                    "type": "grass"
                 }
                 },
                 {
                 "move": {
-                    "name": "amnesia"
+                    "name": "amnesia",
+                    "type": "psychic"
                 }
                 },
                 {
                 "move": {
-                    "name": "sludge wave"
+                    "name": "sludge wave",
+                    "type": "poison"
                 }
                 },
                 {
                 "move": {
-                    "name": "double-edge"
+                    "name": "double-edge",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "solar beam"
+                    "name": "solar beam",
+                    "type": "grass"
                 }
                 }
             ],
@@ -221,57 +236,68 @@
             "moves": [
                 {
                 "move": {
-                    "name": "growl"
+                    "name": "growl",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "tackle"
+                    "name": "tackle",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "ember"
+                    "name": "ember",
+                    "type": "fire"
                 }
                 },
                 {
                 "move": {
-                    "name": "smokescreen"
+                    "name": "smokescreen",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "dragon breath"
+                    "name": "dragon breath",
+                    "type": "dragon"
                 }
                 },
                 {
                 "move": {
-                    "name": "fire fang"
+                    "name": "fire fang",
+                    "type": "fire"
                 }
                 },
                 {
                 "move": {
-                    "name": "fire spin"
+                    "name": "fire spin",
+                    "type": "fire"
                 }
                 },
                 {
                 "move": {
-                    "name": "slash"
+                    "name": "slash",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "flamethrower"
+                    "name": "flamethrower",
+                    "type": "fire"
                 }
                 },
                 {
                 "move": {
-                    "name": "dragon rush"
+                    "name": "dragon rush",
+                    "type": "dragon"
                 }
                 },
                 {
                 "move": {
-                    "name": "flare blitz"
+                    "name": "flare blitz",
+                    "type": "fire"
                 }
                 }
             ],
@@ -391,47 +417,56 @@
             "moves": [
                 {
                 "move": {
-                    "name": "tackle"
+                    "name": "tackle",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "tail whip"
+                    "name": "tail whip",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "water gun"
+                    "name": "water gun",
+                    "type": "water"
                 }
                 },
                 {
                 "move": {
-                    "name": "bite"
+                    "name": "bite",
+                    "type": "dark"
                 }
                 },
                 {
                 "move": {
-                    "name": "bubble beam"
+                    "name": "bubble beam",
+                    "type": "water"
                 }
                 },
                 {
                 "move": {
-                    "name": "icy wind"
+                    "name": "icy wind",
+                    "type": "ice"
                 }
                 },
                 {
                 "move": {
-                    "name": "aqua ring"
+                    "name": "aqua ring",
+                    "type": "water"
                 }
                 },
                 {
                 "move": {
-                    "name": "iron defense"
+                    "name": "iron defense",
+                    "type": "steel"
                 }
                 },
                 {
                 "move": {
-                    "name": "liquidation"
+                    "name": "liquidation",
+                    "type": "water"
                 }
                 }
             ],
@@ -551,67 +586,80 @@
             "moves": [
                 {
                 "move": {
-                    "name": "growl"
+                    "name": "growl",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "quick attack"
+                    "name": "quick attack",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "tail whip"
+                    "name": "tail whip",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "thunder shock"
+                    "name": "thunder shock",
+                    "type": "electric"
                 }
                 },
                 {
                 "move": {
-                    "name": "thunder wave"
+                    "name": "thunder wave",
+                    "type": "electric"
                 }
                 },
                 {
                 "move": {
-                    "name": "nuzzle"
+                    "name": "nuzzle",
+                    "type": "electric"
                 }
                 },
                 {
                 "move": {
-                    "name": "spark"
+                    "name": "spark",
+                    "type": "electric"
                 }
                 },
                 {
                 "move": {
-                    "name": "charm"
+                    "name": "charm",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "thunderbolt"
+                    "name": "thunderbolt",
+                    "type": "electric"
                 }
                 },
                 {
                 "move": {
-                    "name": "charge"
+                    "name": "charge",
+                    "type": "electric"
                 }
                 },
                 {
                 "move": {
-                    "name": "light screen"
+                    "name": "light screen",
+                    "type": "psychic"
                 }
                 },
                 {
                 "move": {
-                    "name": "thunder"
+                    "name": "thunder",
+                    "type": "electric"
                 }
                 },
                 {
                 "move": {
-                    "name": "volt tackle"
+                    "name": "volt tackle",
+                    "type": "electric"
                 }
                 }
             ],
@@ -731,7 +779,8 @@
             "moves": [
                 {
                 "move": {
-                    "name": "transform"
+                    "name": "transform",
+                    "type": "normal"
                 }
                 }
             ],
@@ -855,57 +904,68 @@
             "moves": [
                 {
                 "move": {
-                    "name": "growl"
+                    "name": "growl",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "tackle"
+                    "name": "tackle",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "tail whip"
+                    "name": "tail whip",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "quick attack"
+                    "name": "quick attack",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "disarming voice"
+                    "name": "disarming voice",
+                    "type": "fairy"
                 }
                 },
                 {
                 "move": {
-                    "name": "swift"
+                    "name": "swift",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "bite"
+                    "name": "bite",
+                    "type": "dark"
                 }
                 },
                 {
                 "move": {
-                    "name": "wish"
+                    "name": "wish",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "take down"
+                    "name": "take down",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "charm"
+                    "name": "charm",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "double-edge"
+                    "name": "double-edge",
+                    "type": "normal"
                 }
                 }
             ],
@@ -1022,62 +1082,74 @@
             "moves": [
                 {
                 "move": {
-                    "name": "confusion"
+                    "name": "confusion",
+                    "type": "psychic"
                 }
                 },
                 {
                 "move": {
-                    "name": "swift"
+                    "name": "swift",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "psybeam"
+                    "name": "psybeam",
+                    "type": "psychic"
                 }
                 },
                 {
                 "move": {
-                    "name": "psycho cut"
+                    "name": "psycho cut",
+                    "type": "psychic"
                 }
                 },
                 {
                 "move": {
-                    "name": "safeguard"
+                    "name": "safeguard",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "amnesia"
+                    "name": "amnesia",
+                    "type": "psychic"
                 }
                 },
                 {
                 "move": {
-                    "name": "aura sphere"
+                    "name": "aura sphere",
+                    "type": "fighting"
                 }
                 },
                 {
                 "move": {
-                    "name": "psychic"
+                    "name": "psychic",
+                    "type": "psychic"
                 }
                 },
                 {
                 "move": {
-                    "name": "mist"
+                    "name": "mist",
+                    "type": "ice"
                 }
                 },
                 {
                 "move": {
-                    "name": "psystrike"
+                    "name": "psystrike",
+                    "type": "psychic"
                 }
                 },
                 {
                 "move": {
-                    "name": "recover"
+                    "name": "recover",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "future sight"
+                    "name": "future sight",
+                    "type": "psychic"
                 }
                 }
             ],
@@ -1194,67 +1266,80 @@
             "moves": [
                 {
                 "move": {
-                    "name": "tackle"
+                    "name": "tackle",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "tail whip"
+                    "name": "tail whip",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "leafage"
+                    "name": "leafage",
+                    "type": "grass"
                 }
                 },
                 {
                 "move": {
-                    "name": "disarming voice"
+                    "name": "disarming voice",
+                    "type": "fairy"
                 }
                 },
                 {
                 "move": {
-                    "name": "razor leaf"
+                    "name": "razor leaf",
+                    "type": "grass"
                 }
                 },
                 {
                 "move": {
-                    "name": "leech seed"
+                    "name": "leech seed",
+                    "type": "grass"
                 }
                 },
                 {
                 "move": {
-                    "name": "body slam"
+                    "name": "body slam",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "reflect"
+                    "name": "reflect",
+                    "type": "psychic"
                 }
                 },
                 {
                 "move": {
-                    "name": "safeguard"
+                    "name": "safeguard",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "synthesis"
+                    "name": "synthesis",
+                    "type": "grass"
                 }
                 },
                 {
                 "move": {
-                    "name": "solar beam"
+                    "name": "solar beam",
+                    "type": "grass"
                 }
                 },
                 {
                 "move": {
-                    "name": "light screen"
+                    "name": "light screen",
+                    "type": "psychic"
                 }
                 },
                 {
                 "move": {
-                    "name": "leaf storm"
+                    "name": "leaf storm",
+                    "type": "grass"
                 }
                 }
             ],
@@ -1374,82 +1459,98 @@
             "moves": [
                 {
                 "move": {
-                    "name": "leer"
+                    "name": "leer",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "tackle"
+                    "name": "tackle",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "smokescreen"
+                    "name": "smokescreen",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "ember"
+                    "name": "ember",
+                    "type": "fire"
                 }
                 },
                 {
                 "move": {
-                    "name": "quick attack"
+                    "name": "quick attack",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "flame wheel"
+                    "name": "flame wheel",
+                    "type": "fire"
                 }
                 },
                 {
                 "move": {
-                    "name": "defense curl"
+                    "name": "defense curl",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "flame charge"
+                    "name": "flame charge",
+                    "type": "fire"
                 }
                 },
                 {
                 "move": {
-                    "name": "swift"
+                    "name": "swift",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "lava plume"
+                    "name": "lava plume",
+                    "type": "fire"
                 }
                 },
                 {
                 "move": {
-                    "name": "flamethrower"
+                    "name": "flamethrower",
+                    "type": "fire"
                 }
                 },
                 {
                 "move": {
-                    "name": "inferno"
+                    "name": "inferno",
+                    "type": "fire"
                 }
                 },
                 {
                 "move": {
-                    "name": "rollout"
+                    "name": "rollout",
+                    "type": "rock"
                 }
                 },
                 {
                 "move": {
-                    "name": "double-edge"
+                    "name": "double-edge",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "overheat"
+                    "name": "overheat",
+                    "type": "fire"
                 }
                 },
                 {
                 "move": {
-                    "name": "eruption"
+                    "name": "eruption",
+                    "type": "fire"
                 }
                 }
             ],
@@ -1566,57 +1667,68 @@
             "moves": [
                 {
                 "move": {
-                    "name": "leer"
+                    "name": "leer",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "tackle"
+                    "name": "tackle",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "water gun"
+                    "name": "water gun",
+                    "type": "water"
                 }
                 },
                 {
                 "move": {
-                    "name": "bite"
+                    "name": "bite",
+                    "type": "dark"
                 }
                 },
                 {
                 "move": {
-                    "name": "bubble beam"
+                    "name": "bubble beam",
+                    "type": "water"
                 }
                 },
                 {
                 "move": {
-                    "name": "aqua jet"
+                    "name": "aqua jet",
+                    "type": "water"
                 }
                 },
                 {
                 "move": {
-                    "name": "breaking swipe"
+                    "name": "breaking swipe",
+                    "type": "dragon"
                 }
                 },
                 {
                 "move": {
-                    "name": "screech"
+                    "name": "screech",
+                    "type": "normal"
                 }
                 },
                 {
                 "move": {
-                    "name": "liquidation"
+                    "name": "liquidation",
+                    "type": "water"
                 }
                 },
                 {
                 "move": {
-                    "name": "hydro pump"
+                    "name": "hydro pump",
+                    "type": "water"
                 }
                 },
                 {
                 "move": {
-                    "name": "outrage"
+                    "name": "outrage",
+                    "type": "dragon"
                 }
                 }
             ],
