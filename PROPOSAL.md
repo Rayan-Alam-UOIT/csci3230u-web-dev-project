@@ -180,13 +180,13 @@ Team roles above are lead responsibilities, not exclusive ownership. Since every
 Below are the low-fidelity wireframes for the four key pages of PokéWeb, which the static HTML and CSS pages for M1 are based on.
 
 ### List Page (Key Page #1)
-![Page Wireframe Diagram](images/List-Page-Wireframe.png)
+![Page Wireframe Diagram](public/images/List-Page-Wireframe.png)
 
 ### Detail Page (Key Page #2)
-![Detail Page Wireframe Diagram](images/Detail-Page-Wireframe.png)
+![Detail Page Wireframe Diagram](public/images/Detail-Page-Wireframe.png)
 
 ### Favourites Page (Key Page #3)
-![Favourites Page Wireframe Diagram](images/Favourites-Page-Wireframe.png)
+![Favourites Page Wireframe Diagram](public/images/Favourites-Page-Wireframe.png)
 
 ### Games Page (Key Page #4)
-![Games Page Wireframe Diagram](images/Games-Page-Wireframe.png)
+![Games Page Wireframe Diagram](public/images/Games-Page-Wireframe.png)

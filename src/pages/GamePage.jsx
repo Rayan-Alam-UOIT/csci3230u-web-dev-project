@@ -17,7 +17,7 @@ function GamePage() {
         <li className="game-card">
           <div className="game-card__image">
             <img
-              src="/images/pokemon-game-1.png"
+              src="public/images/pokemon-game-1.png"
               alt='A Pokémon silhouette next to a question mark, in the style of the "Who&apos;s That Pokémon?" TV segment'
             />
           </div>
@@ -55,7 +55,7 @@ function GamePage() {
         <li className="game-card">
           <div className="game-card__image">
             <img
-              src="/images/pokemon-game-2.png"
+              src="public/images/pokemon-game-2.png"
               alt="Pokémon Trivia banner with a grid of Pokémon character icons"
             />
           </div>
