@@ -1,6 +1,6 @@
 import NavBar from "./NavBar";
 
-function Header() {
+function Header({ searchQuery, onSearchChange }) {
   return (
     <header className="site-header">
       <a className="site-header__brand" href="/">
@@ -18,8 +18,7 @@ function Header() {
       <search>
         <form
           className="site-search"
-          action="/search-results-page"
-          method="GET"
+          onSubmit={(event) => event.preventDefault()}
         >
           <label
             htmlFor="site-search"
@@ -39,6 +38,8 @@ function Header() {
             name="q"
             placeholder="Search Pokémon..."
             required
+            value={searchQuery}
+            onChange={(event) => onSearchChange(event.target.value)}
           />
         </form>
       </search>
