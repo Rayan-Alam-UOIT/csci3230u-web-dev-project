@@ -153,3 +153,120 @@
    border-color: var(--color-primary);
    color: var(--color-primary);
 }
+
+/* ---------- Who's That Pokémon? ---------- */
+.visually-hidden {
+   position: absolute;
+   width: 1px;
+   height: 1px;
+   margin: -1px;
+   overflow: hidden;
+   clip: rect(0 0 0 0);
+   white-space: nowrap;
+}
+
+.silhouette__progress {
+   margin: 0 0 var(--space-2);
+   font-size: var(--font-size-sm);
+   color: var(--color-text-muted);
+}
+
+.silhouette__stage {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   max-width: 20rem;
+   margin: 0 auto var(--space-4);
+   aspect-ratio: 1 / 1;
+   background: var(--color-surface);
+   border: var(--border-width) solid var(--color-border);
+   border-radius: var(--radius-md);
+}
+
+.silhouette__img {
+   width: 85%;
+   height: 85%;
+   object-fit: contain;
+   filter: brightness(0);
+   transition: filter 0.6s ease;
+}
+
+.silhouette__img--revealed {
+   filter: none;
+}
+
+.silhouette__options {
+   display: grid;
+   grid-template-columns: 1fr;
+   gap: var(--space-2);
+   margin: 0 0 var(--space-4);
+   padding: 0;
+   border: 0;
+}
+
+@media (min-width: 700px) {
+   .silhouette__options {
+      grid-template-columns: repeat(2, 1fr);
+   }
+}
+
+.answer {
+   display: flex;
+   align-items: center;
+   gap: var(--space-2);
+   padding: var(--space-2) var(--space-3);
+   border: var(--border-width) solid var(--color-border);
+   border-radius: var(--radius-sm);
+   background: var(--color-bg);
+   cursor: pointer;
+}
+
+.answer:hover {
+   border-color: var(--color-text-muted);
+}
+
+.answer--selected {
+   border-color: var(--color-text, #1a1a1a);
+   background: var(--color-surface);
+   box-shadow: inset 0 0 0 1px var(--color-text, #1a1a1a);
+   font-weight: 700;
+}
+
+.answer input {
+   accent-color: var(--color-text, #1a1a1a);
+}
+
+.answer--correct {
+   border-color: var(--color-success, #2e7d32);
+   background: rgba(46, 125, 50, 0.1);
+   color: var(--color-success, #2e7d32);
+}
+
+.answer--wrong {
+   border-color: var(--color-danger, #c62828);
+   background: rgba(198, 40, 40, 0.1);
+   color: var(--color-danger, #c62828);
+}
+
+.silhouette__feedback {
+   margin: 0 0 var(--space-3);
+   font-weight: 700;
+}
+
+.silhouette__feedback--correct { 
+   color: var(--color-success, #2e7d32); 
+}
+
+.silhouette__feedback--wrong   { 
+   color: var(--color-danger, #c62828); 
+}
+
+.submit-btn:disabled {
+   opacity: 0.5;
+   cursor: not-allowed;
+}
+
+.submit-btn:disabled:hover {
+   border-color: var(--color-border);
+   color: inherit;
+}
