@@ -10,7 +10,7 @@ function App() {
 
   return (
     <Layout searchQuery={searchQuery} onSearchChange={setSearchQuery}>
-      <BrowsePage searchQuery={searchQuery}/>
+      <BrowsePage searchQuery={searchQuery} onSearchChange={setSearchQuery} />
     </Layout>
   );
 }
