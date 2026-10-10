@@ -446,3 +446,21 @@ body {
    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
+/* ---------- Empty State label ---------- */
+.empty-state-label {
+   margin: var(--space-4) 0 var(--space-2);
+   font-size: var(--font-size-sm);
+   font-weight: 700;
+   letter-spacing: 0.02em;
+   text-transform: uppercase;
+   color: var(--color-text-muted);
+}
+
+/* ---------- Empty State area ---------- */
+.empty-state-area {
+   min-height: 4rem;
+   padding: var(--space-4);
+   border: var(--border-width) solid var(--color-border);
+   border-radius: var(--radius-md);
+   background: var(--color-bg);
+}

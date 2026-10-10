@@ -1,56 +1,21 @@
 import { useEffect, useState } from "react";
 import PokemonGrid from "../components/PokemonGrid";
-import MultiSelect from "../components/selectForms/MultiSelect";
-import SingleSelect from "../components/selectForms/SingleSelect";
+import FilterPanel from "../components/FilterPanel";
+import Pagination from "../components/Pagination";
+import { usePokemonFilters } from "../hooks/usePokemonFilters";
 import { useFavourites } from "../hooks/useFavourites";
+import { usePagination } from "../hooks/usePagination";
 
-const GENERATION_INFO = {
-  "generation-i":    { numeral: "I",    region: "Kanto" },
-  "generation-ii":   { numeral: "II",   region: "Johto" },
-  "generation-iii":  { numeral: "III",  region: "Hoenn" },
-  "generation-iv":   { numeral: "IV",   region: "Sinnoh" },
-  "generation-v":    { numeral: "V",    region: "Unova" },
-  "generation-vi":   { numeral: "VI",   region: "Kalos" },
-  "generation-vii":  { numeral: "VII",  region: "Alola" },
-  "generation-viii": { numeral: "VIII", region: "Galar" },
-  "generation-ix":   { numeral: "IX",   region: "Paldea" },
-};
-
-const GENERATIONS = Object.values(GENERATION_INFO).map(
-  (g) => `${g.numeral} · ${g.region}`
-);
-
-const TYPES = [
-  "Normal", "Fire", "Water", "Electric", "Grass", "Ice", "Fighting", "Poison", "Ground",
-  "Flying", "Psychic", "Bug", "Rock", "Ghost", "Dragon", "Dark", "Steel", "Fairy",
-];
-
-const SORT_OPTIONS = [
-  { value: "number-asc", label: "Number (low to high)" },
-  { value: "number-desc", label: "Number (high to low)" },
-  { value: "name-asc", label: "Name (A-Z)" },
-  { value: "name-desc", label: "Name (Z-A)" },
-];
+const PAGE_SIZE = 9;
 
 function BrowsePage({ searchQuery = "", onSearchChange }) {
   const [pokemon, setPokemon] = useState([]);
-  const [selectedGenerations, setSelectedGenerations] = useState([]);
-  const [selectedTypes, setSelectedTypes] = useState([]);
-  const [sort, setSort] = useState("");
   const { isFavourite, toggleFavourite } = useFavourites();
-
-  const hasActiveFilters =
-    selectedGenerations.length > 0 ||
-    selectedTypes.length > 0 ||
-    sort ||
-    searchQuery;
-
-  function resetFilters() {
-    setSelectedGenerations([]);
-    setSelectedTypes([]);
-    setSort("");
-    onSearchChange("");
-  }
+  const filters = usePokemonFilters(pokemon, searchQuery, onSearchChange);
+  const { page, setPage, totalPages, pageItems } = usePagination(
+    filters.visiblePokemon,
+    PAGE_SIZE
+  );
 
   useEffect(() => {
     document.title = "Pokéweb - Browse Pokémon";
@@ -60,112 +25,39 @@ function BrowsePage({ searchQuery = "", onSearchChange }) {
       .then((data) => setPokemon(data.pokemon));
   }, []);
 
-  const query = searchQuery.trim().toLowerCase();
+  useEffect(() => {
+    setPage(1);
+  }, [filters.visiblePokemon.length, setPage]);
 
-  const visiblePokemon = pokemon
-    .filter((item) => {
-      const info = GENERATION_INFO[item.generation?.name];
-      const generationLabel = info ? `${info.numeral} · ${info.region}` : "";
-
-      const matchesSearch =
-        query === "" ||
-        item.name.toLowerCase().includes(query) ||
-        String(item.id) === query.replace("#", "");
-
-      const matchesGeneration =
-        selectedGenerations.length === 0 ||
-        selectedGenerations.includes(generationLabel);
-
-      const matchesType =
-        selectedTypes.length === 0 ||
-        item.types.some((t) =>
-          selectedTypes.some((s) => s.toLowerCase() === t.type.name)
-        );
-
-      return matchesSearch && matchesGeneration && matchesType;
-    })
-    .sort((a, b) => {
-      switch (sort) {
-        case "number-asc":
-          return a.id - b.id;
-        case "number-desc":
-          return b.id - a.id;
-        case "name-asc":
-          return a.name.localeCompare(b.name);
-        case "name-desc":
-          return b.name.localeCompare(a.name);
-        default:
-          return 0;
-      }
-    });
-
-  const pokemonWithFavourites = visiblePokemon.map((item) => ({
+  const pokemonWithFavourites = pageItems.map((item) => ({
     ...item,
     is_favourite: isFavourite(item.id),
   }));
 
+  const hasResults = filters.visiblePokemon.length > 0;
+
   return (
     <div className="page container">
-      <section className="filters" aria-label="Filters">
-        <h2 className="filters-title">
-          FILTERS <span className="filters-tagline">· Gotta filter 'em all!</span>
-        </h2>
-
-        <div className="filters-row">
-          <MultiSelect
-            label="Generation"
-            options={GENERATIONS}
-            selected={selectedGenerations}
-            onChange={setSelectedGenerations}
-          />
-
-          <MultiSelect
-            label="Type"
-            options={TYPES}
-            selected={selectedTypes}
-            onChange={setSelectedTypes}
-          />
-
-          <SingleSelect
-            label="Sort"
-            options={SORT_OPTIONS}
-            value={sort}
-            onChange={setSort}
-          />
-
-          {hasActiveFilters && (
-            <button type="button" className="filters-reset" onClick={resetFilters}>
-              <i className="fa-solid fa-xmark" aria-hidden="true"></i>
-              Clear filters
-            </button>
-          )}
-        </div>
-      </section>
+      <FilterPanel filters={filters} />
 
       <h1 className="results-heading">
-        Pokémon <span aria-hidden="true">•</span> {visiblePokemon.length} results
+        Pokémon <span aria-hidden="true">•</span> {filters.visiblePokemon.length} results
       </h1>
 
-      <PokemonGrid
-        pokemon={pokemonWithFavourites}
-        onToggleFavourite={toggleFavourite}
-      />
+      {!hasResults ? (
+        <section className="empty-state-area" aria-label="No matching favourites">
+          <p>No Pokémon match your filters.</p>
+        </section>
+      ) : (
+        <>
+          <PokemonGrid
+            pokemon={pokemonWithFavourites}
+            onToggleFavourite={toggleFavourite}
+          />
 
-      <nav className="pagination" aria-label="Pagination">
-        <a href="#" aria-label="Previous page">
-          ‹
-        </a>
-        <a href="#" aria-current="page">
-          1
-        </a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-        <a href="#" aria-label="Next page">
-          ›
-        </a>
-      </nav>
+          <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
+        </>
+      )}
     </div>
   );
 }

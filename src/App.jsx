@@ -21,7 +21,15 @@ function App() {
                   />
                }
             />
-            <Route path="/favourites" element={<FavouritesPage />} />
+            <Route 
+               path="/favourites"
+               element={
+                  <FavouritesPage
+                     searchQuery={searchQuery}
+                     onSearchChange={setSearchQuery}    
+                  />
+               }
+            />
             <Route path="/games" element={<GamePage />} />
             <Route path="/pokemon/:id" element={<DetailPage />} />
             <Route path="*" element={<p>Page not found.</p>} />
