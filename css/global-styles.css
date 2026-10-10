@@ -435,3 +435,14 @@ body {
 #main-content {
    flex: 1;
 }
+
+/* ---------- Clickable card hover ---------- */
+.card {
+   transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:has(.card-link):hover {
+   transform: translateY(-4px);
+   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+

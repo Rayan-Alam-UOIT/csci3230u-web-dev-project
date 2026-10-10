@@ -16,7 +16,7 @@ function PokemonCard({ pokemon, onToggleFavourite }) {
          </div>
 
          <div className="card-info">
-            <Link className="card-detail-link" to={`/pokemon/${pokemon.id}`}>
+            <Link className="card-detail-link card-link" to={`/pokemon/${pokemon.id}`}>
                <h2 className="card-name">
                   <span className="dex-number">
                      #{String(pokemon.id).padStart(3, "0")}
