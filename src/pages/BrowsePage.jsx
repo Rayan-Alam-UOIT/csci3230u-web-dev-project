@@ -1,13 +1,21 @@
 import { useEffect, useState } from "react";
 import PokemonGrid from "../components/PokemonGrid";
 import FilterPanel from "../components/FilterPanel";
+import Pagination from "../components/Pagination";
 import { usePokemonFilters } from "../hooks/usePokemonFilters";
 import { useFavourites } from "../hooks/useFavourites";
+import { usePagination } from "../hooks/usePagination";
+
+const PAGE_SIZE = 9;
 
 function BrowsePage({ searchQuery = "", onSearchChange }) {
   const [pokemon, setPokemon] = useState([]);
   const { isFavourite, toggleFavourite } = useFavourites();
   const filters = usePokemonFilters(pokemon, searchQuery, onSearchChange);
+  const { page, setPage, totalPages, pageItems } = usePagination(
+    filters.visiblePokemon,
+    PAGE_SIZE
+  );
 
   useEffect(() => {
     document.title = "Pokéweb - Browse Pokémon";
@@ -17,12 +25,16 @@ function BrowsePage({ searchQuery = "", onSearchChange }) {
       .then((data) => setPokemon(data.pokemon));
   }, []);
 
-  const pokemonWithFavourites = filters.visiblePokemon.map((item) => ({
+  useEffect(() => {
+    setPage(1);
+  }, [filters.visiblePokemon.length, setPage]);
+
+  const pokemonWithFavourites = pageItems.map((item) => ({
     ...item,
     is_favourite: isFavourite(item.id),
   }));
 
-  const hasResults = pokemonWithFavourites.length > 0;
+  const hasResults = filters.visiblePokemon.length > 0;
 
   return (
     <div className="page container">
@@ -43,15 +55,7 @@ function BrowsePage({ searchQuery = "", onSearchChange }) {
             onToggleFavourite={toggleFavourite}
           />
 
-          <nav className="pagination" aria-label="Pagination">
-            <a href="#" aria-label="Previous page">‹</a>
-            <a href="#" aria-current="page">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="#">5</a>
-            <a href="#" aria-label="Next page">›</a>
-          </nav>
+          <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
         </>
       )}
     </div>
