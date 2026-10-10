@@ -1,8 +1,10 @@
 import { Fragment, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { useFavourites } from "../hooks/useFavourites";
 
 function DetailPage() {
    const [pokemon, setPokemon] = useState(null);
+   const { isFavourite, toggleFavourite } = useFavourites();
 
    const { id } = useParams();
 
@@ -106,7 +108,8 @@ function DetailPage() {
                         <input
                            type="checkbox"
                            aria-label={`Favourite ${formattedName}`}
-                           checked={pokemon.is_favourite}
+                           checked={isFavourite(pokemon.id)}
+                           onChange={() => toggleFavourite(pokemon.id)}
                         />
 
                         <i

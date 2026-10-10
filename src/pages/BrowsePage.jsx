@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import PokemonGrid from "../components/PokemonGrid";
 import MultiSelect from "../components/selectForms/MultiSelect";
 import SingleSelect from "../components/selectForms/SingleSelect";
+import { useFavourites } from "../hooks/useFavourites";
 
 const GENERATION_INFO = {
   "generation-i":    { numeral: "I",    region: "Kanto" },
@@ -36,6 +37,7 @@ function BrowsePage({ searchQuery = "", onSearchChange }) {
   const [selectedGenerations, setSelectedGenerations] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [sort, setSort] = useState("");
+  const { isFavourite, toggleFavourite } = useFavourites();
 
   const hasActiveFilters =
     selectedGenerations.length > 0 ||
@@ -57,16 +59,6 @@ function BrowsePage({ searchQuery = "", onSearchChange }) {
       .then((response) => response.json())
       .then((data) => setPokemon(data.pokemon));
   }, []);
-
-  function toggleFavourite(id) {
-    setPokemon((currentPokemon) =>
-      currentPokemon.map((item) =>
-        item.id === id
-          ? { ...item, is_favourite: !item.is_favourite }
-          : item
-      )
-    );
-  }
 
   const query = searchQuery.trim().toLowerCase();
 
@@ -106,6 +98,11 @@ function BrowsePage({ searchQuery = "", onSearchChange }) {
           return 0;
       }
     });
+
+  const pokemonWithFavourites = visiblePokemon.map((item) => ({
+    ...item,
+    is_favourite: isFavourite(item.id),
+  }));
 
   return (
     <div className="page container">
@@ -149,9 +146,9 @@ function BrowsePage({ searchQuery = "", onSearchChange }) {
         Pokémon <span aria-hidden="true">•</span> {visiblePokemon.length} results
       </h1>
 
-      <PokemonGrid 
-        pokemon={visiblePokemon} 
-        onToggleFavourite={toggleFavourite} 
+      <PokemonGrid
+        pokemon={pokemonWithFavourites}
+        onToggleFavourite={toggleFavourite}
       />
 
       <nav className="pagination" aria-label="Pagination">
