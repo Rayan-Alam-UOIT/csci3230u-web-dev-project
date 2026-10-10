@@ -1,29 +1,23 @@
+import { NavLink } from "react-router-dom";
+// Using NavLink instead of Link since it auto adds aria-current="page" for active route
+// Only useful here since we have a style for the active link
+
 function NavBar() {
-  return (
-    <nav className="site-nav__list">
-      <a
-        className="site-nav__link site-nav__link--active"
-        href="/"
-        aria-current="page"
-      >
-        Pokémon
-      </a>
+   return (
+      <nav className="site-nav__list">
+         <NavLink className="site-nav__link" to="/" end>
+            Pokémon
+         </NavLink>
 
-      <a
-        className="site-nav__link"
-        href="/pages/favourites-page.html"
-      >
-        Favourites
-      </a>
+         <NavLink className="site-nav__link" to="/favourites">
+            Favourites
+         </NavLink>
 
-      <a
-        className="site-nav__link"
-        href="/pages/game-page.html"
-      >
-        Games
-      </a>
-    </nav>
-  );
+         <NavLink className="site-nav__link" to="/games">
+            Games
+         </NavLink>
+      </nav>
+   );
 }
 
 export default NavBar;
