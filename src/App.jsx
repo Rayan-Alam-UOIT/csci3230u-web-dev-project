@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import BrowsePage from "./pages/BrowsePage";
 import FavouritesPage from "./pages/FavouritesPage";
@@ -6,13 +7,27 @@ import GamePage from "./pages/GamePage";
 import DetailPage from "./pages/DetailPage";
 
 function App() {
-  const [searchQuery, setSearchQuery] = useState("");
+   const [searchQuery, setSearchQuery] = useState("");
 
-  return (
-    <Layout searchQuery={searchQuery} onSearchChange={setSearchQuery}>
-      <BrowsePage searchQuery={searchQuery} onSearchChange={setSearchQuery} />
-    </Layout>
-  );
+   return (
+      <Layout searchQuery={searchQuery} onSearchChange={setSearchQuery}>
+         <Routes>
+            <Route
+               path="/"
+               element={
+                  <BrowsePage
+                     searchQuery={searchQuery}
+                     onSearchChange={setSearchQuery}
+                  />
+               }
+            />
+            <Route path="/favourites" element={<FavouritesPage />} />
+            <Route path="/games" element={<GamePage />} />
+            <Route path="/pokemon/:id" element={<DetailPage />} />
+            <Route path="*" element={<p>Page not found.</p>} />
+         </Routes>
+      </Layout>
+   );
 }
 
 export default App;
