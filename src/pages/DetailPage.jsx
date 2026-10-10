@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 function DetailPage() {
    const [pokemon, setPokemon] = useState(null);
@@ -67,9 +67,9 @@ function DetailPage() {
    return (
       <div className="page container">
          <nav>
-            <a href="/" className="back-button">
+            <Link to="/" className="back-button">
                ‹ &nbsp; Back to Pokémon
-            </a>
+            </Link>
          </nav>
 
          <ul className="card-list">
