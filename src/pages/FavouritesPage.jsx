@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import PokemonGrid from "../components/PokemonGrid";
+import { useFavourites } from "../hooks/useFavourites";
 
 function FavouritesPage() {
   const [pokemon, setPokemon] = useState([]);
+  const { favouriteIds, toggleFavourite } = useFavourites();
 
   useEffect(() => {
     document.title = "Pokéweb - Favourites";
@@ -12,19 +14,9 @@ function FavouritesPage() {
       .then((data) => setPokemon(data.pokemon));
   }, []);
 
-  function toggleFavourite(id) {
-    setPokemon((currentPokemon) =>
-      currentPokemon.map((item) =>
-        item.id === id
-          ? { ...item, is_favourite: !item.is_favourite }
-          : item
-      )
-    );
-  }
-
-  const favouritePokemon = pokemon.filter(
-    (item) => item.is_favourite
-  );
+  const favouritePokemon = pokemon
+    .filter((item) => favouriteIds.includes(item.id))
+    .map((item) => ({ ...item, is_favourite: true }));
 
   return (
     <div className="page container">
