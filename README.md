@@ -9,6 +9,11 @@ from [PokéAPI](https://pokeapi.co/).
 
 **Live site:** Netlify URL (To be added in M3)
 
+## Getting Started
+1. Make sure you have Node.js installed and verified; use this: https://nodejs.org/en/download
+2. In your terminal while in the project directory, install the project's dependencies with `npm install`, which should add a `/node_modules` folder to your local repository.
+3. In that same directory, run `npm run dev`. The terminal should display a localhost link for you to open in your browser.
+
 ## Documentation
 
 - [Project Proposal](PROPOSAL.md): Topic, data source, comparators,
