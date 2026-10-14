@@ -7,7 +7,27 @@ PokéWeb is an accessible online encyclopedia for Pokémon fans. Browse all
 favourites, and test your knowledge with two built-in games. Data comes
 from [PokéAPI](https://pokeapi.co/).
 
-**Live site:** Netlify URL (To be added in M3)
+## Description
+The website includes a catalog of all existing Pokémons. \
+It includes a browsing page with filtering options, such as generation, type, alphabetical, and ID. \
+[<img src="https://github.com/user-attachments/assets/4916cd32-cb25-4af5-97b7-0d206deb053a" width="150" alt="Small Thumbnail"/>](https://github.com/user-attachments/assets/4916cd32-cb25-4af5-97b7-0d206deb053a)
+<!-- <img width="1917" height="1198" alt="image" src="https://github.com/user-attachments/assets/4916cd32-cb25-4af5-97b7-0d206deb053a" /> -->
+
+Each Pokémon has a details page that gives details, such as physical measurements, base statistics, moves, etc. \
+[<img src="https://github.com/user-attachments/assets/462b8834-e0b8-4f1c-9afc-5d9f94ee16bc" width="150" alt="Small Thumbnail"/>](https://github.com/user-attachments/assets/462b8834-e0b8-4f1c-9afc-5d9f94ee16bc)
+<!-- <img width="1917" height="1198" alt="image" src="https://github.com/user-attachments/assets/462b8834-e0b8-4f1c-9afc-5d9f94ee16bc" /> -->
+
+The browsing and detail pages have a favourite button, which saves Pokémons to the favourites page. \
+[<img src="https://github.com/user-attachments/assets/3c6af38d-1408-4b50-9130-284abf709441" width="150" alt="Small Thumbnail"/>](https://github.com/user-attachments/assets/3c6af38d-1408-4b50-9130-284abf709441)
+<!-- <img width="1917" height="1197" alt="image" src="https://github.com/user-attachments/assets/3c6af38d-1408-4b50-9130-284abf709441" /> -->
+
+The browsing and favourites page has a "Search Pokémon" filter to filter by names. \
+This website includes a games page, which includes a `Pokémon Clues` and `Who's that Pokémon?` game \
+[<img src="https://github.com/user-attachments/assets/f30fee0a-6d3a-43a8-918c-3432d4a3f726" width="150" alt="Small Thumbnail"/>](https://github.com/user-attachments/assets/f30fee0a-6d3a-43a8-918c-3432d4a3f726)
+<!-- <img width="1917" height="1198" alt="image" src="https://github.com/user-attachments/assets/f30fee0a-6d3a-43a8-918c-3432d4a3f726" /> -->
+
+
+*Live site:** Netlify URL (To be added in M3)
 
 ## Getting Started
 1. Make sure you have Node.js installed and verified; use this: https://nodejs.org/en/download
