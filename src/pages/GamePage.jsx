@@ -23,50 +23,55 @@ const SILHOUETTE_ROUNDS = [
    },
 ];
 
-const CLUES_ROUNDS = [
-   {
-      name: "Pikachu",
-      gen: 1,
-      type1: "Electric",
-      type2: null,
-      height: 0.4,
-      weight: 6.0,
-      options: ["Eevee", "Pikachu", "Ditto", "Squirtle"],
-   },
-   {
-      name: "Charmander",
-      gen: 1,
-      type1: "Fire",
-      type2: null,
-      height: 0.6,
-      weight: 8.5,
-      options: ["Charmander", "Cyndaquil", "Totodile", "Bulbasaur"],
-   },
-   {
-      name: "Mewtwo",
-      gen: 1,
-      type1: "Psychic",
-      type2: null,
-      height: 2.0,
-      weight: 122.0,
-      options: ["Ditto", "Eevee", "Mewtwo", "Chikorita"],
-   },
-   {
-      name: "Eevee",
-      gen: 1,
-      type1: "Normal",
-      type2: null,
-      height: 0.3,
-      weight: 6.5,
-      options: ["Pikachu", "Squirtle", "Ditto", "Eevee"],
-   },
-];
-
-const ROUNDS_BY_GAME = {
-   silhouette: SILHOUETTE_ROUNDS,
-   clues: CLUES_ROUNDS,
+const GENERATION_NUMBERS = {
+   i: 1,
+   ii: 2,
+   iii: 3,
+   iv: 4,
+   v: 5,
+   vi: 6,
+   vii: 7,
+   viii: 8,
+   ix: 9,
 };
 
+// Map each record to the field that clues will need
+function createCluesRounds(pokemonList) {
+   return pokemonList.map((pokemon) => {
+      const generationKey =
+         pokemon.generation?.name?.replace("generation-", "") ?? "";
+
+      return {
+         name: capitalize(pokemon.name),
+         gen: GENERATION_NUMBERS[generationKey] ?? generationKey,
+         type1:
+            pokemon.types.find((entry) => entry.slot === 1)?.type.name ??
+            "Unknown",
+         type2:
+            pokemon.types.find((entry) => entry.slot === 2)?.type.name ?? null,
+         height: pokemon.height / 10,
+         weight: pokemon.weight / 10,
+      };
+   });
+}
+
+/** pick rand pokemon then remove from a copy of available rounds
+ * (rounds should be og sample list)
+ *  just to make sure same pokemon not picked twice (also makes sure each game is random)
+ */
+function chooseRandomPokemon(rounds, count) {
+   const available = [...rounds];
+   const chosen = [];
+
+   while (chosen.length < count && available.length > 0) {
+      const randomIndex = Math.floor(Math.random() * available.length);
+      chosen.push(available.splice(randomIndex, 1)[0]);
+   }
+
+   return chosen;
+}
+
+// build clue list for each pokemon that's given in param
 function generateClues(pokemon) {
    return [
       { label: "Generation", value: String(pokemon.gen) },
@@ -87,12 +92,12 @@ function generateClues(pokemon) {
    ];
 }
 
-const CLUE_COUNT = generateClues(CLUES_ROUNDS[0]).length;
-
+// Separated game state
 function useCluesGame() {
+   const [clueRounds, setClueRounds] = useState([]);
    const [started, setStarted] = useState(false);
    const [finished, setFinished] = useState(false);
-   const [roundIndex, setRoundIndex] = useState(0);
+   const [clueRoundIndex, setClueRoundIndex] = useState(0);
    const [score, setScore] = useState(0);
    const [bestScore, setBestScore] = useState(() => {
       const savedScore = Number(localStorage.getItem("clues-best-score"));
@@ -100,47 +105,50 @@ function useCluesGame() {
    });
    const [guesses, setGuesses] = useState([]);
    const [revealedCount, setRevealedCount] = useState(1);
-   const [roundComplete, setRoundComplete] = useState(false);
+   const [clueRoundComplete, setClueRoundComplete] = useState(false);
 
-   const round = CLUES_ROUNDS[roundIndex];
-   const clues = round ? generateClues(round) : [];
+   const currentPokemon = clueRounds[clueRoundIndex];
+   const clues = currentPokemon ? generateClues(currentPokemon) : [];
 
-   function start() {
+   function start(newRounds) {
+      if (newRounds.length === 0) return;
+
+      setClueRounds(newRounds);
       setStarted(true);
       setFinished(false);
-      setRoundIndex(0);
+      setClueRoundIndex(0);
       setScore(0);
       setGuesses([]);
       setRevealedCount(1);
-      setRoundComplete(false);
+      setClueRoundComplete(false);
    }
 
    function submitGuess(value) {
-      if (!started || finished || roundComplete || !round) return;
+      if (!started || finished || clueRoundComplete || !currentPokemon) return;
 
       const guess = value.trim();
       if (!guess) return;
 
-      const correct = normalize(guess) === normalize(round.name);
+      const correct = normalize(guess) === normalize(currentPokemon.name);
       const nextGuesses = [...guesses, { text: guess, correct }];
       setGuesses(nextGuesses);
 
       if (correct) {
          const points = clues.length - guesses.length;
          setScore((current) => current + points);
-         setRoundComplete(true);
+         setClueRoundComplete(true);
       } else if (nextGuesses.length >= clues.length) {
          setRevealedCount(clues.length);
-         setRoundComplete(true);
+         setClueRoundComplete(true);
       } else {
          setRevealedCount(nextGuesses.length + 1);
       }
    }
 
    function nextRound() {
-      if (!roundComplete) return;
+      if (!clueRoundComplete) return;
 
-      if (roundIndex === CLUES_ROUNDS.length - 1) {
+      if (clueRoundIndex === clueRounds.length - 1) {
          setFinished(true);
          if (score > bestScore) {
             setBestScore(score);
@@ -149,28 +157,34 @@ function useCluesGame() {
          return;
       }
 
-      setRoundIndex((index) => index + 1);
+      setClueRoundIndex((index) => index + 1);
       setGuesses([]);
       setRevealedCount(1);
-      setRoundComplete(false);
+      setClueRoundComplete(false);
    }
 
    const isCorrect = guesses.some((item) => item.correct);
-   const roundPoints = isCorrect ? clues.length - (guesses.length - 1) : 0;
+   const pointsEarnedThisRound = isCorrect
+      ? clues.length - (guesses.length - 1)
+      : 0;
 
    return {
       started,
       finished,
-      round,
+      currentPokemon,
       score,
       bestScore,
+      maxScore:
+         clueRounds.length *
+         (clueRounds.length > 0 ? generateClues(clueRounds[0]).length : 0),
       guesses,
       visibleClues: clues.slice(0, revealedCount),
-      roundComplete,
-      roundIndex,
+      clueRoundComplete,
+      clueRoundIndex,
       isCorrect,
-      roundPoints,
+      pointsEarnedThisRound,
       clueCount: clues.length,
+      clueRoundCount: clueRounds.length,
       start,
       submitGuess,
       nextRound,
@@ -199,32 +213,52 @@ function GamePage() {
    const [score, setScore] = useState(0);
 
    const [guess, setGuess] = useState("");
-   const [allNames, setAllNames] = useState([]);
+   const [pokemonData, setPokemonData] = useState([]);
    const [activeIndex, setActiveIndex] = useState(-1);
    const [showSuggestions, setShowSuggestions] = useState(false);
 
+   const cluesRounds = useMemo(
+      () => createCluesRounds(pokemonData),
+      [pokemonData],
+   );
+   const allNames = useMemo(
+      () => pokemonData.map((pokemon) => capitalize(pokemon.name)),
+      [pokemonData],
+   );
    const cluesGame = useCluesGame();
 
    useEffect(() => {
       document.title = "Pokéweb - Games";
 
       fetch("/data/sample.json")
-         .then((response) => response.json())
-         .then((data) =>
-            setAllNames(data.pokemon.map((p) => capitalize(p.name))),
-         )
-         .catch(() => setAllNames([]));
+         .then((response) => {
+            if (!response.ok) {
+               throw new Error(
+                  `Failed to load Pokémon data: ${response.status}`,
+               );
+            }
+            return response.json();
+         })
+         .then((data) => setPokemonData(data.pokemon))
+         .catch((error) => {
+            console.error(error);
+            setPokemonData([]);
+         });
    }, []);
 
-   const rounds = activeGame ? ROUNDS_BY_GAME[activeGame] : [];
+   const rounds =
+      activeGame === "clues"
+         ? cluesRounds
+         : activeGame === "silhouette"
+           ? SILHOUETTE_ROUNDS
+           : [];
    const round = rounds[roundIndex];
    const isFinished =
       activeGame === "clues"
          ? cluesGame.finished
          : activeGame === "silhouette" && roundIndex >= rounds.length;
 
-   const maxScore =
-      activeGame === "clues" ? rounds.length * CLUE_COUNT : rounds.length;
+   const maxScore = activeGame === "clues" ? cluesGame.maxScore : rounds.length;
 
    const isCorrect = selected === round?.name;
 
@@ -251,7 +285,7 @@ function GamePage() {
       !alreadyGuessed &&
       (allNames.length === 0 ? guess.trim() !== "" : Boolean(matchedName));
    const listOpen =
-      showSuggestions && suggestions.length > 0 && !cluesGame.roundComplete;
+      showSuggestions && suggestions.length > 0 && !cluesGame.clueRoundComplete;
 
    function resetRound() {
       setSelected("");
@@ -262,17 +296,20 @@ function GamePage() {
    }
 
    function startGame(game) {
-      if (!ROUNDS_BY_GAME[game]) return;
-      setActiveGame(game);
-
       if (game === "clues") {
-         cluesGame.start();
+         if (cluesRounds.length === 0) return;
+
+         setActiveGame("clues");
+         cluesGame.start(chooseRandomPokemon(cluesRounds, 4)); // Change the # to however many rounds u want
          setGuess("");
          setActiveIndex(-1);
          setShowSuggestions(false);
          return;
       }
 
+      if (game !== "silhouette") return;
+
+      setActiveGame("silhouette");
       setRoundIndex(0);
       setScore(0);
       resetRound();
@@ -312,7 +349,7 @@ function GamePage() {
          return;
       }
 
-      if (!canGuess || cluesGame.roundComplete) return;
+      if (!canGuess || cluesGame.clueRoundComplete) return;
       const text = matchedName ?? guess.trim();
 
       cluesGame.submitGuess(text);
@@ -527,9 +564,9 @@ function GamePage() {
             {activeGame === "clues" && !isFinished && (
                <div className="clues">
                   <p className="silhouette__progress">
-                     Round {cluesGame.roundIndex + 1} of {rounds.length} ·
-                     Score: {cluesGame.score}
-                     {!cluesGame.roundComplete &&
+                     Round {cluesGame.clueRoundIndex + 1} of{" "}
+                     {cluesGame.clueRoundCount} · Score: {cluesGame.score}
+                     {!cluesGame.clueRoundComplete &&
                         ` · Worth ${pointsAvailable} point${
                            pointsAvailable === 1 ? "" : "s"
                         }`}
@@ -573,7 +610,7 @@ function GamePage() {
                      </ul>
                   )}
 
-                  {cluesGame.roundComplete && (
+                  {cluesGame.clueRoundComplete && (
                      <p
                         className={
                            "silhouette__feedback " +
@@ -584,14 +621,14 @@ function GamePage() {
                         role="status"
                      >
                         {cluesGame.isCorrect
-                           ? `Correct! It's ${cluesGame.round.name}! You earned ${cluesGame.roundPoints} point${
-                                cluesGame.roundPoints === 1 ? "" : "s"
+                           ? `Correct! It's ${cluesGame.currentPokemon.name}! You earned ${cluesGame.pointsEarnedThisRound} point${
+                                cluesGame.pointsEarnedThisRound === 1 ? "" : "s"
                              }.`
-                           : `Out of clues. It was ${cluesGame.round.name}.`}
+                           : `Out of clues. It was ${cluesGame.currentPokemon.name}.`}
                      </p>
                   )}
 
-                  {!cluesGame.roundComplete ? (
+                  {!cluesGame.clueRoundComplete ? (
                      <form className="clues__form" onSubmit={handleGuess}>
                         <label
                            className="visually-hidden"
@@ -668,7 +705,8 @@ function GamePage() {
                         type="button"
                         onClick={cluesGame.nextRound}
                      >
-                        {cluesGame.roundIndex === rounds.length - 1
+                        {cluesGame.clueRoundIndex ===
+                        cluesGame.clueRoundCount - 1
                            ? "See results"
                            : "Next"}
                      </button>
