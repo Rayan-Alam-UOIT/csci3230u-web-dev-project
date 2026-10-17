@@ -94,6 +94,10 @@ function useCluesGame() {
    const [finished, setFinished] = useState(false);
    const [roundIndex, setRoundIndex] = useState(0);
    const [score, setScore] = useState(0);
+   const [bestScore, setBestScore] = useState(() => {
+      const savedScore = Number(localStorage.getItem("clues-best-score"));
+      return Number.isFinite(savedScore) && savedScore >= 0 ? savedScore : 0;
+   });
    const [guesses, setGuesses] = useState([]);
    const [revealedCount, setRevealedCount] = useState(1);
    const [roundComplete, setRoundComplete] = useState(false);
@@ -138,6 +142,10 @@ function useCluesGame() {
 
       if (roundIndex === CLUES_ROUNDS.length - 1) {
          setFinished(true);
+         if (score > bestScore) {
+            setBestScore(score);
+            localStorage.setItem("clues-best-score", String(score));
+         }
          return;
       }
 
@@ -155,6 +163,7 @@ function useCluesGame() {
       finished,
       round,
       score,
+      bestScore,
       guesses,
       visibleClues: clues.slice(0, revealedCount),
       roundComplete,
@@ -402,6 +411,11 @@ function GamePage() {
                      </strong>
                      .
                   </p>
+                  {activeGame === "clues" && (
+                     <p className="game-play-area__prompt">
+                        Best score: {cluesGame.bestScore} / {maxScore}
+                     </p>
+                  )}
                   <button
                      className="submit-btn"
                      type="button"
