@@ -149,6 +149,10 @@
     color: inherit;
 }
 
+.nav-next {
+    margin-left: auto;
+}
+
 .nav-prev:hover,
 .nav-next:hover {
     text-decoration: underline;
@@ -184,6 +188,7 @@
     margin: 0;
 }
 
+.sprite-link-off,
 .sprite-link {
     display: block;
     width: 100%;
@@ -193,6 +198,11 @@
     cursor: zoom-in;
 }
 
+.sprite-link-off {
+    padding-bottom: 0.67rem;
+}
+
+.sprite-img-off,
 .sprite-img {
     display: block;
     width: 100%;
@@ -200,6 +210,9 @@
     object-fit: contain;
     background: var(--color-surface);
     border: var(--border-width) solid var(--color-border);
+}
+
+.sprite-img {
     border-radius: var(--radius-md);
     image-rendering: pixelated;
 }
@@ -227,9 +240,16 @@
     background: rgb(0 0 0 / 0.6);
 }
 
+.head-info .sprite-img-off {
+   width: 4rem;
+   height: 4rem;
+   object-fit: contain;
+}
+
 .play-sound {
     display: flex;
     align-items: center;
+    transform-origin: left center;
     gap: var(--space-2);
     min-height: 2.75rem;
     background: none;
@@ -242,21 +262,30 @@
     text-decoration: none;
 }
 
+@keyframes pulse {
+   0%, 100% { transform: scale(1); }
+   50%      { transform: scale(1.1); }
+}
+
 .play-sound:hover {
     text-decoration: underline;
+    animation: pulse 0.7s ease-in-out infinite;
 }
 
-.cry-slider {
-    flex: 1;
-    min-width: 0;
+.cry-bar {
+   width: 200px;
+   height: 8px;
+   background: var(--color-surface);
+   border: var(--border-width) solid var(--color-border);
+   border-radius: 4px;
+   overflow: hidden;
 }
 
-.cry-slider:disabled {
-    cursor: default;
-    opacity: 1;
-    accent-color: #000;
+.cry-bar-fill {
+    height: 100%;
+    width: 0;
+    background: gold;
 }
-
 
 @media (min-width: 40em) {
     .page {
@@ -301,7 +330,7 @@
     }
 
     .head-stats {
-        padding-bottom: 7.5rem;
+        padding-bottom: 3rem;
     }
 
     .body-stats {
@@ -358,10 +387,12 @@
         margin-right: var(--space-2);
     }
 
+    .sprite-link-off,
     .sprite-link {
         width: auto;
     }
 
+    .sprite-img-off,
     .sprite-img {
         display: inline;
         width: 4rem;
@@ -379,13 +410,8 @@
         min-height: 0;
     }
 
-    .cry-slider {
-        flex: 0 1 auto;
-        min-width: auto;
-    }
-
-    .cry-slider:disabled {
-        padding-left: 1px;
-        margin-left: -14px;
+    .cry-bar {
+        width: 200px;
+        flex-shrink: 0;
     }
 }
