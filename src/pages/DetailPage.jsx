@@ -1,10 +1,17 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useFavourites } from "../hooks/useFavourites";
+
 
 function DetailPage() {
    const [pokemon, setPokemon] = useState(null);
    const { isFavourite, toggleFavourite } = useFavourites();
+   const audioRef = useRef(null);
+   const fillRef = useRef(null);
+   const rafRef = useRef(null);
+   const [isPlaying, setIsPlaying] = useState(false);
+
+   const cryPath = pokemon?.cries.latest;
 
    const { id } = useParams();
 
@@ -20,7 +27,71 @@ function DetailPage() {
 
             setPokemon(selectedPokemon ?? null);
          });
-   }, []);
+   }, [id]);
+
+   useEffect(() => {
+      if (!cryPath) {
+         return;
+      }
+
+      let stopped = false;
+
+      const audio = new Audio(`/${cryPath}`);
+      audio.preload = "auto";
+      audioRef.current = audio;
+
+      function tick() {
+         if (stopped) {
+            return;
+         }
+         if (audio.duration && fillRef.current) {
+            fillRef.current.style.width =
+               `${(audio.currentTime / audio.duration) * 100}%`;
+         }
+         if (!audio.paused && !audio.ended) {
+            rafRef.current = requestAnimationFrame(tick);
+         }
+      }
+
+      function onPlaying() {
+         if (stopped) {
+            return;
+         }
+         setIsPlaying(true);
+         tick();
+      }
+
+      function onEnded() {
+         if (stopped) {
+            return;
+         }
+         cancelAnimationFrame(rafRef.current);
+         if (fillRef.current) {
+            fillRef.current.style.width = "100%";
+         }
+         setIsPlaying(false);
+
+
+         setTimeout(() => {
+            if (fillRef.current && audio.ended) fillRef.current.style.width = "0%";
+         }, 250);
+      }
+
+      audio.addEventListener("playing", onPlaying);
+      audio.addEventListener("ended", onEnded);
+
+      return () => {
+         stopped = true;
+         cancelAnimationFrame(rafRef.current);
+         audio.pause();
+         audio.removeEventListener("playing", onPlaying);
+         audio.removeEventListener("ended", onEnded);
+         if (fillRef.current) {
+            fillRef.current.style.width = "0%";
+         }
+         setIsPlaying(false);
+      };
+   }, [cryPath]);
 
    if (!pokemon) {
       return null;
@@ -65,6 +136,21 @@ function DetailPage() {
    const shinyArtwork = pokemon.sprites.other["official-artwork"].front_shiny;
 
    const cry = pokemon.cries.latest;
+
+   function playCry() {
+      const audio = audioRef.current;
+      if (!audio) {
+         return;
+      }
+
+      cancelAnimationFrame(rafRef.current);
+      fillRef.current.style.width = "0%";
+      setIsPlaying(false);
+
+      audio.pause();
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
+   }
 
    return (
       <div className="page container">
@@ -142,6 +228,31 @@ function DetailPage() {
 
                      <span className="card-label">Egg Group:</span>
                      <span className="card-value">{eggGroups}</span>
+                  </div>
+                  <div className="sprites-row">
+                     <ul className="sprites-list">
+                        <li>
+                           <button
+                              type="button"
+                              className="sprite-link-off"
+                              popoverTarget="artwork-shiny"
+                           >
+                              <img
+                                 src={`/${shinyArtwork}`}
+                                 alt={`${formattedName} shiny official artwork`}
+                                 className="sprite-img-off"
+                              />
+                           </button>
+
+                           <img
+                              popover="auto"
+                              id="artwork-shiny"
+                              className="sprite-popover"
+                              src={`/${shinyArtwork}`}
+                              alt={`${formattedName} shiny official artwork, enlarged`}
+                           />
+                        </li>
+                     </ul>
                   </div>
                </div>
             </li>
@@ -253,13 +364,15 @@ function DetailPage() {
          </ul>
 
          <nav className="details-nav">
-            <a href="#" className="nav-prev">
-               &larr; Previous Pokemon
-            </a>
+            {pokemon.id > 1 && (
+               <Link to={`/pokemon/${pokemon.id - 1}`} className="nav-prev">
+                  &larr; Previous Pokemon
+               </Link>
+            )}
 
-            <a href="#" className="nav-next">
+            <Link to={`/pokemon/${pokemon.id + 1}`} className="nav-next">
                Next Pokemon &rarr;
-            </a>
+            </Link>
          </nav>
 
          <section className="sprites-section" aria-labelledby="sprites-heading">
@@ -273,7 +386,7 @@ function DetailPage() {
                      <button
                         type="button"
                         className="sprite-link"
-                        popovertarget="sprite-front"
+                        popoverTarget="sprite-front"
                      >
                         <img
                            src={`/${sprites.front_default}`}
@@ -295,7 +408,7 @@ function DetailPage() {
                      <button
                         type="button"
                         className="sprite-link"
-                        popovertarget="sprite-back"
+                        popoverTarget="sprite-back"
                      >
                         <img
                            src={`/${sprites.back_default}`}
@@ -317,7 +430,7 @@ function DetailPage() {
                      <button
                         type="button"
                         className="sprite-link"
-                        popovertarget="sprite-shiny-front"
+                        popoverTarget="sprite-shiny-front"
                      >
                         <img
                            src={`/${sprites.front_shiny}`}
@@ -339,7 +452,7 @@ function DetailPage() {
                      <button
                         type="button"
                         className="sprite-link"
-                        popovertarget="sprite-shiny-back"
+                        popoverTarget="sprite-shiny-back"
                      >
                         <img
                            src={`/${sprites.back_shiny}`}
@@ -360,21 +473,15 @@ function DetailPage() {
 
                <button
                   type="button"
-                  className="play-sound"
-                  onClick={() => new Audio(`/${cry}`).play()}
+                  className={`play-sound ${isPlaying ? "playing" : ""}`}
+                  onClick={playCry}
                >
                   ▶ Play Cry
                </button>
 
-               <input
-                  type="range"
-                  className="cry-slider"
-                  min="0"
-                  max="100"
-                  defaultValue="0"
-                  aria-label="Cry progress"
-                  disabled
-               />
+               <div className="cry-bar" aria-hidden="true">
+                  <div className="cry-bar-fill" ref={fillRef} />
+               </div>
             </div>
          </section>
       </div>
