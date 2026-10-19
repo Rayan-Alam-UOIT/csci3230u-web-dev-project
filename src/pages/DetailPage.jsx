@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState, useRef } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation  } from "react-router-dom";
 import { useFavourites } from "../hooks/useFavourites";
 
 
@@ -14,6 +14,10 @@ function DetailPage() {
    const cryPath = pokemon?.cries.latest;
 
    const { id } = useParams();
+
+   const location = useLocation();
+   const origin = location.state?.from ?? "/";
+   const originLabel = origin === "/favourites" ? "Favourites" : "Pokémon";
 
    useEffect(() => {
       document.title = "Pokéweb - Details";
@@ -155,8 +159,8 @@ function DetailPage() {
    return (
       <div className="page container">
          <nav>
-            <Link to="/" className="back-button">
-               ‹ &nbsp; Back to Pokémon
+            <Link to={origin} className="back-button">
+               ‹ &nbsp; Back to {originLabel}
             </Link>
          </nav>
 
@@ -365,12 +369,12 @@ function DetailPage() {
 
          <nav className="details-nav">
             {pokemon.id > 1 && (
-               <Link to={`/pokemon/${pokemon.id - 1}`} className="nav-prev">
+               <Link to={`/pokemon/${pokemon.id - 1}`} className="nav-prev" state={location.state}>
                   &larr; Previous Pokemon
                </Link>
             )}
 
-            <Link to={`/pokemon/${pokemon.id + 1}`} className="nav-next">
+            <Link to={`/pokemon/${pokemon.id + 1}`} className="nav-next" state={location.state}>
                Next Pokemon &rarr;
             </Link>
          </nav>
