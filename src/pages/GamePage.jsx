@@ -87,7 +87,7 @@ function generateClues(pokemon) {
             ? `type type-${pokemon.type2.toLowerCase()}`
             : "",
       },
-      { label: "Height", value: `${pokemon.height.toFixed(1)} m` },
+      { label: "Height", value: `${pokemon.height.toFixed(1)}m` },
       { label: "Weight", value: `${pokemon.weight.toFixed(1)} kg` },
    ];
 }
@@ -586,7 +586,7 @@ function GamePage() {
                                  (clue.typeClass ? ` ${clue.typeClass}` : "")
                               }
                            >
-                              {clue.value}
+                              {clue.typeClass ? clue.value.toUpperCase() : clue.value}
                            </dd>
                         </div>
                      ))}
