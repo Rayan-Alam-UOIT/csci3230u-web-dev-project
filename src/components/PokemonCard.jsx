@@ -1,13 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function PokemonCard({ pokemon, onToggleFavourite }) {
+   const location = useLocation();
+
    const formattedName =
       pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
 
    return (
       <li className="card">
          <div className="card-image">
-            <Link className="card-detail-link" to={`/pokemon/${pokemon.id}`}>
+            <Link className="card-detail-link" to={`/pokemon/${pokemon.id}`} state={{ from: location.pathname }}>
                <img
                   src={pokemon.sprites.other["official-artwork"].front_default}
                   alt={formattedName}
@@ -16,7 +18,7 @@ function PokemonCard({ pokemon, onToggleFavourite }) {
          </div>
 
          <div className="card-info">
-            <Link className="card-detail-link card-link" to={`/pokemon/${pokemon.id}`}>
+            <Link className="card-detail-link card-link" to={`/pokemon/${pokemon.id}`} state={{ from: location.pathname }}>
                <h2 className="card-name">
                   <span className="dex-number">
                      #{String(pokemon.id).padStart(3, "0")}
