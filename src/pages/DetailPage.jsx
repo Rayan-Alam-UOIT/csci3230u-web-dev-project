@@ -1,10 +1,10 @@
 import { Fragment, useEffect, useState, useRef } from "react";
-import { useParams, Link, useLocation  } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import { useFavourites } from "../hooks/useFavourites";
-
 
 function DetailPage() {
    const [pokemon, setPokemon] = useState(null);
+   const [pokemonList, setPokemonList] = useState([]);
    const { isFavourite, toggleFavourite } = useFavourites();
    const audioRef = useRef(null);
    const fillRef = useRef(null);
@@ -25,6 +25,8 @@ function DetailPage() {
       fetch("/data/sample.json")
          .then((response) => response.json())
          .then((data) => {
+            setPokemonList(data.pokemon);
+
             const selectedPokemon = data.pokemon.find(
                (item) => String(item.id) === id,
             );
@@ -49,8 +51,7 @@ function DetailPage() {
             return;
          }
          if (audio.duration && fillRef.current) {
-            fillRef.current.style.width =
-               `${(audio.currentTime / audio.duration) * 100}%`;
+            fillRef.current.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
          }
          if (!audio.paused && !audio.ended) {
             rafRef.current = requestAnimationFrame(tick);
@@ -75,9 +76,9 @@ function DetailPage() {
          }
          setIsPlaying(false);
 
-
          setTimeout(() => {
-            if (fillRef.current && audio.ended) fillRef.current.style.width = "0%";
+            if (fillRef.current && audio.ended)
+               fillRef.current.style.width = "0%";
          }, 250);
       }
 
@@ -100,6 +101,12 @@ function DetailPage() {
    if (!pokemon) {
       return null;
    }
+
+   const currentIndex = pokemonList.findIndex(
+      (item) => item.id === pokemon.id,
+   );
+   const previousPokemon = pokemonList[currentIndex - 1];
+   const nextPokemon = pokemonList[currentIndex + 1];
 
    const formattedName =
       pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
@@ -368,15 +375,25 @@ function DetailPage() {
          </ul>
 
          <nav className="details-nav">
-            {pokemon.id > 1 && (
-               <Link to={`/pokemon/${pokemon.id - 1}`} className="nav-prev" state={location.state}>
+            {previousPokemon && (
+               <Link
+                  to={`/pokemon/${previousPokemon.id}`}
+                  className="nav-prev"
+                  state={location.state}
+               >
                   &larr; Previous Pokemon
                </Link>
             )}
 
-            <Link to={`/pokemon/${pokemon.id + 1}`} className="nav-next" state={location.state}>
-               Next Pokemon &rarr;
-            </Link>
+            {nextPokemon && (
+               <Link
+                  to={`/pokemon/${nextPokemon.id}`}
+                  className="nav-next"
+                  state={location.state}
+               >
+                  Next Pokemon &rarr;
+               </Link>
+            )}
          </nav>
 
          <section className="sprites-section" aria-labelledby="sprites-heading">
