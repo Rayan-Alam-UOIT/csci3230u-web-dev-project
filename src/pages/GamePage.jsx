@@ -1,28 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 
-const SILHOUETTE_ROUNDS = [
-   {
-      name: "Pikachu",
-      image: "/data/sprites/official-artwork/front_default/pikachu.png",
-      options: ["Eevee", "Pikachu", "Ditto", "Squirtle"],
-   },
-   {
-      name: "Charmander",
-      image: "/data/sprites/official-artwork/front_default/charmander.png",
-      options: ["Charmander", "Cyndaquil", "Totodile", "Bulbasaur"],
-   },
-   {
-      name: "Mewtwo",
-      image: "/data/sprites/official-artwork/front_default/mewtwo.png",
-      options: ["Ditto", "Eevee", "Mewtwo", "Chikorita"],
-   },
-   {
-      name: "Eevee",
-      image: "/data/sprites/official-artwork/front_default/eevee.png",
-      options: ["Pikachu", "Squirtle", "Ditto", "Eevee"],
-   },
-];
-
 const GENERATION_NUMBERS = {
    i: 1,
    ii: 2,
@@ -34,6 +11,101 @@ const GENERATION_NUMBERS = {
    viii: 8,
    ix: 9,
 };
+
+function shuffle(list) {
+   return chooseRandomPokemon(list, list.length); // reuse: picks everything in random order
+}
+
+function useWhosThatPokemon() {
+   const [rounds, setRounds] = useState([]);
+   const [started, setStarted] = useState(false);
+   const [finished, setFinished] = useState(false);
+   const [roundIndex, setRoundIndex] = useState(0);
+   const [score, setScore] = useState(0);
+   const [selected, setSelected] = useState("");
+   const [revealed, setRevealed] = useState(false);
+   const [bestScore, setBestScore] = useState(() => {
+      const saved = Number(localStorage.getItem("whos-best-score"));
+      return Number.isFinite(saved) && saved >= 0 ? saved : 0;
+   });
+
+   const currentRound = rounds[roundIndex];
+   const isCorrect =
+      revealed && normalize(selected) === normalize(currentRound?.name ?? "");
+
+
+   function start(newRounds) {
+      // Copied from clues minigame logic
+      if (newRounds.length === 0) return;
+
+      setRounds(newRounds);
+      setStarted(true);
+      setFinished(false);
+      setRoundIndex(0);
+      setScore(0);
+      setSelected("");
+      setRevealed(false);
+   }
+
+   function select(option) {
+      if (!started || finished || revealed) return;
+      setSelected(option);
+   }
+
+   function submit() {
+      // Copied from submitGuess logic
+      if (!started || finished || revealed || !selected) return;
+
+      const correct = normalize(selected) === normalize(currentRound.name);
+      if (correct) setScore((s) => s + 1);
+      setRevealed(true);
+   }
+
+   function nextRound() {
+      // Copied from clues minigame logic
+      if (!revealed) return;
+
+      if (roundIndex === rounds.length - 1) {
+         setFinished(true);
+         if (score > bestScore) {
+            setBestScore(score);
+            localStorage.setItem("whos-best-score", String(score));
+         }
+         return;
+      }
+
+      setRoundIndex((i) => i + 1);
+      setSelected("");
+      setRevealed(false);
+   }
+
+   return {
+      started, finished, score, bestScore, selected, revealed, isCorrect,
+      currentRound, roundIndex,
+      roundCount: rounds.length,
+      maxScore: rounds.length,
+      start, select, submit, nextRound,
+   };
+}
+
+function createSilhouetteRounds(pokemonList, count) {
+   const picks = chooseRandomPokemon(pokemonList, count);
+
+   return picks.map((pokemon) => {
+      const distractors = chooseRandomPokemon(
+         pokemonList.filter((p) => p.name !== pokemon.name),
+         3,
+      );
+
+      return {
+         name: capitalize(pokemon.name),
+         image: `/data/sprites/official-artwork/front_default/${pokemon.name}.png`,
+         options: shuffle([pokemon, ...distractors]).map((p) =>
+            capitalize(p.name),
+         ),
+      };
+   });
+}
 
 // Map each record to the field that clues will need
 function createCluesRounds(pokemonList) {
@@ -207,10 +279,6 @@ const MAX_SUGGESTIONS = 8;
 
 function GamePage() {
    const [activeGame, setActiveGame] = useState(null);
-   const [roundIndex, setRoundIndex] = useState(0);
-   const [selected, setSelected] = useState("");
-   const [revealed, setRevealed] = useState(false);
-   const [score, setScore] = useState(0);
 
    const [guess, setGuess] = useState("");
    const [pokemonData, setPokemonData] = useState([]);
@@ -226,6 +294,7 @@ function GamePage() {
       [pokemonData],
    );
    const cluesGame = useCluesGame();
+   const silhouetteGame = useWhosThatPokemon();
 
    useEffect(() => {
       document.title = "Pokéweb - Games";
@@ -246,21 +315,17 @@ function GamePage() {
          });
    }, []);
 
-   const rounds =
+   const activeState =
       activeGame === "clues"
-         ? cluesRounds
+         ? cluesGame
          : activeGame === "silhouette"
-           ? SILHOUETTE_ROUNDS
-           : [];
-   const round = rounds[roundIndex];
-   const isFinished =
-      activeGame === "clues"
-         ? cluesGame.finished
-         : activeGame === "silhouette" && roundIndex >= rounds.length;
+            ? silhouetteGame
+            : null;
 
-   const maxScore = activeGame === "clues" ? cluesGame.maxScore : rounds.length;
+   const isFinished = activeState?.finished ?? false;
+   const maxScore = activeState?.maxScore ?? 0;
 
-   const isCorrect = selected === round?.name;
+   const { currentRound: round, selected, revealed, isCorrect } = silhouetteGame;
 
    const pointsAvailable = cluesGame.clueCount - cluesGame.guesses.length;
    const guesses = cluesGame.guesses;
@@ -288,8 +353,6 @@ function GamePage() {
       showSuggestions && suggestions.length > 0 && !cluesGame.clueRoundComplete;
 
    function resetRound() {
-      setSelected("");
-      setRevealed(false);
       setGuess("");
       setActiveIndex(-1);
       setShowSuggestions(false);
@@ -301,24 +364,17 @@ function GamePage() {
 
          setActiveGame("clues");
          cluesGame.start(chooseRandomPokemon(cluesRounds, 4)); // Change the # to however many rounds u want
-         setGuess("");
-         setActiveIndex(-1);
-         setShowSuggestions(false);
+         resetRound();
          return;
       }
 
-      if (game !== "silhouette") return;
+      if (game === "silhouette") {
+         if (pokemonData.length < 4) return;
 
-      setActiveGame("silhouette");
-      setRoundIndex(0);
-      setScore(0);
-      resetRound();
-   }
-
-   function handleSubmit() {
-      if (!selected || revealed) return;
-      if (isCorrect) setScore((s) => s + 1);
-      setRevealed(true);
+         setActiveGame("silhouette");
+         silhouetteGame.start(createSilhouetteRounds(pokemonData, 4));
+         return;
+      }
    }
 
    function chooseSuggestion(name) {
@@ -353,13 +409,6 @@ function GamePage() {
       const text = matchedName ?? guess.trim();
 
       cluesGame.submitGuess(text);
-      setGuess("");
-      setActiveIndex(-1);
-      setShowSuggestions(false);
-   }
-
-   function handleNext() {
-      setRoundIndex((i) => i + 1);
       resetRound();
    }
 
@@ -443,16 +492,13 @@ function GamePage() {
                   <p className="game-play-area__prompt">
                      Game over! You scored{" "}
                      <strong>
-                        {activeGame === "clues" ? cluesGame.score : score} /{" "}
-                        {maxScore}
+                        {activeState.score} / {maxScore}
                      </strong>
                      .
                   </p>
-                  {activeGame === "clues" && (
-                     <p className="game-play-area__prompt">
-                        Best score: {cluesGame.bestScore} / {maxScore}
-                     </p>
-                  )}
+                  <p className="game-play-area__prompt">
+                     Best score: {activeState.bestScore} / {maxScore}
+                  </p>
                   <button
                      className="submit-btn"
                      type="button"
@@ -466,7 +512,7 @@ function GamePage() {
             {activeGame === "silhouette" && !isFinished && (
                <div className="silhouette">
                   <p className="silhouette__progress">
-                     Round {roundIndex + 1} of {rounds.length} · Score: {score}
+                     Round {silhouetteGame.roundIndex + 1} of {silhouetteGame.roundCount} · Score: {silhouetteGame.score}
                   </p>
 
                   <p className="game-play-area__prompt">
@@ -514,7 +560,7 @@ function GamePage() {
                                  name="answer"
                                  value={option}
                                  checked={selected === option}
-                                 onChange={() => setSelected(option)}
+                                 onChange={() => silhouetteGame.select(option)}
                               />
                               <span>{option}</span>
                            </label>
@@ -542,7 +588,7 @@ function GamePage() {
                      <button
                         className="submit-btn"
                         type="button"
-                        onClick={handleSubmit}
+                        onClick={silhouetteGame.submit}
                         disabled={!selected}
                      >
                         Submit
@@ -551,9 +597,9 @@ function GamePage() {
                      <button
                         className="submit-btn"
                         type="button"
-                        onClick={handleNext}
+                        onClick={silhouetteGame.nextRound}
                      >
-                        {roundIndex === rounds.length - 1
+                        {silhouetteGame.roundIndex === silhouetteGame.roundCount - 1
                            ? "See results"
                            : "Next"}
                      </button>
