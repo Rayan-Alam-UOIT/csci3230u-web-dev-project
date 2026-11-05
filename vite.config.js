@@ -8,4 +8,9 @@ export default defineConfig({
     react(),
     babel({ presets: [reactCompilerPreset()] })
   ],
-})
+  test: { // AI-assisted - see AI-USAGE.md #<1>
+    environment: 'jsdom',               // Simulates a browser environment in Node
+    globals: true,                      // Allows using describe/it/expect without explicit imports
+    setupFiles: './src/test/setup.js',  // Path to the test setup file
+  }
+});

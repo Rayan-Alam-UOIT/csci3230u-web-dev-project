@@ -54,6 +54,14 @@ You can use any terminal: Terminal on macOS/Linux, Command Prompt or PowerShell 
 ```
 5. Open the localhost link shown in your terminal in your browser.
 
+## Testing
+
+You can run our .test.jsx files to test our components with:
+```bash
+   npm test #<blank or path>
+```
+
+
 ## Documentation
 
 - [Project Proposal](PROPOSAL.md): Topic, data source, comparators,
