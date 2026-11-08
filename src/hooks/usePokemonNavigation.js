@@ -1,0 +1,20 @@
+import { useMemo } from "react";
+import { usePokemonData } from "./usePokemonData";
+
+export function usePokemonNavigation(id) {
+    const pokemonList = usePokemonData();
+    
+    return useMemo(() => {
+        const index = pokemonList.findIndex((item) => String(item.id) === id);
+
+        if (index === -1) {
+            return { pokemon: null, previousPokemon: null, nextPokemon: null };
+        }
+
+        return {
+            pokemon: pokemonList[index],
+            previousPokemon: pokemonList[index - 1] ?? null,
+            nextPokemon: pokemonList[index + 1] ?? null,
+        };
+    }, [pokemonList, id]);
+}

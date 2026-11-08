@@ -1,141 +1,43 @@
-import { Fragment, useEffect, useState, useRef } from "react";
+// AI-assisted - see AI-USAGE.md #<4>
+
+import { Fragment } from "react";
 import { useParams, Link, useLocation } from "react-router-dom";
+import { BASE_STAT_ROWS, SPRITE_ITEMS } from "../constants/detailConstants";
+import { useCry } from "../hooks/useCry";
+import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { useFavourites } from "../hooks/useFavourites";
+import { usePokemonNavigation } from "../hooks/usePokemonNavigation";
+import { capitalize, titleCase } from "../utils/pokemonUtils";
 
 function DetailPage() {
-   const [pokemon, setPokemon] = useState(null);
-   const [pokemonList, setPokemonList] = useState([]);
-   const { isFavourite, toggleFavourite } = useFavourites();
-   const audioRef = useRef(null);
-   const fillRef = useRef(null);
-   const rafRef = useRef(null);
-   const [isPlaying, setIsPlaying] = useState(false);
-
-   const cryPath = pokemon?.cries.latest;
-
+   useDocumentTitle("Pokéweb - Details");
+   
    const { id } = useParams();
+   const { pokemon, previousPokemon, nextPokemon } = usePokemonNavigation(id);
+   const { isFavourite, toggleFavourite } = useFavourites();
+   const { play: playCry, isPlaying, fillRef } = useCry(pokemon?.cries.latest);
 
    const location = useLocation();
    const origin = location.state?.from ?? "/";
    const originLabel = origin === "/favourites" ? "Favourites" : "Pokémon";
 
-   useEffect(() => {
-      document.title = "Pokéweb - Details";
-
-      fetch("/data/sample.json")
-         .then((response) => response.json())
-         .then((data) => {
-            setPokemonList(data.pokemon);
-
-            const selectedPokemon = data.pokemon.find(
-               (item) => String(item.id) === id,
-            );
-
-            setPokemon(selectedPokemon ?? null);
-         });
-   }, [id]);
-
-   useEffect(() => {
-      if (!cryPath) {
-         return;
-      }
-
-      let stopped = false;
-
-      const audio = new Audio(`/${cryPath}`);
-      audio.preload = "auto";
-      audioRef.current = audio;
-
-      function tick() {
-         if (stopped) {
-            return;
-         }
-         if (audio.duration && fillRef.current) {
-            fillRef.current.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
-         }
-         if (!audio.paused && !audio.ended) {
-            rafRef.current = requestAnimationFrame(tick);
-         }
-      }
-
-      function onPlaying() {
-         if (stopped) {
-            return;
-         }
-         setIsPlaying(true);
-         tick();
-      }
-
-      function onEnded() {
-         if (stopped) {
-            return;
-         }
-         cancelAnimationFrame(rafRef.current);
-         if (fillRef.current) {
-            fillRef.current.style.width = "100%";
-         }
-         setIsPlaying(false);
-
-         setTimeout(() => {
-            if (fillRef.current && audio.ended)
-               fillRef.current.style.width = "0%";
-         }, 250);
-      }
-
-      audio.addEventListener("playing", onPlaying);
-      audio.addEventListener("ended", onEnded);
-
-      return () => {
-         stopped = true;
-         cancelAnimationFrame(rafRef.current);
-         audio.pause();
-         audio.removeEventListener("playing", onPlaying);
-         audio.removeEventListener("ended", onEnded);
-         if (fillRef.current) {
-            fillRef.current.style.width = "0%";
-         }
-         setIsPlaying(false);
-      };
-   }, [cryPath]);
-
    if (!pokemon) {
       return null;
    }
 
-   const currentIndex = pokemonList.findIndex(
-      (item) => item.id === pokemon.id,
-   );
-   const previousPokemon = pokemonList[currentIndex - 1];
-   const nextPokemon = pokemonList[currentIndex + 1];
-
-   const formattedName =
-      pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
+   const formattedName = capitalize(pokemon.name);
 
    const types = pokemon.types.map((item) => item.type.name);
 
    const abilities = pokemon.abilities
-      .map((item) => {
-         const formattedAbility = item.ability.name
-            .replace(/-/g, " ")
-            .split(" ")
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(" ");
-
-         return formattedAbility;
-      })
+      .map((item) => titleCase(item.ability.name))
       .join(", ");
 
    const eggGroups = pokemon.egg_groups
-      .map((item) =>
-         item.name
-            .split("-")
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(" "),
-      )
+      .map((item) => titleCase(item.name))
       .join(" / ");
 
    const stats = pokemon.stats;
-
    const moves = pokemon.moves;
 
    const sprites =
@@ -145,23 +47,6 @@ function DetailPage() {
       pokemon.sprites.other["official-artwork"].front_default;
 
    const shinyArtwork = pokemon.sprites.other["official-artwork"].front_shiny;
-
-   const cry = pokemon.cries.latest;
-
-   function playCry() {
-      const audio = audioRef.current;
-      if (!audio) {
-         return;
-      }
-
-      cancelAnimationFrame(rafRef.current);
-      fillRef.current.style.width = "0%";
-      setIsPlaying(false);
-
-      audio.pause();
-      audio.currentTime = 0;
-      audio.play().catch(() => {});
-   }
 
    return (
       <div className="page container">
@@ -276,61 +161,18 @@ function DetailPage() {
                      </div>
 
                      <div className="body-stats base-stats">
-                        <span className="card-label">HP:</span>
-                        <span className="card-value">
-                           {" "}
-                           {
-                              stats.find((item) => item.stat.name === "hp")
-                                 .base_stat
-                           }{" "}
-                        </span>
-
-                        <span className="card-label">Attack:</span>
-                        <span className="card-value">
-                           {" "}
-                           {
-                              stats.find((item) => item.stat.name === "attack")
-                                 .base_stat
-                           }{" "}
-                        </span>
-
-                        <span className="card-label">Defense:</span>
-                        <span className="card-value">
-                           {" "}
-                           {
-                              stats.find((item) => item.stat.name === "defense")
-                                 .base_stat
-                           }{" "}
-                        </span>
-
-                        <span className="card-label">Sp. Atk:</span>
-                        <span className="card-value">
-                           {" "}
-                           {
-                              stats.find(
-                                 (item) => item.stat.name === "special-attack",
-                              ).base_stat
-                           }{" "}
-                        </span>
-
-                        <span className="card-label">Sp. Def:</span>
-                        <span className="card-value">
-                           {" "}
-                           {
-                              stats.find(
-                                 (item) => item.stat.name === "special-defense",
-                              ).base_stat
-                           }{" "}
-                        </span>
-
-                        <span className="card-label">Speed:</span>
-                        <span className="card-value">
-                           {" "}
-                           {
-                              stats.find((item) => item.stat.name === "speed")
-                                 .base_stat
-                           }{" "}
-                        </span>
+                        {BASE_STAT_ROWS.map(({ label, stat }) => (
+                           <Fragment key={stat}>
+                              <span className="card-label">{label}</span>
+                              <span className="card-value">
+                                 {" "}
+                                 {
+                                    stats.find((item) => item.stat.name === stat)
+                                       .base_stat
+                                 }{" "}
+                              </span>
+                           </Fragment>
+                        ))}
                      </div>
                   </li>
 
@@ -343,28 +185,13 @@ function DetailPage() {
                         {moves.map((item) => (
                            <Fragment key={item.move.name}>
                               <span className="card-label">
-                                 {item.move.name
-                                    .split(/[ -]+/)
-                                    .map(
-                                       (word) =>
-                                          word.charAt(0).toUpperCase() +
-                                          word.slice(1),
-                                    )
-                                    .join(" ")}
-                                 :
+                                 {titleCase(item.move.name)}:
                               </span>
 
                               <span
                                  className={`card-value type type-${item.move.type}`}
                               >
-                                 {item.move.type
-                                    .split("-")
-                                    .map(
-                                       (word) =>
-                                          word.charAt(0).toUpperCase() +
-                                          word.slice(1),
-                                    )
-                                    .join(" ")}
+                                 {titleCase(item.move.type)}
                               </span>
                            </Fragment>
                         ))}
@@ -403,93 +230,29 @@ function DetailPage() {
 
             <div className="sprites-row">
                <ul className="sprites-list">
-                  <li>
-                     <button
-                        type="button"
-                        className="sprite-link"
-                        popoverTarget="sprite-front"
-                     >
+                  {SPRITE_ITEMS.map(({ key, id: popoverId, label }) => (
+                     <li key={popoverId}>
+                        <button
+                           type="button"
+                           className="sprite-link"
+                           popoverTarget={popoverId}
+                        >
+                           <img
+                              src={`/${sprites[key]}`}
+                              alt={`${formattedName} ${label}`}
+                              className="sprite-img"
+                           />
+                        </button>
+
                         <img
-                           src={`/${sprites.front_default}`}
-                           alt={`${formattedName} front sprite`}
-                           className="sprite-img"
+                           popover="auto"
+                           id={popoverId}
+                           className="sprite-popover"
+                           src={`/${sprites[key]}`}
+                           alt={`${formattedName} ${label}, enlarged`}
                         />
-                     </button>
-
-                     <img
-                        popover="auto"
-                        id="sprite-front"
-                        className="sprite-popover"
-                        src={`/${sprites.front_default}`}
-                        alt={`${formattedName} front sprite, enlarged`}
-                     />
-                  </li>
-
-                  <li>
-                     <button
-                        type="button"
-                        className="sprite-link"
-                        popoverTarget="sprite-back"
-                     >
-                        <img
-                           src={`/${sprites.back_default}`}
-                           alt={`${formattedName} back sprite`}
-                           className="sprite-img"
-                        />
-                     </button>
-
-                     <img
-                        popover="auto"
-                        id="sprite-back"
-                        className="sprite-popover"
-                        src={`/${sprites.back_default}`}
-                        alt={`${formattedName} back sprite, enlarged`}
-                     />
-                  </li>
-
-                  <li>
-                     <button
-                        type="button"
-                        className="sprite-link"
-                        popoverTarget="sprite-shiny-front"
-                     >
-                        <img
-                           src={`/${sprites.front_shiny}`}
-                           alt={`${formattedName} shiny front sprite`}
-                           className="sprite-img"
-                        />
-                     </button>
-
-                     <img
-                        popover="auto"
-                        id="sprite-shiny-front"
-                        className="sprite-popover"
-                        src={`/${sprites.front_shiny}`}
-                        alt={`${formattedName} shiny front sprite, enlarged`}
-                     />
-                  </li>
-
-                  <li>
-                     <button
-                        type="button"
-                        className="sprite-link"
-                        popoverTarget="sprite-shiny-back"
-                     >
-                        <img
-                           src={`/${sprites.back_shiny}`}
-                           alt={`${formattedName} shiny back sprite`}
-                           className="sprite-img"
-                        />
-                     </button>
-
-                     <img
-                        popover="auto"
-                        id="sprite-shiny-back"
-                        className="sprite-popover"
-                        src={`/${sprites.back_shiny}`}
-                        alt={`${formattedName} shiny back sprite, enlarged`}
-                     />
-                  </li>
+                     </li>
+                  ))}
                </ul>
 
                <button
