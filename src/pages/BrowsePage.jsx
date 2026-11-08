@@ -1,47 +1,32 @@
-import { useEffect, useState } from "react";
-import PokemonGrid from "../components/PokemonGrid";
 import FilterPanel from "../components/FilterPanel";
 import Pagination from "../components/Pagination";
-import { usePokemonFilters } from "../hooks/usePokemonFilters";
+import PokemonGrid from "../components/PokemonGrid";
+import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { useFavourites } from "../hooks/useFavourites";
-import { usePagination } from "../hooks/usePagination";
-
-const PAGE_SIZE = 9;
+import { usePokemonBrowser } from "../hooks/usePokemonBrowser";
+import { usePokemonData } from "../hooks/usePokemonData";
 
 function BrowsePage({ searchQuery = "", onSearchChange }) {
-  const [pokemon, setPokemon] = useState([]);
+  useDocumentTitle("Pokéweb - Browse Pokémon");
+
+  const pokemon = usePokemonData();
   const { isFavourite, toggleFavourite } = useFavourites();
-  const filters = usePokemonFilters(pokemon, searchQuery, onSearchChange);
-  const { page, setPage, totalPages, pageItems } = usePagination(
-    filters.visiblePokemon,
-    PAGE_SIZE
-  );
 
-  useEffect(() => {
-    document.title = "Pokéweb - Browse Pokémon";
-
-    fetch("/data/sample.json")
-      .then((response) => response.json())
-      .then((data) => setPokemon(data.pokemon));
-  }, []);
-
-  useEffect(() => {
-    setPage(1);
-  }, [filters.visiblePokemon.length, setPage]);
+  const { filters, page, setPage, totalPages, pageItems, resultCount } = usePokemonBrowser(pokemon, searchQuery, onSearchChange);
 
   const pokemonWithFavourites = pageItems.map((item) => ({
     ...item,
     is_favourite: isFavourite(item.id),
   }));
 
-  const hasResults = filters.visiblePokemon.length > 0;
+  const hasResults = resultCount > 0;
 
   return (
     <div className="page container">
       <FilterPanel filters={filters} />
 
       <h1 className="results-heading">
-        Pokémon <span aria-hidden="true">•</span> {filters.visiblePokemon.length} results
+        Pokémon <span aria-hidden="true">•</span> {resultCount} results
       </h1>
 
       {!hasResults ? (

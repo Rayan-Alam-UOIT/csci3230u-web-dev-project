@@ -1,0 +1,1 @@
+export const POKEMON_DATA_URL = "/data/sample.json";
