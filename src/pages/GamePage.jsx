@@ -1,17 +1,21 @@
 // AI-assisted - see AI-USAGE.md #<3>
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import DataStatus from "../components/DataStatus";
 import { CLUES_ROUND_COUNT, MIN_POKEMON_FOR_SILHOUETTE, SILHOUETTE_ROUND_COUNT } from "../constants/gameConstants";
 import { useCluesGame, createCluesRounds } from "../hooks/useCluesGame";
+import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { useGuessAutocomplete } from "../hooks/useGuessAutocomplete";
 import { usePokemonData } from "../hooks/usePokemonData";
 import { useWhosThatPokemon, createSilhouetteRounds } from "../hooks/useWhosThatPokemon";
 import { capitalize, chooseRandomPokemon } from "../utils/pokemonUtils";
 
 function GamePage() {
+   useDocumentTitle("Pokéweb - Games");
+
    const [activeGame, setActiveGame] = useState(null);
 
-   const { pokemonData: pokemonData } = usePokemonData();
+   const { pokemonData: pokemonData, status, retry } = usePokemonData();
    const cluesRounds = useMemo(
       () => createCluesRounds(pokemonData),
       [pokemonData],
@@ -30,10 +34,6 @@ function GamePage() {
       onSubmit: cluesGame.submitGuess,
    });
 
-   useEffect(() => {
-      document.title = "Pokéweb - Games";
-   }, []);
-
    const activeState =
       activeGame === "clues"
          ? cluesGame
@@ -48,6 +48,14 @@ function GamePage() {
 
    const pointsAvailable = cluesGame.clueCount - cluesGame.guesses.length;
    const guesses = cluesGame.guesses;
+
+   if (status !== "ok") {
+      return (
+         <div className="page container">
+         <DataStatus status={status} onRetry={retry} />
+         </div>
+      );
+   }
 
    function startGame(game) {
       if (game === "clues") {

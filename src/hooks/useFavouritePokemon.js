@@ -3,7 +3,7 @@ import { useFavourites } from "./useFavourites";
 import { usePokemonData } from "./usePokemonData";
 
 export function useFavouritePokemon() {
-   const { pokemonData: pokemon } = usePokemonData();
+   const { pokemonData: pokemon, status, retry } = usePokemonData();
    const { favouriteIds, toggleFavourite } = useFavourites();
 
    const favourites = useMemo(
@@ -11,5 +11,5 @@ export function useFavouritePokemon() {
       [pokemon, favouriteIds],
    );
 
-   return { favourites, toggleFavourite };
+   return { favourites, toggleFavourite, status, retry };
 }

@@ -14,6 +14,12 @@ async function fetchJson(url, signal) {
 export function usePokemonData() {
    const [pokemonData, setPokemonData] = useState([]);
    const [status, setStatus] = useState("loading");
+   const [attempt, setAttempt] = useState(0);
+
+   const retry = useCallback(() => {
+      setStatus("loading");
+      setAttempt((n) => n + 1);
+   }, []);
    
    useEffect(() => {
       const controller = new AbortController();
@@ -43,7 +49,7 @@ export function usePokemonData() {
 
       load();
       return () => controller.abort();
-   }, []);
+   }, [attempt]);
 
-   return { pokemonData, status };
+   return { pokemonData, status, retry };
 }

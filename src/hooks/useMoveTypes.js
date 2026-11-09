@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const moveTypeCache = new Map();
 
@@ -23,11 +23,16 @@ function fetchMoveType(url) {
 
 export function useMoveTypes(moves) {
    const [moveTypes, setMoveTypes] = useState({});
+   const [status, setStatus] = useState("loading");
+   const [attempt, setAttempt] = useState(0);
+
+   const retry = useCallback(() => setAttempt((n) => n + 1), []);
 
    useEffect(() => {
       if (!moves) return;
       let cancelled = false;
       setMoveTypes({});
+      setStatus("loading");
 
       Promise.allSettled(
          moves.map(({ move }) =>
@@ -39,12 +44,13 @@ export function useMoveTypes(moves) {
             .filter((r) => r.status === "fulfilled")
             .map((r) => r.value);
          setMoveTypes(Object.fromEntries(entries));
+         setStatus(entries.length < results.length ? "error" : "ok");
       });
 
       return () => {
          cancelled = true;
       };
-   }, [moves]);
+   }, [moves, attempt]);
 
-   return moveTypes;
+   return { moveTypes, status, retry };
 }

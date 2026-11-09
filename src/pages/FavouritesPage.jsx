@@ -1,3 +1,4 @@
+import DataStatus from "../components/DataStatus";
 import FilterPanel from "../components/FilterPanel";
 import Pagination from "../components/Pagination";
 import PokemonGrid from "../components/PokemonGrid";
@@ -8,7 +9,7 @@ import { usePokemonBrowser } from "../hooks/usePokemonBrowser";
 function FavouritesPage({ searchQuery = "", onSearchChange }) {
   useDocumentTitle("Pokéweb - Favourites");
 
-  const { favourites, toggleFavourite } = useFavouritePokemon();
+  const { favourites, toggleFavourite, status, retry } = useFavouritePokemon();
   
   const { filters, page, setPage, totalPages, pageItems, resultCount } = usePokemonBrowser(favourites, searchQuery, onSearchChange);
 
@@ -16,6 +17,14 @@ function FavouritesPage({ searchQuery = "", onSearchChange }) {
     ...item,
     is_favourite: true,
   }));
+
+  if (status !== "ok") {
+    return (
+      <div className="page container">
+        <DataStatus status={status} onRetry={retry} />
+      </div>
+    );
+  }
 
   const hasFavourites = favourites.length > 0;
   const hasResults = resultCount > 0;

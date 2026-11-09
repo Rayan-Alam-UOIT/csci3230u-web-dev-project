@@ -2,9 +2,9 @@ import { useMemo } from "react";
 import { usePokemonData } from "./usePokemonData";
 
 export function usePokemonNavigation(id) {
-    const { pokemonData: pokemonList } = usePokemonData();
+    const { pokemonData: pokemonList, status, retry } = usePokemonData();
     
-    return useMemo(() => {
+    const navigation = useMemo(() => {
         const index = pokemonList.findIndex((item) => String(item.id) === id);
 
         if (index === -1) {
@@ -17,4 +17,6 @@ export function usePokemonNavigation(id) {
             nextPokemon: pokemonList[index + 1] ?? null,
         };
     }, [pokemonList, id]);
+
+    return { ...navigation, status, retry };
 }

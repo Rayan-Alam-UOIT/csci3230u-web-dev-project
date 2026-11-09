@@ -2,6 +2,7 @@
 
 import { Fragment } from "react";
 import { useParams, Link, useLocation } from "react-router-dom";
+import DataStatus from "../components/DataStatus";
 import { BASE_STAT_ROWS, SPRITE_ITEMS } from "../constants/detailConstants";
 import { useCry } from "../hooks/useCry";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
@@ -14,7 +15,7 @@ function DetailPage() {
    useDocumentTitle("Pokéweb - Details");
    
    const { id } = useParams();
-   const { pokemon, previousPokemon, nextPokemon } = usePokemonNavigation(id);
+   const { pokemon, previousPokemon, nextPokemon, status, retry } = usePokemonNavigation(id);
    const { isFavourite, toggleFavourite } = useFavourites();
    const { play: playCry, isPlaying, fillRef } = useCry(pokemon?.cries.latest);
 
@@ -22,10 +23,29 @@ function DetailPage() {
    const origin = location.state?.from ?? "/";
    const originLabel = origin === "/favourites" ? "Favourites" : "Pokémon";
 
-   const moveTypes = useMoveTypes(pokemon?.moves);
+   const { moveTypes, status: moveStatus, retry: retryMoves } = useMoveTypes(pokemon?.moves);
+
+   if (status !== "ok") {
+      return (
+         <div className="page container">
+            <DataStatus status={status} onRetry={retry} loadingText="Loading Pokémon details…" />
+         </div>
+      );
+   }
 
    if (!pokemon) {
-      return null;
+      return (
+         <div className="page container">
+            <nav>
+               <Link to={origin} className="back-button">
+                  ‹ &nbsp; Back to {originLabel}
+               </Link>
+            </nav>
+            <section className="empty-state-area" role="alert">
+               <p>We couldn't find a Pokémon with that ID.</p>
+            </section>
+         </div>
+      );
    }
 
    const formattedName = capitalize(pokemon.name);
