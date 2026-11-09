@@ -51,6 +51,9 @@ function DetailPage() {
    const formattedName = capitalize(pokemon.name);
 
    const { types, stats, moves, sprites, artwork } = pokemon;
+   const availableSprites = SPRITE_ITEMS.filter(({ key }) => sprites[key]);
+   const hasSprites = availableSprites.length > 0;
+   const hasCry = Boolean(pokemon.cryUrl);
 
    const abilities = pokemon.abilities.map(titleCase).join(", ");
 
@@ -249,45 +252,59 @@ function DetailPage() {
                Sprites &amp; Cry
             </h2>
 
-            <div className="sprites-row">
-               <ul className="sprites-list">
-                  {SPRITE_ITEMS.map(({ key, id: popoverId, label }) => (
-                     <li key={popoverId}>
+            {!hasSprites && !hasCry && (
+               <p className="empty-state-area">No sprites or cry available for this Pokémon.</p>
+            )}
+
+            {(hasSprites || hasCry) && (
+               <div className="sprites-row">
+                  {hasSprites ? (
+                     <ul className="sprites-list">
+                        {availableSprites.map(({ key, id: popoverId, label }) => (
+                           <li key={popoverId}>
+                              <button
+                                 type="button"
+                                 className="sprite-link"
+                                 popoverTarget={popoverId}
+                              >
+                                 <img
+                                    src={sprites[key]}
+                                    alt={`${formattedName} ${label}`}
+                                    className="sprite-img"
+                                 />
+                              </button>
+
+                              <img
+                                 popover="auto"
+                                 id={popoverId}
+                                 className="sprite-popover"
+                                 src={sprites[key]}
+                                 alt={`${formattedName} ${label}, enlarged`}
+                              />
+                           </li>
+                        ))}
+                     </ul>
+                  ) : (
+                     <p>No sprites available for this Pokémon.</p>
+                  )}
+
+                  {hasCry && (
+                     <>
                         <button
                            type="button"
-                           className="sprite-link"
-                           popoverTarget={popoverId}
+                           className={`play-sound ${isPlaying ? "playing" : ""}`}
+                           onClick={playCry}
                         >
-                           <img
-                              src={sprites[key]}
-                              alt={`${formattedName} ${label}`}
-                              className="sprite-img"
-                           />
+                           ▶ Play Cry
                         </button>
 
-                        <img
-                           popover="auto"
-                           id={popoverId}
-                           className="sprite-popover"
-                           src={sprites[key]}
-                           alt={`${formattedName} ${label}, enlarged`}
-                        />
-                     </li>
-                  ))}
-               </ul>
-
-               <button
-                  type="button"
-                  className={`play-sound ${isPlaying ? "playing" : ""}`}
-                  onClick={playCry}
-               >
-                  ▶ Play Cry
-               </button>
-
-               <div className="cry-bar" aria-hidden="true">
-                  <div className="cry-bar-fill" ref={fillRef} />
+                        <div className="cry-bar" aria-hidden="true">
+                           <div className="cry-bar-fill" ref={fillRef} />
+                        </div>
+                     </>
+                  )}
                </div>
-            </div>
+            )}
          </section>
       </div>
    );
