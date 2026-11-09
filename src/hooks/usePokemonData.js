@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { POKEMON_DATA_URL } from "../constants/dataUrl";
+import { toPokemon } from "../utils/pokemonMapper";
 
 async function fetchJson(url, signal) {
    const response = await fetch(url, { signal });
@@ -33,7 +34,7 @@ export function usePokemonData() {
                results.map(async ({ url }) => {
                   const pokemon = await fetchJson(url, signal);
                   const species = await fetchJson(pokemon.species.url, signal);
-                  return { ...pokemon, egg_groups: species.egg_groups, generation: species.generation.name };
+                  return toPokemon(pokemon, species);
                }),
             );
 

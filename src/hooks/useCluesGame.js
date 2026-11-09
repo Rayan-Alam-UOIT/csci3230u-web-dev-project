@@ -131,10 +131,10 @@ export function createCluesRounds(pokemonList) {
             name: capitalize(pokemon.name),
             gen: GENERATION_NUMBERS[generationKey] ?? generationKey,
             type1:
-               pokemon.types.find((entry) => entry.slot === 1)?.type.name ??
+               pokemon.types.find((entry) => entry.slot === 1)?.types ??
                "Unknown",
             type2:
-               pokemon.types.find((entry) => entry.slot === 2)?.type.name ?? null,
+               pokemon.types.find((entry) => entry.slot === 2)?.types ?? null,
             height: pokemon.height / 10,
             weight: pokemon.weight / 10,
       };

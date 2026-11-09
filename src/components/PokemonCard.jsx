@@ -11,7 +11,7 @@ function PokemonCard({ pokemon, onToggleFavourite }) {
          <div className="card-image">
             <Link className="card-detail-link" to={`/pokemon/${pokemon.id}`} state={{ from: location.pathname }}>
                <img
-                  src={pokemon.sprites.other["official-artwork"].front_default}
+                  src={pokemon.artwork.default}
                   alt={formattedName}
                />
             </Link>

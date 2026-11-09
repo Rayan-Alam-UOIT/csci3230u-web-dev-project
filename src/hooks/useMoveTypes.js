@@ -31,8 +31,8 @@ export function useMoveTypes(moves) {
       setStatus("loading");
 
       Promise.allSettled(
-         moves.map(({ move }) =>
-            fetchMoveType(move.url, signal).then((type) => [move.name, type]),
+         moves.map(({ name, url }) =>
+            fetchMoveType(url, signal).then((type) => [name, type]),
          ),
       ).then((results) => {
          if (signal.aborted) return;

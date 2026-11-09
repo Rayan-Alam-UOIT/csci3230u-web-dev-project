@@ -39,7 +39,7 @@ export function usePokemonFilters(pokemon, searchQuery = "", onSearchChange) {
         const matchesType =
           selectedTypes.length === 0 ||
           item.types.some((t) =>
-            selectedTypes.some((s) => s.toLowerCase() === t.type.name)
+            selectedTypes.some((s) => s.toLowerCase() === t.types)
           );
 
         return matchesSearch && matchesGeneration && matchesType;
