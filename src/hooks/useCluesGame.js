@@ -130,13 +130,10 @@ export function createCluesRounds(pokemonList) {
       return {
             name: capitalize(pokemon.name),
             gen: GENERATION_NUMBERS[generationKey] ?? generationKey,
-            type1:
-               pokemon.types.find((entry) => entry.slot === 1)?.types ??
-               "Unknown",
-            type2:
-               pokemon.types.find((entry) => entry.slot === 2)?.types ?? null,
-            height: pokemon.height / 10,
-            weight: pokemon.weight / 10,
+            type1: pokemon.types[0] ?? "Unknown",
+            type2: pokemon.types[1] ?? null,
+            height: pokemon.heightM,
+            weight: pokemon.weightKg,
       };
    });
 }

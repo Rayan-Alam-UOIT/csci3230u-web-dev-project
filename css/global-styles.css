@@ -372,6 +372,7 @@ select:focus-visible,
 /* ---------- Pagination ---------- */
 .pagination {
    display: flex;
+   flex-wrap: wrap;
    justify-content: center;
    gap: var(--space-3);
    margin-top: var(--space-4);
@@ -387,6 +388,11 @@ select:focus-visible,
    text-decoration: underline;
    text-underline-offset: 4px;
    color: var(--color-primary);
+}
+
+.pagination-ellipsis {
+  padding: 0 0.5rem;
+  user-select: none;
 }
 
 /* ---------- Footer ---------- */

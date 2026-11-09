@@ -1,8 +1,10 @@
 // AI-assisted - see AI-USAGE.md #<3>
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { POKEMON_DATA_URL } from "../constants/dataUrl";
 import { toPokemon } from "../utils/pokemonMapper";
+
+const BATCH_SIZE = 20;
 
 async function fetchJson(url, signal) {
    const response = await fetch(url, { signal });
@@ -10,6 +12,15 @@ async function fetchJson(url, signal) {
       throw new Error(`Failed to load ${url}: ${response.status}`);
    }
    return response.json();
+}
+
+async function inBatches(items, size, task) {
+   const output = [];
+   for (let i = 0; i < items.length; i += size) {
+      const batch = items.slice(i, i + size);
+      output.push(...(await Promise.all(batch.map(task))));
+   }
+   return output;
 }
 
 export function usePokemonData() {
@@ -30,13 +41,11 @@ export function usePokemonData() {
          try {
             const { results } = await fetchJson(POKEMON_DATA_URL, signal);
 
-            const details = await Promise.all(
-               results.map(async ({ url }) => {
-                  const pokemon = await fetchJson(url, signal);
-                  const species = await fetchJson(pokemon.species.url, signal);
-                  return toPokemon(pokemon, species);
-               }),
-            );
+            const details = await inBatches(results, BATCH_SIZE, async ({ url }) => {
+               const pokemon = await fetchJson(url, signal);
+               const species = await fetchJson(pokemon.species.url, signal);
+               return toPokemon(pokemon, species);
+            });
 
             setPokemonData(details);
             setStatus("ok");
@@ -51,6 +60,6 @@ export function usePokemonData() {
       load();
       return () => controller.abort();
    }, [attempt]);
-
+   
    return { pokemonData, status, retry };
 }

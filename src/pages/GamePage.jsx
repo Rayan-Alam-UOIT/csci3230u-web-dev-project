@@ -3,10 +3,10 @@
 import { useMemo, useState } from "react";
 import DataStatus from "../components/DataStatus";
 import { CLUES_ROUND_COUNT, MIN_POKEMON_FOR_SILHOUETTE, SILHOUETTE_ROUND_COUNT } from "../constants/gameConstants";
+import { usePokemon } from "../context/PokemonContext";
 import { useCluesGame, createCluesRounds } from "../hooks/useCluesGame";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { useGuessAutocomplete } from "../hooks/useGuessAutocomplete";
-import { usePokemonData } from "../hooks/usePokemonData";
 import { useWhosThatPokemon, createSilhouetteRounds } from "../hooks/useWhosThatPokemon";
 import { capitalize, chooseRandomPokemon } from "../utils/pokemonUtils";
 
@@ -15,7 +15,7 @@ function GamePage() {
 
    const [activeGame, setActiveGame] = useState(null);
 
-   const { pokemonData: pokemonData, status, retry } = usePokemonData();
+   const { pokemonData, status, retry } = usePokemon();
    const cluesRounds = useMemo(
       () => createCluesRounds(pokemonData),
       [pokemonData],

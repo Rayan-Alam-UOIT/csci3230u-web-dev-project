@@ -1,8 +1,8 @@
 import { useMemo } from "react";
-import { usePokemonData } from "./usePokemonData";
+import { usePokemon } from "../context/PokemonContext";
 
 export function usePokemonNavigation(id) {
-    const { pokemonData: pokemonList, status, retry } = usePokemonData();
+    const { pokemonData: pokemonList, status, retry } = usePokemon();
     
     const navigation = useMemo(() => {
         const index = pokemonList.findIndex((item) => String(item.id) === id);
