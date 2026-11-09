@@ -125,7 +125,7 @@ export function useCluesGame() {
 export function createCluesRounds(pokemonList) {
    return pokemonList.map((pokemon) => {
       const generationKey =
-            pokemon.generation?.name?.replace("generation-", "") ?? "";
+            pokemon.generation?.replace("generation-", "") ?? "";
 
       return {
             name: capitalize(pokemon.name),

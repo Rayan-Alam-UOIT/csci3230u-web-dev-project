@@ -11,7 +11,7 @@ import { capitalize, chooseRandomPokemon } from "../utils/pokemonUtils";
 function GamePage() {
    const [activeGame, setActiveGame] = useState(null);
 
-   const pokemonData = usePokemonData();
+   const { pokemonData: pokemonData } = usePokemonData();
    const cluesRounds = useMemo(
       () => createCluesRounds(pokemonData),
       [pokemonData],

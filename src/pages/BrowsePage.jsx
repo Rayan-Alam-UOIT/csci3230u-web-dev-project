@@ -9,7 +9,7 @@ import { usePokemonData } from "../hooks/usePokemonData";
 function BrowsePage({ searchQuery = "", onSearchChange }) {
   useDocumentTitle("Pokéweb - Browse Pokémon");
 
-  const pokemon = usePokemonData();
+  const { pokemonData: pokemon } = usePokemonData();
   const { isFavourite, toggleFavourite } = useFavourites();
 
   const { filters, page, setPage, totalPages, pageItems, resultCount } = usePokemonBrowser(pokemon, searchQuery, onSearchChange);

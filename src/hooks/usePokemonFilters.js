@@ -24,7 +24,7 @@ export function usePokemonFilters(pokemon, searchQuery = "", onSearchChange) {
 
     return pokemon
       .filter((item) => {
-        const info = GENERATION_INFO[item.generation?.name];
+        const info = GENERATION_INFO[item.generation];
         const generationLabel = info ? `${info.numeral} · ${info.region}` : "";
 
         const matchesSearch =

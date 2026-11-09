@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { usePokemonData } from "./usePokemonData";
 
 export function usePokemonNavigation(id) {
-    const pokemonList = usePokemonData();
+    const { pokemonData: pokemonList } = usePokemonData();
     
     return useMemo(() => {
         const index = pokemonList.findIndex((item) => String(item.id) === id);

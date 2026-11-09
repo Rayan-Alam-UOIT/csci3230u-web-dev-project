@@ -6,6 +6,7 @@ import { BASE_STAT_ROWS, SPRITE_ITEMS } from "../constants/detailConstants";
 import { useCry } from "../hooks/useCry";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { useFavourites } from "../hooks/useFavourites";
+import { useMoveTypes } from "../hooks/useMoveTypes";
 import { usePokemonNavigation } from "../hooks/usePokemonNavigation";
 import { capitalize, titleCase } from "../utils/pokemonUtils";
 
@@ -20,6 +21,8 @@ function DetailPage() {
    const location = useLocation();
    const origin = location.state?.from ?? "/";
    const originLabel = origin === "/favourites" ? "Favourites" : "Pokémon";
+
+   const moveTypes = useMoveTypes(pokemon?.moves);
 
    if (!pokemon) {
       return null;
@@ -40,11 +43,9 @@ function DetailPage() {
    const stats = pokemon.stats;
    const moves = pokemon.moves;
 
-   const sprites =
-      pokemon.sprites.versions["generation-iv"]["heartgold-soulsilver"];
+   const sprites = pokemon.sprites.versions["generation-iv"]["heartgold-soulsilver"];
 
-   const officialArtwork =
-      pokemon.sprites.other["official-artwork"].front_default;
+   const officialArtwork = pokemon.sprites.other["official-artwork"].front_default;
 
    const shinyArtwork = pokemon.sprites.other["official-artwork"].front_shiny;
 
@@ -61,7 +62,7 @@ function DetailPage() {
                <div className="head-image">
                   <img
                      id="pokemon-img"
-                     src={`/${officialArtwork}`}
+                     src={officialArtwork}
                      alt={formattedName}
                      className="pokecard-image"
                   />
@@ -134,7 +135,7 @@ function DetailPage() {
                               popoverTarget="artwork-shiny"
                            >
                               <img
-                                 src={`/${shinyArtwork}`}
+                                 src={shinyArtwork}
                                  alt={`${formattedName} shiny official artwork`}
                                  className="sprite-img-off"
                               />
@@ -144,7 +145,7 @@ function DetailPage() {
                               popover="auto"
                               id="artwork-shiny"
                               className="sprite-popover"
-                              src={`/${shinyArtwork}`}
+                              src={shinyArtwork}
                               alt={`${formattedName} shiny official artwork, enlarged`}
                            />
                         </li>
@@ -189,9 +190,9 @@ function DetailPage() {
                               </span>
 
                               <span
-                                 className={`card-value type type-${item.move.type}`}
+                                 className={`card-value type type-${moveTypes[item.move.name]}`}
                               >
-                                 {titleCase(item.move.type)}
+                                 {titleCase(moveTypes[item.move.name] ?? "Unknown")}
                               </span>
                            </Fragment>
                         ))}
@@ -238,7 +239,7 @@ function DetailPage() {
                            popoverTarget={popoverId}
                         >
                            <img
-                              src={`/${sprites[key]}`}
+                              src={sprites[key]}
                               alt={`${formattedName} ${label}`}
                               className="sprite-img"
                            />
@@ -248,7 +249,7 @@ function DetailPage() {
                            popover="auto"
                            id={popoverId}
                            className="sprite-popover"
-                           src={`/${sprites[key]}`}
+                           src={sprites[key]}
                            alt={`${formattedName} ${label}, enlarged`}
                         />
                      </li>
