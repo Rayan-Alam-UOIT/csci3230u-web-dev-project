@@ -2,23 +2,17 @@ import { useCallback, useEffect, useState } from "react";
 
 const moveTypeCache = new Map();
 
-function fetchMoveType(url) {
-   if (!moveTypeCache.has(url)) {
-      const promise = fetch(url)
-         .then((response) => {
-            if (!response.ok) {
-               throw new Error(`Failed to load ${url}: ${response.status}`);
-            }
-            return response.json();
-         })
-         .then((move) => move.type.name)
-         .catch((error) => {
-            moveTypeCache.delete(url);
-            throw error;
-         });
-      moveTypeCache.set(url, promise);
+async function fetchMoveType(url, signal) {
+   if (moveTypeCache.has(url)) return moveTypeCache.get(url);
+
+   const response = await fetch(url, { signal });
+   if (!response.ok) {
+      throw new Error(`Failed to load ${url}: ${response.status}`);
    }
-   return moveTypeCache.get(url);
+   const move = await response.json();
+
+   moveTypeCache.set(url, move.type.name);
+   return move.type.name;
 }
 
 export function useMoveTypes(moves) {
@@ -30,16 +24,18 @@ export function useMoveTypes(moves) {
 
    useEffect(() => {
       if (!moves) return;
-      let cancelled = false;
+      const controller = new AbortController();
+      const { signal } = controller;
+
       setMoveTypes({});
       setStatus("loading");
 
       Promise.allSettled(
          moves.map(({ move }) =>
-            fetchMoveType(move.url).then((type) => [move.name, type]),
+            fetchMoveType(move.url, signal).then((type) => [move.name, type]),
          ),
       ).then((results) => {
-         if (cancelled) return;
+         if (signal.aborted) return;
          const entries = results
             .filter((r) => r.status === "fulfilled")
             .map((r) => r.value);
@@ -47,9 +43,7 @@ export function useMoveTypes(moves) {
          setStatus(entries.length < results.length ? "error" : "ok");
       });
 
-      return () => {
-         cancelled = true;
-      };
+      return () => controller.abort();
    }, [moves, attempt]);
 
    return { moveTypes, status, retry };
