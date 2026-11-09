@@ -1,7 +1,11 @@
+import { useEffect, useState } from "react";
 import { EDGE_COUNT, SIBLING_COUNT } from "../constants/pagination";
 
 function range(start, end) {
-  return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+  return Array.from(
+    { length: end - start + 1 },
+    (_, i) => start + i
+  );
 }
 
 function getPageItems(page, totalPages) {
@@ -30,54 +34,124 @@ function getPageItems(page, totalPages) {
 }
 
 function Pagination({ page, totalPages, onPageChange }) {
+  const [pageInput, setPageInput] = useState(String(page));
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    setPageInput(String(page));
+    setError("");
+  }, [page]);
+
   if (totalPages <= 1) return null;
 
-  const go = (e, target) => {
-    e.preventDefault();
+  const go = (target) => {
     if (target >= 1 && target <= totalPages && target !== page) {
       onPageChange(target);
     }
+  };
+
+  const handleJump = (e) => {
+    e.preventDefault();
+
+    const target = Number(pageInput);
+
+    if (
+      !pageInput.trim() ||
+      !Number.isInteger(target) ||
+      target < 1 ||
+      target > totalPages
+    ) {
+      setError(`Enter a page between 1 and ${totalPages}.`);
+      return;
+    }
+
+    setError("");
+    go(target);
   };
 
   const items = getPageItems(page, totalPages);
 
   return (
     <nav className="pagination" aria-label="Pagination">
-      <a
-        href="#"
-        aria-label="Previous page"
-        aria-disabled={page === 1}
-        onClick={(e) => go(e, page - 1)}
-      >
-        ‹
-      </a>
+      <div className="pagination-pages">
+        <button
+          type="button"
+          aria-label="Previous page"
+          disabled={page === 1}
+          onClick={() => go(page - 1)}
+        >
+          ‹
+        </button>
 
-      {items.map((item) =>
-        typeof item === "string" ? (
-          <span key={item} className="pagination-ellipsis" aria-hidden="true">
-            …
-          </span>
-        ) : (
-          <a
-            key={item}
-            href="#"
-            aria-label={`Page ${item}`}
-            aria-current={item === page ? "page" : undefined}
-            onClick={(e) => go(e, item)}
-          >
-            {item}
-          </a>
-        )
+        {items.map((item) =>
+          typeof item === "string" ? (
+            <span
+              key={item}
+              className="pagination-ellipsis"
+              aria-hidden="true"
+            >
+              …
+            </span>
+          ) : (
+            <button
+              type="button"
+              key={item}
+              aria-label={`Page ${item}`}
+              aria-current={item === page ? "page" : undefined}
+              onClick={() => go(item)}
+            >
+              {item}
+            </button>
+          )
+        )}
+
+        <button
+          type="button"
+          aria-label="Next page"
+          disabled={page === totalPages}
+          onClick={() => go(page + 1)}
+        >
+          ›
+        </button>
+      </div>
+
+      <div className="pagination-bottom">
+        <span className="pagination-info" role="status">
+          Page {page} of {totalPages}
+        </span>
+
+        <form className="pagination-jump" onSubmit={handleJump}>
+          <label htmlFor="pagination-page-input">
+            Go to
+          </label>
+
+          <input
+            id="pagination-page-input"
+            type="number"
+            min="1"
+            max={totalPages}
+            step="1"
+            value={pageInput}
+            onChange={(e) => {
+              setPageInput(e.target.value);
+              setError("");
+            }}
+            aria-label="Page number"
+            aria-invalid={Boolean(error)}
+            aria-describedby={error ? "pagination-error" : undefined}
+          />
+
+          <button type="submit" className="pagination-go">
+            Go
+          </button>
+        </form>
+      </div>
+
+      {error && (
+        <span id="pagination-error" className="pagination-error" role="alert">
+          {error}
+        </span>
       )}
-
-      <a
-        href="#"
-        aria-label="Next page"
-        aria-disabled={page === totalPages}
-        onClick={(e) => go(e, page + 1)}
-      >
-        ›
-      </a>
     </nav>
   );
 }
