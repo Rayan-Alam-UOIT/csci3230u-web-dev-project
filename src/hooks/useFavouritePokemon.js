@@ -1,9 +1,9 @@
 import { useMemo } from "react";
+import { usePokemon } from "../context/PokemonContext";
 import { useFavourites } from "./useFavourites";
-import { usePokemonData } from "./usePokemonData";
 
 export function useFavouritePokemon() {
-   const pokemon = usePokemonData();
+   const { pokemonData: pokemon, status, retry } = usePokemon();
    const { favouriteIds, toggleFavourite } = useFavourites();
 
    const favourites = useMemo(
@@ -11,5 +11,5 @@ export function useFavouritePokemon() {
       [pokemon, favouriteIds],
    );
 
-   return { favourites, toggleFavourite };
+   return { favourites, toggleFavourite, status, retry };
 }

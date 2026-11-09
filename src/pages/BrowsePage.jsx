@@ -1,15 +1,16 @@
+import DataStatus from "../components/DataStatus";
 import FilterPanel from "../components/FilterPanel";
 import Pagination from "../components/Pagination";
 import PokemonGrid from "../components/PokemonGrid";
+import { usePokemon } from "../context/PokemonContext";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { useFavourites } from "../hooks/useFavourites";
 import { usePokemonBrowser } from "../hooks/usePokemonBrowser";
-import { usePokemonData } from "../hooks/usePokemonData";
 
 function BrowsePage({ searchQuery = "", onSearchChange }) {
   useDocumentTitle("Pokéweb - Browse Pokémon");
 
-  const pokemon = usePokemonData();
+  const { pokemonData: pokemon, status, retry } = usePokemon();
   const { isFavourite, toggleFavourite } = useFavourites();
 
   const { filters, page, setPage, totalPages, pageItems, resultCount } = usePokemonBrowser(pokemon, searchQuery, onSearchChange);
@@ -18,6 +19,14 @@ function BrowsePage({ searchQuery = "", onSearchChange }) {
     ...item,
     is_favourite: isFavourite(item.id),
   }));
+
+  if (status !== "ok") {
+    return (
+      <div className="page container">
+        <DataStatus status={status} onRetry={retry} />
+      </div>
+    );
+  }
 
   const hasResults = resultCount > 0;
 

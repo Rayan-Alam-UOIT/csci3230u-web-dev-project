@@ -15,7 +15,7 @@ export function useCry(cryPath) {
 
       let stopped = false;
 
-      const audio = new Audio(`/${cryPath}`);
+      const audio = new Audio(cryPath);
       audio.preload = "auto";
       audioRef.current = audio;
 

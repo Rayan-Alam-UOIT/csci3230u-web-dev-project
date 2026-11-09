@@ -334,6 +334,7 @@
     }
 
     .body-stats {
+        grid-template-columns: auto 1fr auto 1fr;
         padding-bottom: 15.625rem;
     }
 

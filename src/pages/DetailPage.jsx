@@ -2,10 +2,12 @@
 
 import { Fragment } from "react";
 import { useParams, Link, useLocation } from "react-router-dom";
+import DataStatus from "../components/DataStatus";
 import { BASE_STAT_ROWS, SPRITE_ITEMS } from "../constants/detailConstants";
 import { useCry } from "../hooks/useCry";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { useFavourites } from "../hooks/useFavourites";
+import { useMoveTypes } from "../hooks/useMoveTypes";
 import { usePokemonNavigation } from "../hooks/usePokemonNavigation";
 import { capitalize, titleCase } from "../utils/pokemonUtils";
 
@@ -13,40 +15,49 @@ function DetailPage() {
    useDocumentTitle("Pokéweb - Details");
    
    const { id } = useParams();
-   const { pokemon, previousPokemon, nextPokemon } = usePokemonNavigation(id);
+   const { pokemon, previousPokemon, nextPokemon, status, retry } = usePokemonNavigation(id);
    const { isFavourite, toggleFavourite } = useFavourites();
-   const { play: playCry, isPlaying, fillRef } = useCry(pokemon?.cries.latest);
+   const { play: playCry, isPlaying, fillRef } = useCry(pokemon?.cryUrl);
 
    const location = useLocation();
    const origin = location.state?.from ?? "/";
    const originLabel = origin === "/favourites" ? "Favourites" : "Pokémon";
 
+   const { moveTypes, status: moveStatus, retry: retryMoves } = useMoveTypes(pokemon?.moves);
+
+   if (status !== "ok") {
+      return (
+         <div className="page container">
+            <DataStatus status={status} onRetry={retry} loadingText="Loading Pokémon details…" />
+         </div>
+      );
+   }
+
    if (!pokemon) {
-      return null;
+      return (
+         <div className="page container">
+            <nav>
+               <Link to={origin} className="back-button">
+                  ‹ &nbsp; Back to {originLabel}
+               </Link>
+            </nav>
+            <section className="empty-state-area" role="alert">
+               <p>We couldn't find a Pokémon with that ID.</p>
+            </section>
+         </div>
+      );
    }
 
    const formattedName = capitalize(pokemon.name);
 
-   const types = pokemon.types.map((item) => item.type.name);
+   const { types, stats, moves, sprites, artwork } = pokemon;
+   const availableSprites = SPRITE_ITEMS.filter(({ key }) => sprites[key]);
+   const hasSprites = availableSprites.length > 0;
+   const hasCry = Boolean(pokemon.cryUrl);
 
-   const abilities = pokemon.abilities
-      .map((item) => titleCase(item.ability.name))
-      .join(", ");
+   const abilities = pokemon.abilities.map(titleCase).join(", ");
 
-   const eggGroups = pokemon.egg_groups
-      .map((item) => titleCase(item.name))
-      .join(" / ");
-
-   const stats = pokemon.stats;
-   const moves = pokemon.moves;
-
-   const sprites =
-      pokemon.sprites.versions["generation-iv"]["heartgold-soulsilver"];
-
-   const officialArtwork =
-      pokemon.sprites.other["official-artwork"].front_default;
-
-   const shinyArtwork = pokemon.sprites.other["official-artwork"].front_shiny;
+   const eggGroups = pokemon.eggGroups.map(titleCase).join(" / ");
 
    return (
       <div className="page container">
@@ -61,7 +72,7 @@ function DetailPage() {
                <div className="head-image">
                   <img
                      id="pokemon-img"
-                     src={`/${officialArtwork}`}
+                     src={artwork.default}
                      alt={formattedName}
                      className="pokecard-image"
                   />
@@ -111,12 +122,12 @@ function DetailPage() {
                   <div className="head-stats">
                      <span className="card-label">Height:</span>
                      <span className="card-value">
-                        {(pokemon.height / 10).toFixed(1)}m
+                        {pokemon.heightM.toFixed(1)}m
                      </span>
 
                      <span className="card-label">Weight:</span>
                      <span className="card-value">
-                        {(pokemon.weight / 10).toFixed(1)} kg
+                        {pokemon.weightKg.toFixed(1)} kg
                      </span>
 
                      <span className="card-label">Abilities:</span>
@@ -134,7 +145,7 @@ function DetailPage() {
                               popoverTarget="artwork-shiny"
                            >
                               <img
-                                 src={`/${shinyArtwork}`}
+                                 src={artwork.shiny}
                                  alt={`${formattedName} shiny official artwork`}
                                  className="sprite-img-off"
                               />
@@ -144,7 +155,7 @@ function DetailPage() {
                               popover="auto"
                               id="artwork-shiny"
                               className="sprite-popover"
-                              src={`/${shinyArtwork}`}
+                              src={artwork.shiny}
                               alt={`${formattedName} shiny official artwork, enlarged`}
                            />
                         </li>
@@ -166,10 +177,8 @@ function DetailPage() {
                               <span className="card-label">{label}</span>
                               <span className="card-value">
                                  {" "}
-                                 {
-                                    stats.find((item) => item.stat.name === stat)
-                                       .base_stat
-                                 }{" "}
+                                 {stats[stat]}
+                                 {" "}
                               </span>
                            </Fragment>
                         ))}
@@ -181,18 +190,33 @@ function DetailPage() {
                         <span className="detail-type">MOVES</span>
                      </div>
 
+                     {moveStatus === "loading" && (
+                        <p role="status" aria-live="polite">Loading move types…</p>
+                     )}
+
+                     {moveStatus === "error" && (
+                        <p role="alert">
+                           Some move types couldn't be loaded.{" "}
+                           <button type="button" onClick={retryMoves}>Try again</button>
+                        </p>
+                     )}
+
                      <div className="body-stats">
                         {moves.map((item) => (
-                           <Fragment key={item.move.name}>
+                           <Fragment key={item.name}>
                               <span className="card-label">
-                                 {titleCase(item.move.name)}:
+                                 {titleCase(item.name)}:
                               </span>
-
-                              <span
-                                 className={`card-value type type-${item.move.type}`}
-                              >
-                                 {titleCase(item.move.type)}
-                              </span>
+                              
+                              {moveTypes[item.name] ? (
+                                 <span className={`card-value type type-${moveTypes[item.name]}`}>
+                                    {titleCase(moveTypes[item.name])}
+                                 </span>
+                              ) : (
+                                 <span className="card-value">
+                                    {moveStatus === "loading" ? "…" : "Unknown"}
+                                 </span>
+                              )}
                            </Fragment>
                         ))}
                      </div>
@@ -228,45 +252,59 @@ function DetailPage() {
                Sprites &amp; Cry
             </h2>
 
-            <div className="sprites-row">
-               <ul className="sprites-list">
-                  {SPRITE_ITEMS.map(({ key, id: popoverId, label }) => (
-                     <li key={popoverId}>
+            {!hasSprites && !hasCry && (
+               <p className="empty-state-area">No sprites or cry available for this Pokémon.</p>
+            )}
+
+            {(hasSprites || hasCry) && (
+               <div className="sprites-row">
+                  {hasSprites ? (
+                     <ul className="sprites-list">
+                        {availableSprites.map(({ key, id: popoverId, label }) => (
+                           <li key={popoverId}>
+                              <button
+                                 type="button"
+                                 className="sprite-link"
+                                 popoverTarget={popoverId}
+                              >
+                                 <img
+                                    src={sprites[key]}
+                                    alt={`${formattedName} ${label}`}
+                                    className="sprite-img"
+                                 />
+                              </button>
+
+                              <img
+                                 popover="auto"
+                                 id={popoverId}
+                                 className="sprite-popover"
+                                 src={sprites[key]}
+                                 alt={`${formattedName} ${label}, enlarged`}
+                              />
+                           </li>
+                        ))}
+                     </ul>
+                  ) : (
+                     <p>No sprites available for this Pokémon.</p>
+                  )}
+
+                  {hasCry && (
+                     <>
                         <button
                            type="button"
-                           className="sprite-link"
-                           popoverTarget={popoverId}
+                           className={`play-sound ${isPlaying ? "playing" : ""}`}
+                           onClick={playCry}
                         >
-                           <img
-                              src={`/${sprites[key]}`}
-                              alt={`${formattedName} ${label}`}
-                              className="sprite-img"
-                           />
+                           ▶ Play Cry
                         </button>
 
-                        <img
-                           popover="auto"
-                           id={popoverId}
-                           className="sprite-popover"
-                           src={`/${sprites[key]}`}
-                           alt={`${formattedName} ${label}, enlarged`}
-                        />
-                     </li>
-                  ))}
-               </ul>
-
-               <button
-                  type="button"
-                  className={`play-sound ${isPlaying ? "playing" : ""}`}
-                  onClick={playCry}
-               >
-                  ▶ Play Cry
-               </button>
-
-               <div className="cry-bar" aria-hidden="true">
-                  <div className="cry-bar-fill" ref={fillRef} />
+                        <div className="cry-bar" aria-hidden="true">
+                           <div className="cry-bar-fill" ref={fillRef} />
+                        </div>
+                     </>
+                  )}
                </div>
-            </div>
+            )}
          </section>
       </div>
    );

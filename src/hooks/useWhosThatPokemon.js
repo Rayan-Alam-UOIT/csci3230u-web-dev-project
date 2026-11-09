@@ -93,7 +93,7 @@ export function createSilhouetteRounds(pokemonList, count) {
 
       return {
             name: capitalize(pokemon.name),
-            image: pokemon.sprites.other["official-artwork"].front_default,
+            image: pokemon.artwork.default,
             options: shuffle([pokemon, ...distractors]).map((p) =>
                capitalize(p.name),
             ),
