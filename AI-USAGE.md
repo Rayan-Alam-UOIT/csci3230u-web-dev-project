@@ -81,3 +81,53 @@ I would like to make the play cry audio code as a hook. Please provide that.
 
 - **What it produced & what I changed:** It produced a file `Usecry.js`. The file is a hook for playing the audio of a selected Pokemon's cry, which was previously in the `DetailPage.js`. Claude produced also a list of changes to make to the `DetailPage.js` to support the new hook files (note it provided a list of changes to make, rather than simply the updated page file).
 I renamed the file to follow the appropriate casing (`useCry.js`) and placed it in the `hooks` folder. I implemented the changes Claude mentioned, which included updating the imports to include the hook and removing the large `useEffect` that previously had all the cry audio logic. The JSX did not have to be changed.
+
+## Log
+
+### #5 - Pokédex Descriptions and Evolution Chain
+
+- **Date:** 2026-11-09
+- **Member:** Rayan Alam
+- **Tool / model:** free-tier ChatGPT (GPT-5.6 Luna)
+- **Files:** `src/utils/pokemonMapper.js`, `src/pages/DetailPage.jsx`, `src/components/EvolutionChain.jsx`, and related CSS
+- **Prompt (verbatim):**
+
+```text
+I want to improve the Pokémon Detail Page by adding Pokédex descriptions and an Evolution Chain section. The descriptions should come from PokéAPI species data, and the evolution chain should show how each Pokémon evolves. Can you help me implement these features while keeping the layout responsive and consistent with the existing design?
+```
+
+- **What it produced & what I changed:** ChatGPT helped with extracting and formatting English Pokédex descriptions from PokéAPI species data and displaying them on the Detail Page. It also assisted with the Evolution Chain section and its integration into the page. I adjusted the layout and styling to keep both sections visually consistent, preserved the original Pokémon artwork, and normalized description text to handle unusual capitalization and line breaks.
+
+## Log
+
+### #6 - Improve Base Stats and Moves Layout
+
+- **Date:** 2026-11-09
+- **Member:** Rayan Alam
+- **Tool / model:** free-tier ChatGPT (GPT-5.6 Luna)
+- **Files:** `src/pages/DetailPage.jsx` + Detail Page CSS
+- **Prompt (verbatim):**
+
+```
+I want to improve the formatting of the Base Stats and Moves cards on the Pokémon Detail Page. The cards are currently too tall, and longer move names wrap awkwardly because of the column layout. Can we make both sections more compact, responsive, and easier to read while keeping the existing move-type colours?
+```
+
+- **What it produced & what I changed:** ChatGPT suggested replacing the existing grids with separate responsive layouts for Base Stats and Moves. It also identified unnecessary CSS padding contributing to the excessive card height. I implemented the new layouts and added a Show All / Show Less button to initially display only 12 moves. I adjusted the styling and fixed an issue where the `moves` variable was referenced before initialization, causing the Detail Page to render blank.
+
+---
+
+## Log
+
+### #7 - Improve Pokémon Cry Player
+
+- **Date:** 2026-11-09
+- **Member:** Rayan Alam
+- **Tool / model:** free-tier ChatGPT (GPT-5.6 Luna)
+- **Files:** `src/pages/DetailPage.jsx` + Detail Page CSS
+- **Prompt (verbatim):**
+
+```
+Could we slightly enhance the design of the Play Cry button on the Pokémon Detail Page? I want a cleaner button with an icon and a subtle audio progress indicator, while keeping the existing useCry hook and overall website styling.
+```
+
+- **What it produced & what I changed:** ChatGPT suggested a redesigned Play Cry button with a Font Awesome icon, a playing state, and a slimmer progress bar. I implemented the JSX and CSS changes while keeping the existing `useCry` functionality. I also removed the bouncing hover animation because I preferred a simpler hover effect with only a border colour change.
