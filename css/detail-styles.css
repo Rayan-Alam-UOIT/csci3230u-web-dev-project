@@ -162,7 +162,7 @@
 .sprites-section {
     margin-top: var(--space-4);
     margin-bottom: var(--space-4);
-    padding-top: var(--space-3);
+    padding-top: 0;
 }
 
 .sprites-heading {
@@ -268,8 +268,9 @@
 }
 
 .play-sound:hover {
-    text-decoration: underline;
-    animation: pulse 0.7s ease-in-out infinite;
+    border-color: var(--color-primary);
+    transform: none;
+    animation: none;
 }
 
 .cry-bar {
@@ -335,7 +336,6 @@
 
     .body-stats {
         grid-template-columns: auto 1fr auto 1fr;
-        padding-bottom: 15.625rem;
     }
 
     .detail-type {
@@ -353,9 +353,9 @@
     }
 
     .body-list {
-        flex-direction: row;
-        gap: 1rem;
-        margin: 1em 0;
+        flex-direction: column;
+        gap: var(--space-3);
+        margin: var(--space-3) 0 0;
     }
 
     .body {
@@ -373,7 +373,7 @@
     }
 
     .sprites-section {
-        margin-bottom: 6.25rem;
+        margin-bottom: var(--space-3);
     }
 
     .sprites-row {
@@ -415,4 +415,282 @@
         width: 200px;
         flex-shrink: 0;
     }
+}
+
+
+/* ---------- Evolution Chain ---------- */
+.evolution-section {
+    margin-top: var(--space-4);
+    padding: var(--space-3);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+}
+
+.evolution-section h2 {
+    margin: 0 0 var(--space-3);
+}
+
+.evolution-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+}
+
+.evolution-step {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.evolution-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+    min-width: 120px;
+    padding: var(--space-2);
+    border: 1px solid #d4d4d8;
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.evolution-card:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-3px);
+}
+
+.evolution-card img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+.evolution-card strong {
+    font-size: var(--font-size-base);
+}
+
+.evolution-card small {
+    color: var(--color-text-muted);
+}
+
+.evolution-method {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.evolution-method span {
+    font-size: 1.75rem;
+}
+
+.evolution-method small {
+    font-size: var(--font-size-sm);
+    text-align: center;
+}
+
+/* ---------- Pokédex Description ---------- */
+.pokedex-description {
+    margin-top: var(--space-3);
+    padding: var(--space-3);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    max-width: none;
+}
+
+.pokedex-description h2 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--font-size-base);
+    font-weight: 700;
+}
+
+.pokedex-description p {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+}
+
+/* ---------- Base Stats & Moves ---------- */
+.stats-card,
+.moves-card {
+    min-width: 0;
+}
+
+/* ---------- Base ---------- */
+.base-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2);
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-1);
+    padding: var(--space-2);
+    background: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+.stat-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.stat-value {
+    font-size: var(--font-size-xl, 1.5rem);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Moves ---------- */
+.moves-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2);
+}
+
+.move-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: var(--space-2);
+    min-width: 0;
+    padding: var(--space-2);
+    background: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+.move-name {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    line-height: 1.4;
+    overflow-wrap: break-word;
+}
+
+.move-item .card-value {
+    padding-right: 0;
+    font-size: var(--font-size-sm);
+}
+
+.move-type-fallback {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+/* ---------- Responsive layout ---------- */
+@media (min-width: 40em) {
+    .base-stats-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .moves-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 64em) {
+    .base-stats-grid {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .moves-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+.moves-toggle {
+    display: block;
+    margin: var(--space-3) auto 0;
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.moves-toggle:hover {
+    border-color: var(--color-primary);
+}
+
+/* ---------- Pokémon Cry Player ---------- */
+.cry-player {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.625rem;
+}
+
+.play-sound {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    min-height: 2.75rem;
+    padding: 0.625rem 1rem;
+    background: var(--color-surface);
+    color: var(--color-text);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-md);
+    font: inherit;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.play-sound:hover {
+    border-color: var(--color-primary);
+}
+
+.play-sound:active {
+    transform: translateY(0);
+}
+
+.play-sound:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+}
+
+.play-sound.playing {
+    border-color: var(--color-primary);
+}
+
+.play-sound i {
+    font-size: 0.875rem;
+}
+
+/* ---------- Audio progress indicator ---------- */
+.cry-bar {
+    width: 100%;
+    max-width: 12rem;
+    height: 5px;
+    background: var(--color-border);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.cry-bar-fill {
+    width: 0;
+    height: 100%;
+    background: var(--color-primary);
+    border-radius: inherit;
 }

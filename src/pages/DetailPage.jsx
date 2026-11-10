@@ -10,6 +10,8 @@ import { useFavourites } from "../hooks/useFavourites";
 import { useMoveTypes } from "../hooks/useMoveTypes";
 import { usePokemonNavigation } from "../hooks/usePokemonNavigation";
 import { capitalize, titleCase } from "../utils/pokemonUtils";
+import EvolutionChain from "../components/EvolutionChain";
+import { useState } from "react";
 
 function DetailPage() {
    useDocumentTitle("Pokéweb - Details");
@@ -24,6 +26,8 @@ function DetailPage() {
    const originLabel = origin === "/favourites" ? "Favourites" : "Pokémon";
 
    const { moveTypes, status: moveStatus, retry: retryMoves } = useMoveTypes(pokemon?.moves);
+
+   const [showAllMoves, setShowAllMoves] = useState(false);
 
    if (status !== "ok") {
       return (
@@ -51,6 +55,8 @@ function DetailPage() {
    const formattedName = capitalize(pokemon.name);
 
    const { types, stats, moves, sprites, artwork } = pokemon;
+
+   const visibleMoves = showAllMoves ? moves : moves.slice(0, 12);
    const availableSprites = SPRITE_ITEMS.filter(({ key }) => sprites[key]);
    const hasSprites = availableSprites.length > 0;
    const hasCry = Boolean(pokemon.cryUrl);
@@ -164,88 +170,95 @@ function DetailPage() {
                </div>
             </li>
 
+            <section className="pokedex-description">
+               <h2>Pokédex Description</h2>
+               <p>{pokemon.description ?? "No Pokédex description available."}</p>
+            </section>
+
+            <EvolutionChain speciesId={pokemon.speciesId ?? pokemon.id} />
+
+            
             <li className="body-row">
                <ul className="body-list">
-                  <li className="body">
-                     <div className="card-row">
-                        <span className="detail-type">BASE STATS</span>
-                     </div>
+                  <li className="body stats-card">
+                        <div className="card-row">
+                           <span className="detail-type">BASE STATS</span>
+                        </div>
 
-                     <div className="body-stats base-stats">
-                        {BASE_STAT_ROWS.map(({ label, stat }) => (
-                           <Fragment key={stat}>
-                              <span className="card-label">{label}</span>
-                              <span className="card-value">
-                                 {" "}
-                                 {stats[stat]}
-                                 {" "}
-                              </span>
-                           </Fragment>
-                        ))}
-                     </div>
+                        <div className="base-stats-grid">
+                           {BASE_STAT_ROWS.map(({ label, stat }) => (
+                              <div className="stat-item" key={stat}>
+                                    <span className="stat-label">
+                                       {label.replace(":", "")}
+                                    </span>
+                                    <span className="stat-value">
+                                       {stats[stat]}
+                                    </span>
+                              </div>
+                           ))}
+                        </div>
                   </li>
 
-                  <li className="body">
-                     <div className="card-row">
-                        <span className="detail-type">MOVES</span>
-                     </div>
+                  <li className="body moves-card">
+                        <div className="card-row">
+                           <span className="detail-type">
+                              MOVES ({moves.length})
+                           </span>
+                        </div>
 
-                     {moveStatus === "loading" && (
-                        <p role="status" aria-live="polite">Loading move types…</p>
-                     )}
+                        {moveStatus === "loading" && (
+                           <p role="status" aria-live="polite">
+                              Loading move types…
+                           </p>
+                        )}
 
-                     {moveStatus === "error" && (
-                        <p role="alert">
-                           Some move types couldn't be loaded.{" "}
-                           <button type="button" onClick={retryMoves}>Try again</button>
-                        </p>
-                     )}
+                        {moveStatus === "error" && (
+                           <p role="alert">
+                              Some move types couldn't be loaded.{" "}
+                              <button type="button" onClick={retryMoves}>
+                                    Try again
+                              </button>
+                           </p>
+                        )}
 
-                     <div className="body-stats">
-                        {moves.map((item) => (
-                           <Fragment key={item.name}>
-                              <span className="card-label">
-                                 {titleCase(item.name)}:
-                              </span>
-                              
-                              {moveTypes[item.name] ? (
-                                 <span className={`card-value type type-${moveTypes[item.name]}`}>
-                                    {titleCase(moveTypes[item.name])}
-                                 </span>
-                              ) : (
-                                 <span className="card-value">
-                                    {moveStatus === "loading" ? "…" : "Unknown"}
-                                 </span>
-                              )}
-                           </Fragment>
-                        ))}
-                     </div>
+                        
+                        <div className="moves-grid">
+                           {visibleMoves.map((item) => (
+                              <div className="move-item" key={item.name}>
+                                    <span className="move-name">
+                                       {titleCase(item.name)}
+                                    </span>
+
+                                    {moveTypes[item.name] ? (
+                                       <span
+                                          className={`card-value type type-${moveTypes[item.name]}`}
+                                       >
+                                          {titleCase(moveTypes[item.name])}
+                                       </span>
+                                    ) : (
+                                       <span className="move-type-fallback">
+                                          {moveStatus === "loading" ? "…" : "Unknown"}
+                                       </span>
+                                    )}
+                              </div>
+                           ))}
+                        </div>
+                        {moves.length > 12 && (
+                           <button
+                              type="button"
+                              className="moves-toggle"
+                              onClick={() => setShowAllMoves((prev) => !prev)}
+                              aria-expanded={showAllMoves}
+                           >
+                              {showAllMoves
+                                    ? "Show Less"
+                                    : `Show All ${moves.length} Moves`}
+                           </button>
+                        )}
                   </li>
                </ul>
             </li>
          </ul>
-
-         <nav className="details-nav">
-            {previousPokemon && (
-               <Link
-                  to={`/pokemon/${previousPokemon.id}`}
-                  className="nav-prev"
-                  state={location.state}
-               >
-                  &larr; Previous Pokemon
-               </Link>
-            )}
-
-            {nextPokemon && (
-               <Link
-                  to={`/pokemon/${nextPokemon.id}`}
-                  className="nav-next"
-                  state={location.state}
-               >
-                  Next Pokemon &rarr;
-               </Link>
-            )}
-         </nav>
 
          <section className="sprites-section" aria-labelledby="sprites-heading">
             <h2 id="sprites-heading" className="sprites-heading">
@@ -289,23 +302,51 @@ function DetailPage() {
                   )}
 
                   {hasCry && (
-                     <>
+                     <div className="cry-player">
                         <button
-                           type="button"
-                           className={`play-sound ${isPlaying ? "playing" : ""}`}
-                           onClick={playCry}
+                              type="button"
+                              className={`play-sound ${isPlaying ? "playing" : ""}`}
+                              onClick={playCry}
+                              aria-label={`Play ${formattedName}'s cry`}
                         >
-                           ▶ Play Cry
+                              <i
+                                 className={`fa-solid ${isPlaying ? "fa-volume-high" : "fa-play"}`}
+                                 aria-hidden="true"
+                              ></i>
+                              <span>{isPlaying ? "Playing Cry..." : "Play Cry"}</span>
                         </button>
 
                         <div className="cry-bar" aria-hidden="true">
-                           <div className="cry-bar-fill" ref={fillRef} />
+                              <div className="cry-bar-fill" ref={fillRef} />
                         </div>
-                     </>
+                     </div>
                   )}
                </div>
             )}
          </section>
+
+
+         <nav className="details-nav">
+            {previousPokemon && (
+               <Link
+                  to={`/pokemon/${previousPokemon.id}`}
+                  className="nav-prev"
+                  state={location.state}
+               >
+                  &larr; Previous Pokemon
+               </Link>
+            )}
+
+            {nextPokemon && (
+               <Link
+                  to={`/pokemon/${nextPokemon.id}`}
+                  className="nav-next"
+                  state={location.state}
+               >
+                  Next Pokemon &rarr;
+               </Link>
+            )}
+         </nav>
       </div>
    );
 }
