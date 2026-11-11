@@ -263,7 +263,7 @@ select:focus-visible,
    flex-direction: column;
    gap: var(--space-3);
    /* extra bottom padding leaves room for type badges etc. later */
-   padding: var(--space-3) var(--space-3) var(--space-6);
+   padding: var(--space-3) var(--space-3) var(--space-4);
    border: var(--border-width) solid var(--color-border);
    border-radius: var(--radius-md);
    background: var(--color-bg);
@@ -285,6 +285,12 @@ select:focus-visible,
 }
 
 .card-info {
+   display: flex;
+   flex-direction: column;
+   gap: var(--space-2);
+}
+
+.card-info-top {
    display: flex;
    align-items: center;
    justify-content: space-between;
@@ -329,6 +335,23 @@ select:focus-visible,
    content: "";
    position: absolute;
    inset: 0;
+}
+
+.card-info-bottom {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: var(--space-2);
+   flex-wrap: wrap;
+}
+
+.card-types {
+   display: flex;
+   flex-wrap: wrap;
+   align-items: center;
+   gap: var(--space-2);
+   font-size: large;
+   font-weight: 650;
 }
 
 /* ---------- Favourite (heart) toggle ---------- */
