@@ -14,52 +14,71 @@ async function fetchJson(url, signal) {
    return response.json();
 }
 
-async function inBatches(items, size, task) {
-   const output = [];
-   for (let i = 0; i < items.length; i += size) {
-      const batch = items.slice(i, i + size);
-      output.push(...(await Promise.all(batch.map(task))));
-   }
-   return output;
-}
-
 export function usePokemonData() {
    const [pokemonData, setPokemonData] = useState([]);
    const [status, setStatus] = useState("loading");
+   const [isLoadingMore, setIsLoadingMore] = useState(true);
    const [attempt, setAttempt] = useState(0);
 
    const retry = useCallback(() => {
       setStatus("loading");
       setAttempt((n) => n + 1);
    }, []);
-   
+
    useEffect(() => {
       const controller = new AbortController();
       const { signal } = controller;
 
       async function load() {
+         setPokemonData([]);
+         setStatus("loading");
+         setIsLoadingMore(true);
+
          try {
-            const { results } = await fetchJson(POKEMON_DATA_URL, signal);
+            const { results } = await fetchJson(
+               POKEMON_DATA_URL,
+               signal
+            );
 
-            const details = await inBatches(results, BATCH_SIZE, async ({ url }) => {
-               const pokemon = await fetchJson(url, signal);
-               const species = await fetchJson(pokemon.species.url, signal);
-               return toPokemon(pokemon, species);
-            });
+            for (let i = 0; i < results.length; i += BATCH_SIZE) {
+               const batch = results.slice(i, i + BATCH_SIZE);
 
-            setPokemonData(details);
-            setStatus("ok");
+               const details = await Promise.all(
+                  batch.map(async ({ url }) => {
+                     const pokemon = await fetchJson(url, signal);
+                     const species = await fetchJson(
+                        pokemon.species.url,
+                        signal
+                     );
+                     return toPokemon(pokemon, species);
+                  })
+               );
+
+               if (signal.aborted) return;
+
+               setPokemonData((prev) => [...prev, ...details]);
+
+               if (i === 0) {
+                  setStatus("ok");
+               }
+            }
+
+            if (!signal.aborted) {
+               setStatus("ok");
+               setIsLoadingMore(false);
+            }
          } catch (error) {
-            if (error.name === "AbortError") return;
+            if (signal.aborted) return;
             console.error(error);
             setPokemonData([]);
             setStatus("error");
+            setIsLoadingMore(false);
          }
       }
 
       load();
       return () => controller.abort();
    }, [attempt]);
-   
-   return { pokemonData, status, retry };
+
+   return { pokemonData, status, retry, isLoadingMore };
 }
