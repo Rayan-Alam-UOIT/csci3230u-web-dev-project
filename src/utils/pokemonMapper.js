@@ -21,6 +21,8 @@ export function toPokemon(rawPokemon, rawSpecies) {
         name: rawPokemon.name,
         generation: rawSpecies.generation.name,
         types: rawPokemon.types.map((t) => t.type.name),
+        is_legendary: rawSpecies.is_legendary,
+        is_mythical: rawSpecies.is_mythical,
         heightM: rawPokemon.height / 10,
         weightKg: rawPokemon.weight / 10,
         abilities: rawPokemon.abilities.map((a) => a.ability.name),

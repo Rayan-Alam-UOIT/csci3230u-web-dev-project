@@ -68,6 +68,16 @@
     align-items: flex-start;
 }
 
+.head-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    width: 100%;
+    margin-bottom: var(--space-2);
+}
+
 .head-name {
     margin: 0 0 var(--space-2);
     font-size: var(--font-size-2xl);
