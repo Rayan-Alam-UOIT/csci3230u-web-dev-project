@@ -62,6 +62,20 @@ function PokemonCard({ pokemon, onToggleFavourite }) {
                      </span>
                   ))}
                </div>
+
+               <div className="card-status">
+                  {is_legendary && (
+                     <span className="status-badge status-legendary">
+                        LEGENDARY
+                     </span>
+                  )}
+
+                  {is_mythical && (
+                     <span className="status-badge status-mythical">
+                        MYTHICAL
+                     </span>
+                  )}
+               </div>
             </div>
          </div>
       </li>

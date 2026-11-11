@@ -54,7 +54,7 @@ function DetailPage() {
 
    const formattedName = capitalize(pokemon.name);
 
-   const { types, stats, moves, sprites, artwork } = pokemon;
+   const { types, is_legendary, is_mythical, stats, moves, sprites, artwork } = pokemon;
 
    const visibleMoves = showAllMoves ? moves : moves.slice(0, 12);
    const availableSprites = SPRITE_ITEMS.filter(({ key }) => sprites[key]);
@@ -85,12 +85,26 @@ function DetailPage() {
                </div>
 
                <div className="head-info">
-                  <h1 className="head-name">
-                     <span className="dex-number">
-                        #{String(pokemon.id).padStart(3, "0")}
-                     </span>{" "}
-                     {formattedName}
-                  </h1>
+                  <div className="head-title-row">
+                     <h1 className="head-name">
+                        <span className="dex-number">
+                           #{String(pokemon.id).padStart(3, "0")}
+                        </span>{" "}
+                        {formattedName}
+                     </h1>
+
+                     {is_legendary && (
+                        <span className="status-badge status-legendary">
+                           LEGENDARY
+                        </span>
+                     )}
+
+                     {is_mythical && (
+                        <span className="status-badge status-mythical">
+                           MYTHICAL
+                        </span>
+                     )}
+                  </div>
 
                   <div className="card-row">
                      {types.map((type) => (

@@ -354,6 +354,36 @@ select:focus-visible,
    font-weight: 650;
 }
 
+.card-status {
+   display: flex;
+   align-items: center;
+   gap: var(--space-1);
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-2) var(--space-3);
+    border-radius: 50rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+}
+
+.status-legendary {
+    color: #78520b;
+    background-color: #fff0bf;
+    border: 1px solid #d4a72c;
+}
+
+.status-mythical {
+    color: #713b91;
+    background-color: #f1dfff;
+    border: 1px solid #b57ad5;
+}
+
 /* ---------- Favourite (heart) toggle ---------- */
 .fav {
    position: relative;
