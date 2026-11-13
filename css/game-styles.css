@@ -366,7 +366,7 @@
 }
  
 .clues__suggestions {
-   position: absolute;
+   position: absolute; 
    top: 100%;
    left: 0;
    right: 0;
@@ -377,6 +377,8 @@
    margin: var(--space-1) 0 0;
    padding: 0;
    list-style: none;
+   max-height: 10rem;
+   overflow-y: auto;
 }
  
 .clues__suggestion {
