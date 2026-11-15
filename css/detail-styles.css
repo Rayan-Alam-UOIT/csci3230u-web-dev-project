@@ -1,3 +1,5 @@
+/* AI-assisted - see AI-USAGE.md #<8> */
+
 /* =========================================================
    POKÉWEB - DETAIL PAGE STYLES
    This file only adds what's specific to this page: the 
@@ -6,12 +8,8 @@
    with its enlarge-on-click popovers.
    ========================================================= */
 
-/* ---------- Page wrapper ---------- */
-.page {
-    padding-block: var(--space-3) var(--space-4);
-}
 
-/* ---------- Results heading ---------- */
+/* ---------- Back to Pokemon Button ---------- */
 .back-button {
     display: inline-flex;
     align-items: center;
@@ -20,7 +18,7 @@
     font-size: var(--font-size-base);
     font-weight: 400;
     opacity: 0.80;
-    color: black;
+    color: var(--color-text);
     text-decoration: none;
 }
 
@@ -29,6 +27,8 @@
     text-decoration: underline;
 }
 
+
+/* ---------- List of Cards (Head, Pokedex Description, Evolution Chain, Base Stats, Moves) ---------- */
 .card-list {
     display: flex;
     flex-direction: column;
@@ -37,6 +37,8 @@
     margin: 0;
 }
 
+
+/* ---------- Head Card (includes the official artwork, number, name, type(s), favourite button, height, weight, abilities, and egg group ---------- */
 .head {
     display: flex;
     flex-direction: column;
@@ -47,6 +49,7 @@
     background: var(--color-bg);
 }
 
+/* Holds the official artwork */
 .head-image {
     aspect-ratio: 1;
     width: 100%;
@@ -62,6 +65,7 @@
     object-fit: contain;
 }
 
+/* Holds all textual Pokemon fields (number, name, type(s), favourite button, height, weight, abilities, and egg group) */
 .head-info {
     display: flex;
     flex-direction: column;
@@ -84,8 +88,22 @@
     font-weight: 700;
 }
 
-.head-stats,
-.body-stats {
+.card-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.card-value {
+    min-width: 0;
+    text-align: left;
+    font-weight: bold;
+    font-size: var(--font-size-md);
+    overflow-wrap: anywhere;
+}
+
+/* Head stats are the Pokemon's height, weight, abilities, and egg group */
+.head-stats {
     display: grid;
     grid-template-columns: auto 1fr;
     column-gap: var(--space-3);
@@ -93,34 +111,101 @@
     margin: 0;
 }
 
-.detail-type {
-    font-weight: bold;
-    font-size: large;
-    padding-right: var(--space-2);
-}
-
-.card-row {
-    display: flex;
-    align-items: center;
-    gap: 0.3125rem;
+.head-stats .card-value {
+    color: var(--color-text-muted);
+    font-weight: 650;
 }
 
 .card-label {
     text-align: left;
 }
 
-.card-value {
-    min-width: 0;
-    text-align: left;
-    font-weight: bold;
-    font-size: large;
-    overflow-wrap: anywhere;
+/* Used for the official shiny artwork */
+.artwork-shiny-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
 }
 
-.head-stats .card-value,
-.base-stats .card-value {
-    color: #5c5b5b;
-    font-weight: 650;
+.artwork-shiny-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr));
+    gap: var(--space-2);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.artwork-shiny-thumb-btn {
+    display: block;
+    width: 100%;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: zoom-in;
+    padding-bottom: var(--space-2);
+}
+
+.artwork-shiny-thumb-img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: contain;
+    background: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+}
+
+.head-info .artwork-shiny-thumb-img {
+    width: 4rem;
+    height: 4rem;
+    object-fit: contain;
+}
+
+.artwork-shiny-lightbox {
+    box-sizing: border-box;
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    width: min(90vw, 20rem);
+    height: auto;
+    max-height: 90dvh;
+    padding: var(--space-3);
+    background: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-md);
+    image-rendering: pixelated;
+}
+
+.artwork-shiny-lightbox:not(:popover-open) {
+    display: none;
+}
+
+.artwork-shiny-lightbox::backdrop {
+    background: rgb(0 0 0 / 0.6);
+}
+
+
+/* ---------- Pokédex Description ---------- */
+.pokedex-description {
+    margin-top: var(--space-3);
+    padding: var(--space-3);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    max-width: none;
+}
+
+.pokedex-description h2 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--font-size-base);
+    font-weight: 700;
+}
+
+.pokedex-description p {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-base);
+    line-height: 1.6;
 }
 
 .body-list {
@@ -137,294 +222,6 @@
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--radius-md);
     background: var(--color-bg);
-}
-
-.details-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    max-width: 68.75rem;
-    margin-inline: auto;
-    padding-block: var(--space-2);
-}
-
-.nav-prev,
-.nav-next {
-    display: inline-flex;
-    align-items: center;
-    min-height: 2.75rem;
-    text-decoration: none;
-    font-weight: 600;
-    color: inherit;
-}
-
-.nav-next {
-    margin-left: auto;
-}
-
-.nav-prev:hover,
-.nav-next:hover {
-    text-decoration: underline;
-}
-
-/* ---------- Sprites & Cry section ---------- */
-.sprites-section {
-    margin-top: var(--space-4);
-    margin-bottom: var(--space-4);
-    padding-top: 0;
-}
-
-.sprites-heading {
-    font-size: var(--font-size-base);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    margin: 0 0 var(--space-3);
-}
-
-.sprites-row {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-}
-
-.sprites-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr));
-    gap: var(--space-2);
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.sprite-link-off,
-.sprite-link {
-    display: block;
-    width: 100%;
-    background: none;
-    border: 0;
-    padding: 0;
-    cursor: zoom-in;
-}
-
-.sprite-link-off {
-    padding-bottom: 0.67rem;
-}
-
-.sprite-img-off,
-.sprite-img {
-    display: block;
-    width: 100%;
-    aspect-ratio: 1;
-    object-fit: contain;
-    background: var(--color-surface);
-    border: var(--border-width) solid var(--color-border);
-}
-
-.sprite-img {
-    border-radius: var(--radius-md);
-    image-rendering: pixelated;
-}
-
-.sprite-popover {
-    box-sizing: border-box;
-    position: fixed;
-    inset: 0;
-    margin: auto;
-    width: min(90vw, 20rem);
-    height: auto;
-    max-height: 90dvh;
-    padding: var(--space-3);
-    background: var(--color-surface);
-    border: var(--border-width) solid var(--color-border);
-    border-radius: var(--radius-md);
-    image-rendering: pixelated;
-}
-
-.sprite-popover:not(:popover-open) {
-    display: none;
-}
-
-.sprite-popover::backdrop {
-    background: rgb(0 0 0 / 0.6);
-}
-
-.head-info .sprite-img-off {
-   width: 4rem;
-   height: 4rem;
-   object-fit: contain;
-}
-
-.play-sound {
-    display: flex;
-    align-items: center;
-    transform-origin: left center;
-    gap: var(--space-2);
-    min-height: 2.75rem;
-    background: none;
-    border: none;
-    padding: 0;
-    font: inherit;
-    font-weight: 600;
-    color: black;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-@keyframes pulse {
-   0%, 100% { transform: scale(1); }
-   50%      { transform: scale(1.1); }
-}
-
-.play-sound:hover {
-    border-color: var(--color-primary);
-    transform: none;
-    animation: none;
-}
-
-.cry-bar {
-   width: 200px;
-   height: 8px;
-   background: var(--color-surface);
-   border: var(--border-width) solid var(--color-border);
-   border-radius: 4px;
-   overflow: hidden;
-}
-
-.cry-bar-fill {
-    height: 100%;
-    width: 0;
-    background: gold;
-}
-
-@media (min-width: 40em) {
-    .page {
-        padding-block: var(--space-4) var(--space-5);
-    }
-
-    .back-button {
-        display: inline-block;
-        min-height: 0;
-        margin: var(--space-4) 0 var(--space-3);
-    }
-
-    .head {
-        flex-direction: row;
-        padding: 0 var(--space-3);
-    }
-
-    .head-image {
-        width: 30%;
-        max-width: none;
-        margin: 1.0625rem 0;
-    }
-
-    .head-image img {
-        width: auto;
-        object-fit: fill;
-    }
-
-    .head-info {
-        padding: 1.125rem 0 0 0.625rem;
-    }
-
-    .head-name {
-        margin: 0;
-    }
-
-    .head-stats,
-    .body-stats {
-        column-gap: 1.875rem;
-        row-gap: 0;
-        margin: revert;
-    }
-
-    .head-stats {
-        padding-bottom: 3rem;
-    }
-
-    .body-stats {
-        grid-template-columns: auto 1fr auto 1fr;
-    }
-
-    .detail-type {
-        padding-right: 1.25rem;
-    }
-
-    .card-row {
-        padding-bottom: 1.1875rem;
-    }
-
-    .card-value {
-        padding-right: 1.25rem;
-        min-width: auto;
-        overflow-wrap: normal;
-    }
-
-    .body-list {
-        flex-direction: column;
-        gap: var(--space-3);
-        margin: var(--space-3) 0 0;
-    }
-
-    .body {
-        flex: 1;
-        padding: 1.3125rem;
-    }
-
-    .details-nav {
-        padding-block: 1rem;
-    }
-
-    .nav-prev,
-    .nav-next {
-        min-height: 0;
-    }
-
-    .sprites-section {
-        margin-bottom: var(--space-3);
-    }
-
-    .sprites-row {
-        flex-direction: row;
-        align-items: center;
-        gap: var(--space-4);
-    }
-
-    .sprites-list {
-        display: flex;
-        gap: var(--space-3);
-        margin-right: var(--space-2);
-    }
-
-    .sprite-link-off,
-    .sprite-link {
-        width: auto;
-    }
-
-    .sprite-img-off,
-    .sprite-img {
-        display: inline;
-        width: 4rem;
-        height: 4rem;
-        aspect-ratio: auto;
-    }
-
-    .sprite-popover {
-        box-sizing: content-box;
-        max-height: none;
-    }
-
-    .play-sound {
-        gap: 0;
-        min-height: 0;
-    }
-
-    .cry-bar {
-        width: 200px;
-        flex-shrink: 0;
-    }
 }
 
 
@@ -460,24 +257,24 @@
     flex-direction: column;
     align-items: center;
     gap: var(--space-1);
-    min-width: 120px;
+    min-width: var(--size-card-min);
     padding: var(--space-2);
-    border: 1px solid #d4d4d8;
+    border: var(--border-width) solid var(--color-border-subtle);
     border-radius: var(--radius-md);
     background: var(--color-surface);
     color: var(--color-text);
     text-decoration: none;
-    transition: border-color 0.2s, transform 0.2s;
+    transition: border-color var(--transition-fast), transform var(--transition-fast);
 }
 
 .evolution-card:hover {
     border-color: var(--color-primary);
-    transform: translateY(-3px);
+    transform: translateY(-0.1875rem);
 }
 
 .evolution-card img {
-    width: 100px;
-    height: 100px;
+    width: var(--size-thumb);
+    height: var(--size-thumb);
     object-fit: contain;
 }
 
@@ -499,7 +296,7 @@
 }
 
 .evolution-method span {
-    font-size: 1.75rem;
+    font-size: var(--font-size-xl);
 }
 
 .evolution-method small {
@@ -507,36 +304,18 @@
     text-align: center;
 }
 
-/* ---------- Pokédex Description ---------- */
-.pokedex-description {
-    margin-top: var(--space-3);
-    padding: var(--space-3);
-    border: var(--border-width) solid var(--color-border);
-    border-radius: var(--radius-md);
-    background: var(--color-bg);
-    max-width: none;
-}
 
-.pokedex-description h2 {
-    margin: 0 0 var(--space-2);
-    font-size: var(--font-size-base);
-    font-weight: 700;
-}
-
-.pokedex-description p {
-    margin: 0;
-    color: var(--color-text-muted);
-    font-size: var(--font-size-base);
-    line-height: 1.6;
-}
-
-/* ---------- Base Stats & Moves ---------- */
-.stats-card,
-.moves-card {
+/* ---------- Base Stats ---------- */
+.stats-card {
     min-width: 0;
 }
 
-/* ---------- Base ---------- */
+.detail-type {
+    font-weight: bold;
+    font-size: var(--font-size-md);
+    padding-right: var(--space-2);
+}
+
 .base-stats-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -566,7 +345,12 @@
     font-variant-numeric: tabular-nums;
 }
 
+
 /* ---------- Moves ---------- */
+.moves-card {
+    min-width: 0;
+}
+
 .moves-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -603,27 +387,6 @@
     color: var(--color-text-muted);
 }
 
-/* ---------- Responsive layout ---------- */
-@media (min-width: 40em) {
-    .base-stats-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .moves-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-}
-
-@media (min-width: 64em) {
-    .base-stats-grid {
-        grid-template-columns: repeat(6, minmax(0, 1fr));
-    }
-
-    .moves-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-}
-
 .moves-toggle {
     display: block;
     margin: var(--space-3) auto 0;
@@ -641,21 +404,96 @@
     border-color: var(--color-primary);
 }
 
-/* ---------- Pokémon Cry Player ---------- */
+
+/* ---------- Sprites ---------- */
+.sprites-section {
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-4);
+    padding-top: 0;
+}
+
+.sprites-heading {
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin: 0 0 var(--space-3);
+}
+
+.sprites-row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.sprites-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr));
+    gap: var(--space-2);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sprite-link {
+    display: block;
+    width: 100%;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: zoom-in;
+}
+
+.sprite-img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: contain;
+    background: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-md);
+    image-rendering: pixelated;
+}
+
+.sprite-popover {
+    box-sizing: border-box;
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    width: min(90vw, 20rem);
+    height: auto;
+    max-height: 90dvh;
+    padding: var(--space-3);
+    background: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-md);
+    image-rendering: pixelated;
+}
+
+.sprite-popover:not(:popover-open) {
+    display: none;
+}
+
+.sprite-popover::backdrop {
+    background: rgb(0 0 0 / 0.6);
+}
+
+
+/* ---------- Play Cry Button and Cry Bar ---------- */
 .cry-player {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.625rem;
+    gap: var(--space-2);
 }
 
 .play-sound {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.625rem;
+    gap: var(--space-2);
     min-height: 2.75rem;
-    padding: 0.625rem 1rem;
+    padding: var(--space-2) var(--space-3);
     background: var(--color-surface);
     color: var(--color-text);
     border: var(--border-width) solid var(--color-border);
@@ -663,8 +501,10 @@
     font: inherit;
     font-size: var(--font-size-sm);
     font-weight: 600;
+    text-decoration: none;
+    transform-origin: left center;
     cursor: pointer;
-    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
 }
 
 .play-sound:hover {
@@ -676,8 +516,8 @@
 }
 
 .play-sound:focus-visible {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 3px;
+    outline: 0.125rem solid var(--color-primary);
+    outline-offset: 0.1875rem;
 }
 
 .play-sound.playing {
@@ -685,22 +525,225 @@
 }
 
 .play-sound i {
-    font-size: 0.875rem;
+    font-size: var(--font-size-sm);
 }
 
-/* ---------- Audio progress indicator ---------- */
 .cry-bar {
     width: 100%;
-    max-width: 12rem;
-    height: 5px;
-    background: var(--color-border);
-    border-radius: 999px;
+    max-width: var(--size-bar-width);
+    height: var(--size-bar-height);
+    background: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-pill);
     overflow: hidden;
 }
 
 .cry-bar-fill {
     width: 0;
     height: 100%;
-    background: var(--color-primary);
+    background: var(--color-accent);
     border-radius: inherit;
+}
+
+
+/* ---------- Previous / Next Navigation ---------- */
+.details-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding-block: var(--space-2);
+}
+
+.nav-prev,
+.nav-next {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    text-decoration: none;
+    font-weight: 600;
+    color: inherit;
+}
+
+.nav-next {
+    margin-left: auto;
+}
+
+.nav-prev:hover,
+.nav-next:hover {
+    text-decoration: underline;
+}
+
+
+/* ---------- Responsive Layout ---------- */
+@media (min-width: 40em) {
+    /* Back to Pokemon Button */
+    .back-button {
+        display: inline-block;
+        min-height: 0;
+        margin: var(--space-4) 0 var(--space-3);
+    }
+
+    /* Head Card */
+    .head {
+        flex-direction: row;
+        padding: 0 var(--space-3);
+    }
+
+    .head-image {
+        width: 30%;
+        max-width: none;
+        margin: var(--space-3) 0;
+    }
+
+    .head-image img {
+        width: auto;
+        object-fit: fill;
+    }
+
+    .head-info {
+        padding: var(--space-3) 0 0 var(--space-2);
+    }
+
+    .head-name {
+        margin: 0;
+    }
+
+    .card-row {
+        padding-bottom: var(--space-3);
+    }
+
+    .card-value {
+        padding-right: var(--space-3);
+        min-width: auto;
+        overflow-wrap: normal;
+    }
+
+    .head-stats {
+        column-gap: var(--space-5);
+        row-gap: 0;
+        margin: revert;
+        padding-bottom: var(--space-6);
+    }
+
+    .artwork-shiny-section {
+        flex-direction: row;
+        align-items: center;
+        gap: var(--space-4);
+    }
+
+    .artwork-shiny-grid {
+        display: flex;
+        gap: var(--space-3);
+        margin-right: var(--space-2);
+    }
+
+    .artwork-shiny-thumb-btn {
+        width: auto;
+    }
+
+    .artwork-shiny-thumb-img {
+        display: inline;
+        width: 4rem;
+        height: 4rem;
+        aspect-ratio: auto;
+    }
+
+    .artwork-shiny-lightbox {
+        box-sizing: content-box;
+        max-height: none;
+    }
+
+    .body-list {
+        flex-direction: column;
+        gap: var(--space-3);
+        margin: var(--space-3) 0 0;
+    }
+
+    .body {
+        flex: 1;
+        padding: var(--space-3);
+    }
+
+    /* Base Stats */
+    .detail-type {
+        padding-right: var(--space-3); 
+    }
+
+    .base-stats-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    /* Moves */
+    .moves-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    /* Sprites */
+    .sprites-section {
+        margin-bottom: var(--space-3);
+    }
+
+    .sprites-row {
+        flex-direction: row;
+        align-items: center;
+        gap: var(--space-4);
+    }
+
+    .sprites-list {
+        display: flex;
+        gap: var(--space-3);
+        margin-right: var(--space-2);
+    }
+
+    .sprite-link {
+        width: auto;
+    }
+
+    .sprite-img {
+        display: inline;
+        width: 4rem;
+        height: 4rem;
+        aspect-ratio: auto;
+    }
+
+    .sprite-popover {
+        box-sizing: content-box;
+        max-height: none;
+    }
+
+    /* Play Cry Button and Cry Bar */
+    .play-sound {
+        gap: 0;
+        min-height: 0;
+    }
+
+    .cry-bar {
+        width: var(--size-bar-width);
+        flex-shrink: 0;
+    }
+
+    /* Previous / Next Navigation */
+    .details-nav {
+        padding-block: var(--space-3);
+    }
+
+    .nav-prev,
+    .nav-next {
+        min-height: 0;
+    }
+}
+
+@media (min-width: 64em) {
+    /* Base Stats */
+    .base-stats-grid {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    /* Moves */
+    .moves-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
 }

@@ -80,7 +80,6 @@ function DetailPage() {
                      id="pokemon-img"
                      src={artwork.default}
                      alt={formattedName}
-                     className="pokecard-image"
                   />
                </div>
 
@@ -156,25 +155,25 @@ function DetailPage() {
                      <span className="card-label">Egg Group:</span>
                      <span className="card-value">{eggGroups}</span>
                   </div>
-                  <div className="sprites-row">
-                     <ul className="sprites-list">
+                  <div className="artwork-shiny-section">
+                     <ul className="artwork-shiny-grid">
                         <li>
                            <button
                               type="button"
-                              className="sprite-link-off"
+                              className="artwork-shiny-thumb-btn"
                               popoverTarget="artwork-shiny"
                            >
                               <img
                                  src={artwork.shiny}
                                  alt={`${formattedName} shiny official artwork`}
-                                 className="sprite-img-off"
+                                 className="artwork-shiny-thumb-img"
                               />
                            </button>
 
                            <img
                               popover="auto"
                               id="artwork-shiny"
-                              className="sprite-popover"
+                              className="artwork-shiny-lightbox"
                               src={artwork.shiny}
                               alt={`${formattedName} shiny official artwork, enlarged`}
                            />
@@ -192,86 +191,84 @@ function DetailPage() {
             <EvolutionChain speciesId={pokemon.speciesId ?? pokemon.id} />
 
             
-            <li className="body-row">
-               <ul className="body-list">
-                  <li className="body stats-card">
-                        <div className="card-row">
-                           <span className="detail-type">BASE STATS</span>
-                        </div>
+            <ul className="body-list">
+               <li className="body stats-card">
+                     <div className="card-row">
+                        <span className="detail-type">BASE STATS</span>
+                     </div>
 
-                        <div className="base-stats-grid">
-                           {BASE_STAT_ROWS.map(({ label, stat }) => (
-                              <div className="stat-item" key={stat}>
-                                    <span className="stat-label">
-                                       {label.replace(":", "")}
-                                    </span>
-                                    <span className="stat-value">
-                                       {stats[stat]}
-                                    </span>
-                              </div>
-                           ))}
-                        </div>
-                  </li>
+                     <div className="base-stats-grid">
+                        {BASE_STAT_ROWS.map(({ label, stat }) => (
+                           <div className="stat-item" key={stat}>
+                                 <span className="stat-label">
+                                    {label.replace(":", "")}
+                                 </span>
+                                 <span className="stat-value">
+                                    {stats[stat]}
+                                 </span>
+                           </div>
+                        ))}
+                     </div>
+               </li>
 
-                  <li className="body moves-card">
-                        <div className="card-row">
-                           <span className="detail-type">
-                              MOVES ({moves.length})
-                           </span>
-                        </div>
+               <li className="body moves-card">
+                     <div className="card-row">
+                        <span className="detail-type">
+                           MOVES ({moves.length})
+                        </span>
+                     </div>
 
-                        {moveStatus === "loading" && (
-                           <p role="status" aria-live="polite">
-                              Loading move types…
-                           </p>
-                        )}
+                     {moveStatus === "loading" && (
+                        <p role="status" aria-live="polite">
+                           Loading move types…
+                        </p>
+                     )}
 
-                        {moveStatus === "error" && (
-                           <p role="alert">
-                              Some move types couldn't be loaded.{" "}
-                              <button type="button" onClick={retryMoves}>
-                                    Try again
-                              </button>
-                           </p>
-                        )}
-
-                        
-                        <div className="moves-grid">
-                           {visibleMoves.map((item) => (
-                              <div className="move-item" key={item.name}>
-                                    <span className="move-name">
-                                       {titleCase(item.name)}
-                                    </span>
-
-                                    {moveTypes[item.name] ? (
-                                       <span
-                                          className={`card-value type type-${moveTypes[item.name]}`}
-                                       >
-                                          {titleCase(moveTypes[item.name])}
-                                       </span>
-                                    ) : (
-                                       <span className="move-type-fallback">
-                                          {moveStatus === "loading" ? "…" : "Unknown"}
-                                       </span>
-                                    )}
-                              </div>
-                           ))}
-                        </div>
-                        {moves.length > 12 && (
-                           <button
-                              type="button"
-                              className="moves-toggle"
-                              onClick={() => setShowAllMoves((prev) => !prev)}
-                              aria-expanded={showAllMoves}
-                           >
-                              {showAllMoves
-                                    ? "Show Less"
-                                    : `Show All ${moves.length} Moves`}
+                     {moveStatus === "error" && (
+                        <p role="alert">
+                           Some move types couldn't be loaded.{" "}
+                           <button type="button" onClick={retryMoves}>
+                                 Try again
                            </button>
-                        )}
-                  </li>
-               </ul>
-            </li>
+                        </p>
+                     )}
+
+                     
+                     <div className="moves-grid">
+                        {visibleMoves.map((item) => (
+                           <div className="move-item" key={item.name}>
+                                 <span className="move-name">
+                                    {titleCase(item.name)}
+                                 </span>
+
+                                 {moveTypes[item.name] ? (
+                                    <span
+                                       className={`card-value type type-${moveTypes[item.name]}`}
+                                    >
+                                       {titleCase(moveTypes[item.name])}
+                                    </span>
+                                 ) : (
+                                    <span className="move-type-fallback">
+                                       {moveStatus === "loading" ? "…" : "Unknown"}
+                                    </span>
+                                 )}
+                           </div>
+                        ))}
+                     </div>
+                     {moves.length > 12 && (
+                        <button
+                           type="button"
+                           className="moves-toggle"
+                           onClick={() => setShowAllMoves((prev) => !prev)}
+                           aria-expanded={showAllMoves}
+                        >
+                           {showAllMoves
+                                 ? "Show Less"
+                                 : `Show All ${moves.length} Moves`}
+                        </button>
+                     )}
+               </li>
+            </ul>
          </ul>
 
          <section className="sprites-section" aria-labelledby="sprites-heading">

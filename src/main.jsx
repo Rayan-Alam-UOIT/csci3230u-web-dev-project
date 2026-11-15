@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 
 import "../css/global-styles.css";
+import "../css/filter-styles.css";
 import "../css/list-styles.css";
 import "../css/favourite-styles.css";
 import "../css/game-styles.css";

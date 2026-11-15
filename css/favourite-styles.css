@@ -1,33 +1,5 @@
 /* =========================================================
    POKÉWEB — FAVOURITES PAGE STYLES
-   This file only adds what's specific to this page: the
-   page heading and the saved-count summary above the grid.
-   Header/footer/tokens come from global-styles.css.
    ========================================================= */
 
-/* ---------- Page wrapper ---------- */
-.page {
-   padding-block: var(--space-4) var(--space-5);
-}
-
-.page-title {
-   margin: 0 0 var(--space-1);
-   font-size: var(--font-size-2xl);
-}
-
-/* ---------- Favourites heading ---------- */
-.favourites-heading {
-   margin: var(--space-4) 0 var(--space-3);
-   font-size: var(--font-size-lg);
-   font-weight: 700;
-}
-
-/* ---------- Clickable card hover ---------- */
-.card {
-   transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.card:has(.card-link):hover {
-   transform: translateY(-4px);
-   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-}
+/* There are currently no styles specific to the Favourites Page */

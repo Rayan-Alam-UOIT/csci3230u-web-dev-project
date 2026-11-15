@@ -35,7 +35,7 @@ function FavouritesPage({ searchQuery = "", onSearchChange }) {
 
       {hasFavourites && <FilterPanel filters={filters} />}
 
-      <h2 className="favourites-heading">
+      <h2 className="results-heading">
         Your saved Pokémon <span aria-hidden="true">•</span>{" "}
         {resultCount === favourites.length
           ? `${favourites.length} favourites`

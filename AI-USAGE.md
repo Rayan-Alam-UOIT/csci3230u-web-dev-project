@@ -131,3 +131,19 @@ Could we slightly enhance the design of the Play Cry button on the Pokémon Deta
 ```
 
 - **What it produced & what I changed:** ChatGPT suggested a redesigned Play Cry button with a Font Awesome icon, a playing state, and a slimmer progress bar. I implemented the JSX and CSS changes while keeping the existing `useCry` functionality. I also removed the bouncing hover animation because I preferred a simpler hover effect with only a border colour change.
+
+---
+
+## Log
+
+### #8 - Additions to Root
+- **Date:** 2026-11-14
+- **Member:** Mason Shipton
+- **Tool / model:** free-tier Claude (Claude Sonnet 5.5)
+- **Files:** `detail-styles.css`, `game-styles.css`, `global-styles.css`
+- **Prompt (verbatim):**
+
+```
+Please help me turn my font sizes, colours, and other properties in my css files into root variables. Provide the updated root as well as what to change in each of my css files. 
+```
+- **What it produced & what I changed:** It provided an updated `:root` for my `global-styles.css` which I replaced my original with. This new `:root` had new variables for text, background, and border colours; badge colours, font sizes, shapes, sizing, and transitions. Claude told me every rule in `detail-styles.css`, `game-styles.css`, `global-styles.css` to change to use our new root variables. After Claude's changes, I moved the filter CSS rules to it's own file (`filter-styles.css`) so that the `global-styles.css` is less cluttered and more easy to read. I re-organized the CSS rules across all the files so that the rules for each component are lumped together (e.g., all the CSS rules for the Game Picker Cards in the Game Page can be found under a comment `/* ---------- Game Picker Cards ---------- */` in `game-styles.css`). For `detail-styles.css`, I made new CSS rules for `artwork-shiny-...` for the official shiny Pokemon artwork used in the head. Before, both that artwork and the sprites at the bottom of the Detail Page used the same rules, which could cause issues long term if we want to change those rules for only one of them.
