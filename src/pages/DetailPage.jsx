@@ -1,9 +1,8 @@
 // AI-assisted - see AI-USAGE.md #<4>
 
-import { Fragment } from "react";
 import { useParams, Link, useLocation } from "react-router-dom";
 import DataStatus from "../components/DataStatus";
-import { BASE_STAT_ROWS, SPRITE_ITEMS } from "../constants/detailConstants";
+import { BASE_STAT_ROWS, SPRITE_GROUPS, SPRITE_VARIANTS } from "../constants/detailConstants";
 import { useCry } from "../hooks/useCry";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { useFavourites } from "../hooks/useFavourites";
@@ -68,8 +67,20 @@ function DetailPage() {
       pokemon;
 
    const visibleMoves = showAllMoves ? moves : moves.slice(0, 12);
-   const availableSprites = SPRITE_ITEMS.filter(({ key }) => sprites[key]);
-   const hasSprites = availableSprites.length > 0;
+   const availableSpriteGroups = SPRITE_GROUPS.map(({ key, label }) => {
+      const source = pokemon.spriteSets?.[key] ?? (key === "blackWhiteAnimated" ? pokemon.sprites : null);
+
+      return {
+         key,
+         label,
+         sprites: SPRITE_VARIANTS.flatMap(({ key: variant, label: variantLabel }) =>
+            source?.[variant]
+               ? [{ key: variant, label: variantLabel, src: source[variant] }]
+               : []
+         ),
+      };
+   }).filter(({ sprites }) => sprites.length > 0);
+   const hasSprites = availableSpriteGroups.length > 0;
    const hasCry = Boolean(pokemon.cryUrl);
 
    const abilities = pokemon.abilities.map(titleCase).join(", ");
@@ -292,33 +303,56 @@ function DetailPage() {
             {(hasSprites || hasCry) && (
                <div className="sprites-row">
                   {hasSprites ? (
-                     <ul className="sprites-list">
-                        {availableSprites.map(
-                           ({ key, id: popoverId, label }) => (
-                              <li key={popoverId}>
-                                 <button
-                                    type="button"
-                                    className="sprite-link"
-                                    popoverTarget={popoverId}
-                                 >
-                                    <img
-                                       src={sprites[key]}
-                                       alt={`${formattedName} ${label}`}
-                                       className="sprite-img"
-                                    />
-                                 </button>
+                     <div className="sprite-groups">
+                        {availableSpriteGroups.map((group) => (
+                           <section
+                              key={group.key}
+                              className="sprite-group"
+                              aria-labelledby={`sprite-group-${group.key}`}
+                           >
+                              <h3
+                                 id={`sprite-group-${group.key}`}
+                                 className="sprite-group-heading"
+                              >
+                                 {group.label}
+                              </h3>
 
-                                 <img
-                                    popover="auto"
-                                    id={popoverId}
-                                    className="sprite-popover"
-                                    src={sprites[key]}
-                                    alt={`${formattedName} ${label}, enlarged`}
-                                 />
-                              </li>
-                           ),
-                        )}
-                     </ul>
+                              <ul className="sprites-list">
+                                 {group.sprites.map(({ key, label, src }) => {
+                                    const popoverId = `sprite-${pokemon.id}-${group.key}-${key}`;
+                                    const spriteLabel = `${formattedName} ${group.label} ${label}`;
+
+                                    return (
+                                       <li key={key} className="sprite-item">
+                                          <button
+                                             type="button"
+                                             className="sprite-link"
+                                             popoverTarget={popoverId}
+                                             aria-label={`Enlarge ${spriteLabel}`}
+                                          >
+                                             <img
+                                                src={src}
+                                                alt={spriteLabel}
+                                                className="sprite-img"
+                                                loading="lazy"
+                                             />
+                                          </button>
+                                          <span className="sprite-label">{label}</span>
+
+                                          <img
+                                             popover="auto"
+                                             id={popoverId}
+                                             className="sprite-popover"
+                                             src={src}
+                                             alt={`${spriteLabel}, enlarged`}
+                                          />
+                                       </li>
+                                    );
+                                 })}
+                              </ul>
+                           </section>
+                        ))}
+                     </div>
                   ) : (
                      <p>No sprites available for this Pokémon.</p>
                   )}

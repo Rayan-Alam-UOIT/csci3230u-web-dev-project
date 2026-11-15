@@ -1,27 +1,22 @@
 
 import { useEffect, useState } from "react";
 
-function flattenChain(node, depth = 0) {
-  return [
-    {
-      name: node.species.name,
-      id: Number(node.species.url.match(/\/(\d+)\/?$/)?.[1]),
-      depth,
-      evolutionDetails: node.evolution_details,
-    },
-    ...node.evolves_to.flatMap((next) =>
-      flattenChain(next, depth + 1)
-    ),
-  ];
+function buildTree(node) {
+  return {
+    name: node.species.name,
+    id: Number(node.species.url.match(/\/(\d+)\/?$/)?.[1]),
+    evolutionDetails: node.evolution_details,
+    evolvesTo: node.evolves_to.map(buildTree),
+  };
 }
 
 export function useEvolutionChain(speciesId) {
-  const [evolutions, setEvolutions] = useState([]);
+  const [chain, setChain] = useState(null);
   const [status, setStatus] = useState("loading");
 
   useEffect(() => {
     if (!speciesId) {
-      setEvolutions([]);
+      setChain(null);
       setStatus("idle");
       return;
     }
@@ -30,7 +25,7 @@ export function useEvolutionChain(speciesId) {
 
     async function loadEvolutions() {
       setStatus("loading");
-      setEvolutions([]);
+      setChain(null);
 
       try {
         const speciesResponse = await fetch(
@@ -52,7 +47,7 @@ export function useEvolutionChain(speciesId) {
         const data = await chainResponse.json();
 
         if (!controller.signal.aborted) {
-          setEvolutions(flattenChain(data.chain));
+          setChain(buildTree(data.chain));
           setStatus("ok");
         }
       } catch (error) {
@@ -67,5 +62,5 @@ export function useEvolutionChain(speciesId) {
     return () => controller.abort();
   }, [speciesId]);
 
-  return { evolutions, status };
+  return { chain, status };
 }

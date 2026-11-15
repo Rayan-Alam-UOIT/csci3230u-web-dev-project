@@ -7,9 +7,27 @@ export const BASE_STAT_ROWS = [
    { label: "Speed:", stat: "speed" },
 ];
 
-export const SPRITE_ITEMS = [
-   { key: "front_default", id: "sprite-front", label: "front sprite" },
-   { key: "back_default", id: "sprite-back", label: "back sprite" },
-   { key: "front_shiny", id: "sprite-shiny-front", label: "shiny front sprite" },
-   { key: "back_shiny", id: "sprite-shiny-back", label: "shiny back sprite" },
+export const SPRITE_KEYS = [
+   "front_default",
+   "front_shiny",
+   "back_default",
+   "back_shiny",
+   "front_gray",
+   "back_gray",
+];
+
+export const SPRITE_GROUPS = [
+   { key: "redBlue", label: "Red / Blue" },
+   { key: "crystalAnimated", label: "Crystal" },
+   { key: "blackWhiteAnimated", label: "Black / White" },
+   { key: "showdown", label: "Showdown" },
+];
+
+export const SPRITE_VARIANTS = [
+   { key: "front_default", label: "Front" },
+   { key: "front_shiny", label: "Front Shiny" },
+   { key: "back_default", label: "Back" },
+   { key: "back_shiny", label: "Back Shiny" },
+   { key: "front_gray", label: "Front Gray" },
+   { key: "back_gray", label: "Back Gray" },
 ];
