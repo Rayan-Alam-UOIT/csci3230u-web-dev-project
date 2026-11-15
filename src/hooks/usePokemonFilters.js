@@ -4,17 +4,20 @@ import { GENERATION_INFO } from "../constants/filters";
 export function usePokemonFilters(pokemon, searchQuery = "", onSearchChange) {
   const [selectedGenerations, setSelectedGenerations] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [sort, setSort] = useState("");
 
   const hasActiveFilters =
     selectedGenerations.length > 0 ||
     selectedTypes.length > 0 ||
+    selectedCategories.length > 0 ||
     Boolean(sort) ||
     Boolean(searchQuery);
 
   function resetFilters() {
     setSelectedGenerations([]);
     setSelectedTypes([]);
+    setSelectedCategories([]);
     setSort("");
     onSearchChange?.("");
   }
@@ -42,7 +45,12 @@ export function usePokemonFilters(pokemon, searchQuery = "", onSearchChange) {
             selectedTypes.some((s) => s.toLowerCase() === t)
           );
 
-        return matchesSearch && matchesGeneration && matchesType;
+        const matchesCategory =
+          selectedCategories.length === 0 ||
+          (selectedCategories.includes("Legendary") && item.is_legendary) ||
+          (selectedCategories.includes("Mythical") && item.is_mythical);
+
+        return matchesSearch && matchesGeneration && matchesType && matchesCategory;
       })
       .sort((a, b) => {
         switch (sort) {
@@ -53,7 +61,7 @@ export function usePokemonFilters(pokemon, searchQuery = "", onSearchChange) {
           default:            return 0;
         }
       });
-  }, [pokemon, searchQuery, selectedGenerations, selectedTypes, sort]);
+  }, [pokemon, searchQuery, selectedGenerations, selectedTypes, selectedCategories, sort]);
 
   return {
     selectedGenerations, setSelectedGenerations,
@@ -62,5 +70,7 @@ export function usePokemonFilters(pokemon, searchQuery = "", onSearchChange) {
     hasActiveFilters,
     resetFilters,
     visiblePokemon,
+    selectedCategories,
+    setSelectedCategories
   };
 }

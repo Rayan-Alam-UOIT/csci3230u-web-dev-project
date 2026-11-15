@@ -1,3 +1,4 @@
+// AI-assisted - see AI-USAGE.md #<5, 9>
 
 import { Link } from "react-router-dom";
 import { titleCase } from "../utils/pokemonUtils";
@@ -20,12 +21,13 @@ function getEvolutionMethod(details) {
   return titleCase(detail.trigger?.name ?? "Special Condition");
 }
 
-function EvolutionCard({ evolution }) {
+function EvolutionCard({ evolution, isCurrent }) {
   return (
     <Link
       to={`/pokemon/${evolution.id}`}
-      className="evolution-card"
+      className={`evolution-card${isCurrent ? " is-current" : ""}`}
       aria-label={`View ${titleCase(evolution.name)} details`}
+      aria-current={isCurrent ? "page" : undefined}
     >
       <img
         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${evolution.id}.png`}
@@ -46,7 +48,7 @@ function chunk(items, size) {
   return groups;
 }
 
-function EvolutionNode({ node, chunkSize, isRoot = false }) {
+function EvolutionNode({ node, chunkSize, currentId, isRoot = false }) {
   const method = getEvolutionMethod(node.evolutionDetails);
 
   const groups = node.evolvesTo.length === 0 ? [[]] : chunk(node.evolvesTo, chunkSize);
@@ -60,7 +62,7 @@ function EvolutionNode({ node, chunkSize, isRoot = false }) {
             <small>{method}</small>
           </div>
         )}
-        <EvolutionCard evolution={node} />
+        <EvolutionCard evolution={node} isCurrent={node.id === currentId} />
       </div>
 
       {children.length > 0 && (
@@ -70,6 +72,7 @@ function EvolutionNode({ node, chunkSize, isRoot = false }) {
               key={child.name}
               node={child}
               chunkSize={chunkSize}
+              currentId={currentId}
             />
           ))}
         </div>
@@ -98,7 +101,7 @@ function EvolutionChain({ speciesId }) {
 
       {status === "ok" && chain && (
         <div className="evolution-list">
-          <EvolutionNode node={chain} chunkSize={chunkSize} isRoot />
+          <EvolutionNode node={chain} chunkSize={chunkSize} currentId={speciesId} isRoot />
         </div>
       )}
     </section>

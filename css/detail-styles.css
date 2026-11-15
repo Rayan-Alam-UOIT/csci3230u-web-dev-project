@@ -1,4 +1,4 @@
-/* AI-assisted - see AI-USAGE.md #<8> */
+/* AI-assisted - see AI-USAGE.md #<5, 6, 7, 8, 11, 12, 13> */
 
 /* =========================================================
    POKÉWEB - DETAIL PAGE STYLES
@@ -16,17 +16,14 @@
     min-height: 2.75rem;
     margin-block: var(--space-2);
     font-size: var(--font-size-base);
-    font-weight: 400;
-    opacity: 0.80;
-    color: var(--color-text);
+    font-weight: 600;
+    color: inherit;
     text-decoration: none;
 }
 
 .back-button:hover {
-    opacity: 1;
     text-decoration: underline;
 }
-
 
 /* ---------- List of Cards (Head, Pokedex Description, Evolution Chain, Base Stats, Moves) ---------- */
 .card-list {
@@ -197,8 +194,9 @@
 
 .pokedex-description h2 {
     margin: 0 0 var(--space-2);
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-md);
     font-weight: 700;
+    text-transform: uppercase;
 }
 
 .pokedex-description p {
@@ -236,11 +234,15 @@
 
 .evolution-section h2 {
     margin: 0 0 var(--space-3);
+    font-size: var(--font-size-md);
+    font-weight: 700;
+    text-transform: uppercase;
 }
 
 .evolution-list {
     display: flex;
     justify-content: center;
+    padding-block: var(--space-2);
 }
 
 .evolution-node {
@@ -298,6 +300,15 @@
 .evolution-card:hover {
     border-color: var(--color-primary);
     transform: translateY(-0.1875rem);
+}
+
+.evolution-card.is-current {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+.evolution-card.is-current strong {
+    color: var(--color-primary);
 }
 
 .evolution-card img {
@@ -430,26 +441,51 @@
     border-color: var(--color-primary);
 }
 
+.moves-group {
+    margin-top: var(--space-3);
+}
+
+.moves-group-heading {
+    margin: 0 0 var(--space-2);
+    font-size: var(--font-size-base);
+    font-weight: 700;
+}
+
+.moves-version {
+    margin-left: auto;
+    padding: var(--space-1) var(--space-2);
+    background: var(--color-surface);
+    color: var(--color-text);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-md);
+    font: inherit;
+    font-size: var(--font-size-sm);
+}
+
+.move-level {
+    margin-right: var(--space-2);
+    color: var(--color-text-muted);
+    font-weight: 400;
+    font-size: var(--font-size-sm);
+}
 
 /* ---------- Sprites ---------- */
 .sprites-section {
-    margin-top: var(--space-4);
+    margin-top: var(--space-3);
     margin-bottom: var(--space-4);
-    padding-top: 0;
 }
 
 .sprites-heading {
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-md);
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.03em;
     margin: 0 0 var(--space-3);
 }
 
 .sprites-row {
     display: flex;
     flex-direction: column;
-    gap: var(--space-3);
+    gap: var(--space-4);
 }
 
 .sprite-groups {
@@ -597,10 +633,9 @@
 .cry-bar-fill {
     width: 0;
     height: 100%;
-    background: var(--color-accent);
+    background: var(--color-primary);
     border-radius: inherit;
 }
-
 
 /* ---------- Previous / Next Navigation ---------- */
 .details-nav {
@@ -763,6 +798,44 @@
         justify-content: flex-start;
     }
 
+    .evolution-branches:has(> :nth-child(4)) {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(2, max-content);
+        align-items: start;
+        gap: var(--space-3) var(--space-4);
+        padding-left: var(--space-4);
+        border-left: 2px solid var(--color-border-subtle);
+    }
+
+    /* short line from the base card across to the bracket */
+    .evolution-branches:has(> :nth-child(4))::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 100%;
+        width: var(--space-3);
+        border-top: 2px solid var(--color-border-subtle);
+    }
+
+    .evolution-branches:has(> :nth-child(4)) .evolution-step {
+        flex-direction: column;
+        gap: var(--space-1);
+    }
+
+    .evolution-branches:has(> :nth-child(4)) .evolution-method {
+        width: auto;
+        align-self: center;
+    }
+
+    .evolution-branches:has(> :nth-child(4)) .evolution-method span {
+        display: none;
+    }
+
+    .evolution-branches:has(> :nth-child(4)) .evolution-method small {
+        position: static;
+    }
+
     /* Base Stats */
     .detail-type {
         padding-right: var(--space-3); 
@@ -782,8 +855,23 @@
         margin-bottom: var(--space-3);
     }
 
+    .sprites-row {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: var(--space-4);
+    }
+
     .sprite-groups {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: var(--space-4) var(--space-5);
+        flex: 0 1 auto;
+    }
+
+    .sprite-group {
+        flex: 0 0 auto;
     }
 
     .sprites-list {
@@ -794,7 +882,7 @@
     }
 
     .sprite-item {
-        flex: 1 1 0;
+        flex: 0 0 5rem;
     }
 
     .sprite-link {
@@ -802,7 +890,7 @@
     }
 
     .sprite-img {
-        display: inline;
+        display: block;
         width: 4rem;
         height: 4rem;
         aspect-ratio: auto;
@@ -815,8 +903,15 @@
 
     /* Play Cry Button and Cry Bar */
     .play-sound {
-        gap: 0;
+        gap: var(--space-2);
         min-height: 0;
+    }
+
+    .cry-player {
+        flex-direction: row;
+        align-items: center;
+        gap: var(--space-3);
+        width: 100%;
     }
 
     .cry-bar {
@@ -844,5 +939,10 @@
     /* Moves */
     .moves-grid {
         grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    /* Evolution Chain */
+    .evolution-branches:has(> :nth-child(4)) {
+        grid-template-columns: repeat(3, max-content);
     }
 }

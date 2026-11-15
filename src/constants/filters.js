@@ -25,3 +25,5 @@ export const SORT_OPTIONS = [
   { value: "name-asc", label: "Name (A-Z)" },
   { value: "name-desc", label: "Name (Z-A)" },
 ];
+
+export const CATEGORIES = ["Legendary", "Mythical"];
