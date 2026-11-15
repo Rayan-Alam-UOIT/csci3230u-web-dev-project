@@ -240,16 +240,42 @@
 
 .evolution-list {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
     justify-content: center;
-    gap: var(--space-3);
+}
+
+.evolution-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
 }
 
 .evolution-step {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: var(--space-3);
+    gap: var(--space-2);
+}
+
+.evolution-method {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.evolution-method span {
+    font-size: var(--font-size-xl);
+    line-height: 1;
+    transform: rotate(90deg);
+}
+
+.evolution-method small {
+    font-size: var(--font-size-sm);
+    line-height: 1.2;
+    text-align: center;
 }
 
 .evolution-card {
@@ -257,7 +283,9 @@
     flex-direction: column;
     align-items: center;
     gap: var(--space-1);
+    box-sizing: border-box;
     min-width: var(--size-card-min);
+    max-width: 100%;
     padding: var(--space-2);
     border: var(--border-width) solid var(--color-border-subtle);
     border-radius: var(--radius-md);
@@ -286,22 +314,20 @@
     color: var(--color-text-muted);
 }
 
-.evolution-method {
+.evolution-branches {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: var(--space-3);
+}
+
+.evolution-variants {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-1);
-    color: var(--color-primary);
-    font-weight: 600;
-}
-
-.evolution-method span {
-    font-size: var(--font-size-xl);
-}
-
-.evolution-method small {
-    font-size: var(--font-size-sm);
-    text-align: center;
+    gap: var(--space-4);
 }
 
 
@@ -695,6 +721,46 @@
     .body {
         flex: 1;
         padding: var(--space-3);
+    }
+
+    /* Evolution Chain */
+    .evolution-list {
+        overflow-x: auto;
+    }
+
+    .evolution-node {
+        flex-direction: row;
+        gap: var(--space-3);
+    }
+
+    .evolution-step {
+        flex-direction: row;
+        gap: var(--space-3);
+    }
+
+    .evolution-method {
+        position: relative;
+        justify-content: center;
+        width: var(--size-method, 5.5rem);
+        align-self: stretch;
+    }
+
+    .evolution-method span {
+        transform: none;
+    }
+
+    .evolution-method small {
+        position: absolute;
+        top: calc(50% + 0.9rem);
+        left: 0;
+        right: 0;
+    }
+
+    .evolution-branches {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: stretch;
+        justify-content: flex-start;
     }
 
     /* Base Stats */
