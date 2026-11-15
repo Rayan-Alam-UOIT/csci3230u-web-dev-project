@@ -23,12 +23,21 @@ function App() {
                      />
                   }
                />
-               <Route 
+               <Route
+                  path="/page/:page"
+                  element={
+                     <BrowsePage
+                        searchQuery={searchQuery}
+                        onSearchChange={setSearchQuery}
+                     />
+                  }
+               />
+               <Route
                   path="/favourites"
                   element={
                      <FavouritesPage
                         searchQuery={searchQuery}
-                        onSearchChange={setSearchQuery}    
+                        onSearchChange={setSearchQuery}
                      />
                   }
                />
