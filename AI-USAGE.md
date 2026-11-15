@@ -147,3 +147,35 @@ Could we slightly enhance the design of the Play Cry button on the Pokémon Deta
 Please help me turn my font sizes, colours, and other properties in my css files into root variables. Provide the updated root as well as what to change in each of my css files. 
 ```
 - **What it produced & what I changed:** It provided an updated `:root` for my `global-styles.css` which I replaced my original with. This new `:root` had new variables for text, background, and border colours; badge colours, font sizes, shapes, sizing, and transitions. Claude told me every rule in `detail-styles.css`, `game-styles.css`, `global-styles.css` to change to use our new root variables. After Claude's changes, I moved the filter CSS rules to it's own file (`filter-styles.css`) so that the `global-styles.css` is less cluttered and more easy to read. I re-organized the CSS rules across all the files so that the rules for each component are lumped together (e.g., all the CSS rules for the Game Picker Cards in the Game Page can be found under a comment `/* ---------- Game Picker Cards ---------- */` in `game-styles.css`). For `detail-styles.css`, I made new CSS rules for `artwork-shiny-...` for the official shiny Pokemon artwork used in the head. Before, both that artwork and the sprites at the bottom of the Detail Page used the same rules, which could cause issues long term if we want to change those rules for only one of them.
+
+---
+
+## Log
+
+### #9 - Turning Evolution Chain into a Tree
+- **Date:** 2026-11-15
+- **Member:** Mason Shipton
+- **Tool / model:** free-tier Claude (Claude Sonnet 5.5)
+- **Files:** `useEvolutionChain.js`, `EvolutionChain.jsx`
+- **Prompt (verbatim):**
+
+```
+So I have this js and JSX code here. And the code works well for the most part. For a Pokemon like Bulbasaur, it perfectly shows it's evolution line. However, they are other Pokemon, like for example Slowpoke, which can evolve into two separate Pokemon. And this current code does not capture that well. It displays it still as a line, as if Slowpoke -> Slowbro -> Slowking. How can we change this code to reflect this, while still keeping the structure for pokemon like Bulbasaur?
+```
+- **What it produced & what I changed:** It produced a new helper function (`buildTree`) for the `useEvolutionChain.js` hook that keeps the tree structure of some Pokemon's evolutions. Previously, the code would flatten a Pokemon's evolutions, so for Pokemon with branching evolutions, the sructure would be lost. It produced changes to `EvolutionChain.jsx` to follow the new structure of `useEvolutionChain.js`. In addition to the necessary changes to the JSX code to work with the new hook structure, Claude also changed `EvolutionChain.jsx` to have `EvolutionCard` and `EvolutionNode` be separate functions. I considered reversing that but I thought keeping it was for the best. Finally, Claude produced new CSS classes for the changes it made to JSX. While the code was no longer flattening the evolution list, Claude's code still did not display the Pokemon's evolution list correctly. For small screens, the evolution list would expand outside the box. I fixed this by changing the flex property of Claude's new classes (making `evolution-node`, `evolution-method`, and `evolution-branch` flexboxes). After this, there was still an issue for Pokemon with two or more evolutions, where it only shows the branching behaviour for the first two evolutions:
+E.g.,
+ Eevee
+  \/               \/
+Vaporeon        Jolteon
+  \/               \/
+Flareon          Espeon
+  \/               \/
+  ...              ...
+I fixed this by making a new hook, `useMediaQuery.js`, so that for small screens, a copy of the child Pokemon is made for every two branching evolutions. So it's displayed on the screen like the following:
+ Eevee
+  \/               \/
+Vaporeon        Jolteon
+
+ Eevee
+  \/               \/
+Flareon          Espeon

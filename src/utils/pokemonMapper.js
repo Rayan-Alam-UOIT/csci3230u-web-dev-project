@@ -1,13 +1,25 @@
+import { SPRITE_KEYS } from "../constants/detailConstants";
+
+function makeSpriteSet(game, fallback = {}) {
+    return Object.fromEntries(SPRITE_KEYS.map((key) => [key, game?.[key] ?? fallback?.[key] ?? null]));
+}
+
 export function toPokemon(rawPokemon, rawSpecies) {
-    const hgss = rawPokemon.sprites?.versions?.["generation-iv"]?.["heartgold-soulsilver"] ?? {};
-    const artwork = rawPokemon.sprites?.other?.["official-artwork"] ?? {};
-    const defaultSprites = rawPokemon.sprites ?? {};
-    const sprites = {
-        front_default: hgss.front_default ?? defaultSprites.front_default ?? null,
-        front_shiny: hgss.front_shiny ?? defaultSprites.front_shiny ?? null,
-        back_default: hgss.back_default ?? defaultSprites.back_default ?? null,
-        back_shiny: hgss.back_shiny ?? defaultSprites.back_shiny ?? null,
+    const rawSprites = rawPokemon.sprites ?? {};
+    const versions = rawSprites.versions ?? {};
+    const artwork = rawSprites.other?.["official-artwork"] ?? {};
+
+    const crystal = versions["generation-ii"]?.crystal;
+
+    const spriteSets = {
+        redBlue: makeSpriteSet(versions["generation-i"]?.["red-blue"]),
+        crystalAnimated: makeSpriteSet(crystal?.animated, crystal),
+        blackWhiteAnimated: makeSpriteSet(versions["generation-v"]?.["black-white"]?.animated),
+        showdown: makeSpriteSet(rawSprites.other?.showdown),
     };
+
+    const sprites = makeSpriteSet(spriteSets.blackWhiteAnimated, rawSprites);
+
     const descriptionEntry = rawSpecies.flavor_text_entries?.find(
         (entry) => entry.language.name === "en"
     );
@@ -36,6 +48,7 @@ export function toPokemon(rawPokemon, rawSpecies) {
             shiny: artwork.front_shiny ?? null,
         },
         sprites,
+        spriteSets,
         description,
         cryUrl: rawPokemon.cries?.latest ?? null,
     };
