@@ -1,22 +1,26 @@
 import { useMemo } from "react";
 import { usePokemon } from "../context/PokemonContext";
 
-export function usePokemonNavigation(id) {
-    const { pokemonData: pokemonList, status, retry } = usePokemon();
-    
-    const navigation = useMemo(() => {
-        const index = pokemonList.findIndex((item) => String(item.id) === id);
+export function usePokemonNavigation(id, navigationIds) {
+   const { pokemonData: pokemonList, status, retry } = usePokemon();
 
-        if (index === -1) {
-            return { pokemon: null, previousPokemon: null, nextPokemon: null };
-        }
+   const navigation = useMemo(() => {
+      const pokemon = pokemonList.find((item) => String(item.id) === id);
 
-        return {
-            pokemon: pokemonList[index],
-            previousPokemon: pokemonList[index - 1] ?? null,
-            nextPokemon: pokemonList[index + 1] ?? null,
-        };
-    }, [pokemonList, id]);
+      const list = navigationIds
+         ? navigationIds
+              .map((navId) => pokemonList.find((item) => item.id === navId))
+              .filter(Boolean)
+         : pokemonList;
 
-    return { ...navigation, status, retry };
+      const index = list.findIndex((item) => String(item.id) === id);
+
+      return {
+         pokemon: pokemon ?? null,
+         previousPokemon: list[index - 1] ?? null,
+         nextPokemon: list[index + 1] ?? null,
+      };
+   }, [pokemonList, id, navigationIds]);
+
+   return { ...navigation, status, retry };
 }

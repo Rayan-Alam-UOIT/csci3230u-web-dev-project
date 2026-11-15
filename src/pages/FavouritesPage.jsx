@@ -59,6 +59,7 @@ function FavouritesPage({ searchQuery = "", onSearchChange }) {
                <PokemonGrid
                   pokemon={favouritePokemon}
                   onToggleFavourite={toggleFavourite}
+                  navigationIds={favourites.map(({ id }) => id)}
                />
 
                <Pagination
