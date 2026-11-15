@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 
-function PokemonCard({ pokemon, onToggleFavourite }) {
+function PokemonCard({ pokemon, onToggleFavourite, navigationIds }) {
    const location = useLocation();
 
    const formattedName =
@@ -11,17 +11,22 @@ function PokemonCard({ pokemon, onToggleFavourite }) {
    return (
       <li className="card">
          <div className="card-image">
-            <Link className="card-detail-link" to={`/pokemon/${pokemon.id}`} state={{ from: location.pathname }}>
-               <img
-                  src={pokemon.artwork.default}
-                  alt={formattedName}
-               />
+            <Link
+               className="card-detail-link"
+               to={`/pokemon/${pokemon.id}`}
+               state={{ from: location.pathname, navigationIds }}
+            >
+               <img src={pokemon.artwork.default} alt={formattedName} />
             </Link>
          </div>
 
          <div className="card-info">
             <div className="card-info-top">
-               <Link className="card-detail-link card-link" to={`/pokemon/${pokemon.id}`} state={{ from: location.pathname }}>
+               <Link
+                  className="card-detail-link card-link"
+                  to={`/pokemon/${pokemon.id}`}
+                  state={{ from: location.pathname, navigationIds }}
+               >
                   <h2 className="card-name">
                      <span className="dex-number">
                         #{String(pokemon.id).padStart(3, "0")}
@@ -53,10 +58,7 @@ function PokemonCard({ pokemon, onToggleFavourite }) {
             <div className="card-info-bottom">
                <div className="card-types">
                   {types.map((type) => (
-                     <span
-                        key={type}
-                        className={`type type-${type}`}
-                     >
+                     <span key={type} className={`type type-${type}`}>
                         {" "}
                         {type.toUpperCase()}{" "}
                      </span>
