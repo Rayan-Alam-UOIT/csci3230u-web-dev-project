@@ -17,10 +17,11 @@ export const SPRITE_KEYS = [
 ];
 
 export const SPRITE_GROUPS = [
-   { key: "redBlue", label: "Red / Blue" },
+   { key: "default", label: "Default Sprites" },
+   { key: "redBlue", label: "Red & Blue" },
    { key: "crystalAnimated", label: "Crystal" },
-   { key: "blackWhiteAnimated", label: "Black / White" },
-   { key: "showdown", label: "Showdown" },
+   { key: "blackWhiteAnimated", label: "Black & White Animated" },
+   { key: "showdown", label: "Pokémon Showdown" },
 ];
 
 export const SPRITE_VARIANTS = [

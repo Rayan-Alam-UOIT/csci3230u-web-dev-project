@@ -1,3 +1,5 @@
+// AI-assisted - see AI-USAGE.md #10
+
 import DataStatus from "../components/DataStatus";
 import FilterPanel from "../components/FilterPanel";
 import Pagination from "../components/Pagination";
@@ -5,14 +7,31 @@ import PokemonGrid from "../components/PokemonGrid";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { useFavouritePokemon } from "../hooks/useFavouritePokemon";
 import { usePokemonBrowser } from "../hooks/usePokemonBrowser";
+import { useCallback } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 function FavouritesPage({ searchQuery = "", onSearchChange }) {
    useDocumentTitle("Pokéweb - Favourites");
 
+   const { page: pageParam } = useParams();
+   const navigate = useNavigate();
+   const routePage = Math.max(1, Number(pageParam) || 1);
+
+   const goToPage = useCallback(
+      (page) =>
+         navigate(
+            page === 1 ? "/favourites" : `/favourites/page/${page}`
+         ),
+      [navigate],
+   );
+
    const { favourites, toggleFavourite, status, retry } = useFavouritePokemon();
 
-   const { filters, page, setPage, totalPages, pageItems, resultCount } =
-      usePokemonBrowser(favourites, searchQuery, onSearchChange);
+   const { filters, page, totalPages, pageItems, resultCount } =
+      usePokemonBrowser(favourites, searchQuery, onSearchChange, {
+         page: routePage,
+         onPageChange: goToPage,
+      });
 
    const favouritePokemon = pageItems.map((item) => ({
       ...item,
@@ -65,7 +84,7 @@ function FavouritesPage({ searchQuery = "", onSearchChange }) {
                <Pagination
                   page={page}
                   totalPages={totalPages}
-                  onPageChange={setPage}
+                  onPageChange={goToPage}
                />
             </>
          )}

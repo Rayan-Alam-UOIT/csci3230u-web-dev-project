@@ -1,11 +1,12 @@
 import MultiSelect from "./selectForms/MultiSelect";
 import SingleSelect from "./selectForms/SingleSelect";
-import { GENERATIONS, TYPES, SORT_OPTIONS } from "../constants/filters";
+import { GENERATIONS, TYPES, CATEGORIES, SORT_OPTIONS } from "../constants/filters";
 
 function FilterPanel({ filters }) {
   const {
     selectedGenerations, setSelectedGenerations,
     selectedTypes, setSelectedTypes,
+    selectedCategories, setSelectedCategories,
     sort, setSort,
     hasActiveFilters, resetFilters,
   } = filters;
@@ -29,6 +30,13 @@ function FilterPanel({ filters }) {
         options={TYPES}
         selected={selectedTypes}
         onChange={setSelectedTypes}
+        />
+
+        <MultiSelect
+          label="Category"
+          options={CATEGORIES}
+          selected={selectedCategories}
+          onChange={setSelectedCategories}
         />
 
         <SingleSelect

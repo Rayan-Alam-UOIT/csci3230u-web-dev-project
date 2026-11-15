@@ -10,9 +10,24 @@ function NavBar() {
 
    function isActive(to) {
       if (onDetail) {
-         return to === detailOrigin;
+         if (to === "/") {
+            return (
+               detailOrigin === "/" ||
+               detailOrigin.startsWith("/page/")
+            );
+         }
+
+         return (
+            detailOrigin === to ||
+            detailOrigin.startsWith(`${to}/`)
+         );
       }
-      return to === "/" ? pathname === "/" : pathname.startsWith(to);
+
+      if (to === "/") {
+         return pathname === "/" || pathname.startsWith("/page/");
+      }
+
+      return pathname === to || pathname.startsWith(`${to}/`);
    }
 
    return (

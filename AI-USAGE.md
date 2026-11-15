@@ -174,21 +174,25 @@ So I have this js and JSX code here. And the code works well for the most part. 
 ```
 - **What it produced & what I changed:** It produced a new helper function (`buildTree`) for the `useEvolutionChain.js` hook that keeps the tree structure of some Pokemon's evolutions. Previously, the code would flatten a Pokemon's evolutions, so for Pokemon with branching evolutions, the sructure would be lost. It produced changes to `EvolutionChain.jsx` to follow the new structure of `useEvolutionChain.js`. In addition to the necessary changes to the JSX code to work with the new hook structure, Claude also changed `EvolutionChain.jsx` to have `EvolutionCard` and `EvolutionNode` be separate functions. I considered reversing that but I thought keeping it was for the best. Finally, Claude produced new CSS classes for the changes it made to JSX. While the code was no longer flattening the evolution list, Claude's code still did not display the Pokemon's evolution list correctly. For small screens, the evolution list would expand outside the box. I fixed this by changing the flex property of Claude's new classes (making `evolution-node`, `evolution-method`, and `evolution-branch` flexboxes). After this, there was still an issue for Pokemon with two or more evolutions, where it only shows the branching behaviour for the first two evolutions:
 E.g.,
- Eevee
-  \/               \/
-Vaporeon        Jolteon
-  \/               \/
-Flareon          Espeon
-  \/               \/
-  ...              ...
-I fixed this by making a new hook, `useMediaQuery.js`, so that for small screens, a copy of the child Pokemon is made for every two branching evolutions. So it's displayed on the screen like the following:
- Eevee
-  \/               \/
-Vaporeon        Jolteon
+  ```
+   Eevee
+    \/               \/
+  Vaporeon        Jolteon
+    \/               \/
+  Flareon          Espeon
+    \/               \/
+    ...              ...
+  ```
+  I fixed this by making a new hook, `useMediaQuery.js`, so that for small screens, a copy of the child Pokemon is made for every two branching evolutions. So it's displayed on the screen like the following:
+  ```
+   Eevee
+    \/               \/
+  Vaporeon        Jolteon
 
- Eevee
-  \/               \/
-Flareon          Espeon
+   Eevee
+    \/               \/
+  Flareon          Espeon
+  ```
 
 ---
 
@@ -198,7 +202,7 @@ Flareon          Espeon
 
 - **Date:** 2026-11-15
 - **Member:** Wingfung Hu
-- **Tool / model:** Copilot Free (GPT-5.6 Luna)
+- **Tool / model:** free-tier ChatGPT (GPT-5.6 Luna)
 - **Files:** `src/pages/FavouritesPage.jsx`, `src/components/PokemonGrid.jsx`, `src/components/PokemonCard.jsx`, `src/pages/DetailPage.jsx`, and `src/hooks/usePokemonNavigation.js`
 - **Prompt (verbatim):**
 
@@ -212,3 +216,92 @@ Currently, when the user clicks the Detail Page from one of their Pokemon in Fav
    3. `src/components/PokemonCard.jsx` - Included `navigationIds` and the originating pathname in the detail links’ router state.
    4. `src/pages/DetailPage.jsx` - Read `navigationIds` from the router state and passed them to `usePokemonNavigation`. The previous/next links preserve that state when navigating between detail pages.
    5. `src/hooks/usePokemonNavigation.js` - Used the provided IDs to find the previous and next Pokémon among the favourites. When no IDs are provided, it continues to navigate through the full Pokémon list.
+
+---
+
+## Log
+
+### #11 - Sprites & Cry Section Layout
+
+- **Date:** 2026-11-15
+- **Member:** Rayan Alam
+- **Tool / model:** free-tier Claude (Claude Sonnet 5.5)
+- **Files:** `src/pages/DetailPage.jsx` + `detail-styles.css`
+- **Prompt (verbatim):**
+
+```
+Currently the sprites layout on desktop for the Pokemon on the Detail Page leaves a gap and weird formatting if some Pokemon don't have a certain sprite, and some Pokemon don't have sprites at all. How can we fix the formatting and also the placement of the Play Cry button relative to the sprites? I don't want to mess anything up, so any new CSS should replace the old CSS instead of just being added at the bottom, but tell me which ones.
+```
+
+follow-up prompts:
+
+```
+The sprites look cleaner formatted now but the cry player needs to be formatted better for the new sprites.
+```
+
+```
+I don't like the border top thing but I do like the Play Cry being underneath the sprites. The icon in Play Cry is too close to the text, and I want the Sprites & Cry text to be the same size as the Moves and Base Stats text.
+```
+
+```
+If we were to put the sprites and cry into a card section the same way as the other ones like Description and Moves, would that be better?
+```
+
+- **What it produced & what I changed:** It explained that the gaps came from a fixed 2-column grid for the sprite groups and stretchy `flex: 1 1 0` sprite items, then gave replacement CSS rules so the groups wrap naturally and each sprite has a fixed width. A missing sprite or sprite group no longer leaves a hole. It moved the Play Cry player into its own row underneath the sprites, with the button and bar side by side. It also fixed the icon spacing (a desktop `gap: 0` override), matched the Sprites & Cry heading to the Base Stats and Moves headings, and suggested turning the section into a card by reusing the existing `.body` class. I tried a divider line above the cry player but removed it because I didn't like it. When the spacing between the sprites and the cry button didn't change, we found the base `.sprites-row` rule had lost its `display: flex`, so I restored it. I applied the card change by adding the `body` class to the sprites section in `DetailPage.jsx`.
+
+---
+
+## Log
+
+### #12 - Evolution Chain Hover Fix and Branching Layout
+
+- **Date:** 2026-11-15
+- **Member:** Rayan Alam
+- **Tool / model:** free-tier Claude (Claude Sonnet 5.5)
+- **Files:** `detail-styles.css`
+- **Prompt (verbatim):**
+
+```
+I want to focus on fixing the evolution tree design. First off, when hovering, a bit of the top of the evolution card gets cut off. Second, for Pokemon that can have several different evolutions like a branch instead of a single chain (Eevee for example), how can we format it better but keep the normal chain for normal evolutions?
+```
+
+follow-up prompts:
+
+```
+For Eevee's evolution branch or any with a lot of different things, it still looks like a linear evolution for some of the evolutions, is there any way around that or no?
+```
+
+```
+I don't understand the black line thing, is it supposed to look like that? Also give me some other Pokemon to test how this looks.
+```
+
+- **What it produced & what I changed:** It explained that the hover cut-off was caused by `overflow-x: auto` on `.evolution-list` clipping the card's upward lift, and fixed it with vertical padding. For Pokémon with 4 or more branches (Eevee), it added CSS using `:has(> :nth-child(4))` so the branches form a 2-column grid on tablets and a 3-column grid on large screens, while normal chains keep the existing layout. When Eevee's grid still read like a chain, it removed the arrows, moved the evolution method above each card, and added a bracket line from the base card to the group. It also explained the bracket and gave options to soften or remove it, plus a list of Pokémon to test (Eevee, Tyrogue, Wurmple, Slowpoke, Charmander, Ditto). [Update this line with what you did with the bracket line, e.g. softened it with `--color-border-subtle` or removed it.] I confirmed that regular chains were unaffected.
+
+
+---
+
+## Log
+
+### #13 - Organize Moves by Learn Method
+
+- **Date:** 2026-11-15
+- **Member:** Rayan Alam
+- **Tool / model:** free-tier Claude (Claude Sonnet 5.5)
+- **Files:** `src/utils/pokemonMapper.js`, `src/utils/moveUtils.js` (new), `src/pages/DetailPage.jsx`, `detail-styles.css`
+- **Prompt (verbatim):**
+
+```
+If we wanted to take the moves and organize them by how they can be unlocked or whatever, is that possible with the PokeAPI?
+```
+
+follow-up prompts:
+
+```
+So what are the necessary changes so that we can visually categorize the moves?
+```
+
+```
+Before clicking show more we should limit to showing 12 or however many we had showing before, because that's the whole purpose since there are too many moves. Also, clicking show more and then going to another Pokemon shows all the moves for them as well instead of resetting to show more.
+```
+
+- **What it produced & what I changed:** It confirmed PokéAPI includes `version_group_details` for each move (learn method, level and game), and that the data was being dropped when `pokemonMapper.js` reduced each move to `{ name, url }`. It gave me an updated mapper line that keeps those details, and a new `moveUtils.js` with the method order and labels (Level Up, TM / HM, Egg, Tutor), a game ordering so the newest game is the default, and helpers that group moves by game and method. In `DetailPage.jsx` it added a game dropdown, grouped move sections with "Lv. N" on level-up moves, and the supporting CSS. For my follow-up, it made the 12-move limit apply across all categories instead of per category, and reset "Show All" when navigating to another Pokémon. I implemented the changes and fixed two mistakes of my own: the mapper used `pokemon.moves` instead of `rawPokemon.moves`, and `useMemo` was missing from the React import in `DetailPage.jsx`. I kept the 12-move cap shared across categories.
