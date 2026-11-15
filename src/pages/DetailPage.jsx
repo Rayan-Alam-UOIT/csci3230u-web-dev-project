@@ -17,10 +17,10 @@ function DetailPage() {
    useDocumentTitle("Pokéweb - Details");
 
    const { id } = useParams();
-   const location = useLocation();
+   const location = useLocation(); // AI-assisted
 
    const { pokemon, previousPokemon, nextPokemon, status, retry } =
-      usePokemonNavigation(id, location.state?.navigationIds);
+      usePokemonNavigation(id, location.state?.navigationIds); // AI-assisted
    const { isFavourite, toggleFavourite } = useFavourites();
    const { play: playCry, isPlaying, fillRef } = useCry(pokemon?.cryUrl);
 

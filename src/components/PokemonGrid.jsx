@@ -7,6 +7,7 @@ function PokemonGrid({ pokemon, onToggleFavourite, navigationIds }) {
             <PokemonCard
                key={item.id}
                pokemon={item}
+               // AI-assisted
                onToggleFavourite={onToggleFavourite}
                navigationIds={navigationIds}
             />

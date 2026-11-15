@@ -5,9 +5,9 @@ export function usePokemonNavigation(id, navigationIds) {
    const { pokemonData: pokemonList, status, retry } = usePokemon();
 
    const navigation = useMemo(() => {
-      const pokemon = pokemonList.find((item) => String(item.id) === id);
+      const pokemon = pokemonList.find((item) => String(item.id) === id); // AI-assisted
 
-      const list = navigationIds
+      const list = navigationIds // AI-assisted
          ? navigationIds
               .map((navId) => pokemonList.find((item) => item.id === navId))
               .filter(Boolean)
