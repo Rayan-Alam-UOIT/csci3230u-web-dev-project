@@ -152,7 +152,7 @@ function GamePage() {
             )}
 
             {activeGame && isFinished && (
-               <div className="silhouette-result">
+               <div>
                   <p className="game-play-area__prompt">
                      Game over! You scored{" "}
                      <strong>
@@ -174,7 +174,7 @@ function GamePage() {
             )}
 
             {activeGame === "silhouette" && !isFinished && (
-               <div className="silhouette">
+               <div>
                   <p className="silhouette__progress">
                      Round {silhouetteGame.roundIndex + 1} of {silhouetteGame.roundCount} · Score: {silhouetteGame.score}
                   </p>
@@ -272,8 +272,8 @@ function GamePage() {
             )}
 
             {activeGame === "clues" && !isFinished && (
-               <div className="clues">
-                  <p className="silhouette__progress">
+               <div>
+                  <p className="clues__progress">
                      Round {cluesGame.clueRoundIndex + 1} of{" "}
                      {cluesGame.clueRoundCount} · Score: {cluesGame.score}
                      {!cluesGame.clueRoundComplete &&
@@ -323,10 +323,10 @@ function GamePage() {
                   {cluesGame.clueRoundComplete && (
                      <p
                         className={
-                           "silhouette__feedback " +
+                           "clues__feedback " +
                            (cluesGame.isCorrect
-                              ? "silhouette__feedback--correct"
-                              : "silhouette__feedback--wrong")
+                              ? "clues__feedback--correct"
+                              : "clues__feedback--wrong")
                         }
                         role="status"
                      >
