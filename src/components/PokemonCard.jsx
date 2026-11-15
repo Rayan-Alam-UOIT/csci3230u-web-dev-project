@@ -1,3 +1,5 @@
+// AI-assisted - see AI-USAGE.md #10
+
 import { Link, useLocation } from "react-router-dom";
 
 function PokemonCard({ pokemon, onToggleFavourite, navigationIds }) {

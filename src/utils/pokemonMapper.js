@@ -1,3 +1,5 @@
+// AI-assisted - see AI-USAGE.md #<5, 13>
+
 import { SPRITE_KEYS } from "../constants/detailConstants";
 
 function makeSpriteSet(game, fallback = {}) {
@@ -42,7 +44,15 @@ export function toPokemon(rawPokemon, rawSpecies) {
         stats: Object.fromEntries(
             rawPokemon.stats.map((s) => [s.stat.name, s.base_stat]),
         ),
-        moves: rawPokemon.moves.map((m) => ({ name: m.move.name, url: m.move.url })),
+        moves: rawPokemon.moves.map(({ move, version_group_details }) => ({
+            name: move.name,
+            url: move.url,
+            details: version_group_details.map((d) => ({
+                method: d.move_learn_method.name,
+                level: d.level_learned_at,
+                versionGroup: d.version_group.name,
+            })),
+        })),
         artwork: {
             default: artwork.front_default ?? null,
             shiny: artwork.front_shiny ?? null,

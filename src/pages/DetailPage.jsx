@@ -1,4 +1,4 @@
-// AI-assisted - see AI-USAGE.md #<4>
+// AI-assisted - see AI-USAGE.md #<4, 5, 6, 7, 10, 11, 13>
 
 import { useParams, Link, useLocation } from "react-router-dom";
 import DataStatus from "../components/DataStatus";
@@ -10,7 +10,13 @@ import { useMoveTypes } from "../hooks/useMoveTypes";
 import { usePokemonNavigation } from "../hooks/usePokemonNavigation";
 import { capitalize, titleCase } from "../utils/pokemonUtils";
 import EvolutionChain from "../components/EvolutionChain";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import {
+   MOVE_METHOD_ORDER,
+   MOVE_METHOD_LABELS,
+   getVersionGroups,
+   groupMovesByMethod,
+} from "../utils/moveUtils";
 
 function DetailPage() {
    useDocumentTitle("Pokéweb - Details");
@@ -33,6 +39,27 @@ function DetailPage() {
    } = useMoveTypes(pokemon?.moves);
 
    const [showAllMoves, setShowAllMoves] = useState(false);
+
+   const [selectedVersion, setSelectedVersion] = useState(null);
+
+   const versionGroups = useMemo(
+      () => getVersionGroups(pokemon?.moves ?? []),
+      [pokemon],
+   );
+   const activeVersion = versionGroups.includes(selectedVersion)
+      ? selectedVersion
+      : versionGroups.at(-1);
+
+   const groupedMoves = useMemo(
+      () => groupMovesByMethod(pokemon?.moves ?? [], activeVersion),
+      [pokemon, activeVersion],
+   );
+
+   const [prevId, setPrevId] = useState(id);
+   if (id !== prevId) {
+      setPrevId(id);
+      setShowAllMoves(false);
+   }
 
    if (status !== "ok") {
       return (
@@ -66,7 +93,6 @@ function DetailPage() {
    const { types, is_legendary, is_mythical, stats, moves, sprites, artwork } =
       pokemon;
 
-   const visibleMoves = showAllMoves ? moves : moves.slice(0, 12);
    const availableSpriteGroups = SPRITE_GROUPS.map(({ key, label }) => {
       const source = pokemon.spriteSets?.[key] ?? (key === "blackWhiteAnimated" ? pokemon.sprites : null);
 
@@ -82,6 +108,26 @@ function DetailPage() {
    }).filter(({ sprites }) => sprites.length > 0);
    const hasSprites = availableSpriteGroups.length > 0;
    const hasCry = Boolean(pokemon.cryUrl);
+
+   const MOVE_LIMIT = 12;
+
+const methodsWithMoves = MOVE_METHOD_ORDER.filter(
+   (m) => groupedMoves[m]?.length,
+);
+const totalMoves = methodsWithMoves.reduce(
+   (sum, m) => sum + groupedMoves[m].length,
+   0,
+);
+
+let remaining = showAllMoves ? Infinity : MOVE_LIMIT;
+const visibleGroups = methodsWithMoves
+   .map((method) => {
+      const list = groupedMoves[method];
+      const shown = list.slice(0, remaining);
+      remaining -= shown.length;
+      return { method, list, shown };
+   })
+   .filter(({ shown }) => shown.length > 0);
 
    const abilities = pokemon.abilities.map(titleCase).join(", ");
 
@@ -235,6 +281,21 @@ function DetailPage() {
                <li className="body moves-card">
                   <div className="card-row">
                      <span className="detail-type">MOVES ({moves.length})</span>
+
+                     {versionGroups.length > 0 && (
+                        <select
+                           className="moves-version"
+                           value={activeVersion}
+                           onChange={(e) => setSelectedVersion(e.target.value)}
+                           aria-label="Game version"
+                        >
+                           {versionGroups.map((group) => (
+                              <option key={group} value={group}>
+                                 {titleCase(group)}
+                              </option>
+                           ))}
+                        </select>
+                     )}
                   </div>
 
                   {moveStatus === "loading" && (
@@ -252,44 +313,56 @@ function DetailPage() {
                      </p>
                   )}
 
-                  <div className="moves-grid">
-                     {visibleMoves.map((item) => (
-                        <div className="move-item" key={item.name}>
-                           <span className="move-name">
-                              {titleCase(item.name)}
-                           </span>
+                  {visibleGroups.map(({ method, list, shown }) => (
+                     <section key={method} className="moves-group">
+                        <h3 className="moves-group-heading">
+                           {MOVE_METHOD_LABELS[method]} ({list.length})
+                        </h3>
 
-                           {moveTypes[item.name] ? (
-                              <span
-                                 className={`card-value type type-${moveTypes[item.name]}`}
-                              >
-                                 {titleCase(moveTypes[item.name])}
-                              </span>
-                           ) : (
-                              <span className="move-type-fallback">
-                                 {moveStatus === "loading" ? "…" : "Unknown"}
-                              </span>
-                           )}
+                        <div className="moves-grid">
+                           {shown.map((item) => (
+                              <div className="move-item" key={item.name}>
+                                 <span className="move-name">
+                                    {method === "level-up" && (
+                                       <span className="move-level">Lv. {item.level}</span>
+                                    )}
+                                    {titleCase(item.name)}
+                                 </span>
+
+                                 {moveTypes[item.name] ? (
+                                    <span
+                                       className={`card-value type type-${moveTypes[item.name]}`}
+                                    >
+                                       {titleCase(moveTypes[item.name])}
+                                    </span>
+                                 ) : (
+                                    <span className="move-type-fallback">
+                                       {moveStatus === "loading" ? "…" : "Unknown"}
+                                    </span>
+                                 )}
+                              </div>
+                           ))}
                         </div>
-                     ))}
-                  </div>
-                  {moves.length > 12 && (
+                     </section>
+                  ))}
+
+                  {totalMoves === 0 && <p>No moves available for this game.</p>}
+
+                  {totalMoves > MOVE_LIMIT && (
                      <button
                         type="button"
                         className="moves-toggle"
                         onClick={() => setShowAllMoves((prev) => !prev)}
                         aria-expanded={showAllMoves}
                      >
-                        {showAllMoves
-                           ? "Show Less"
-                           : `Show All ${moves.length} Moves`}
+                        {showAllMoves ? "Show Less" : `Show All ${totalMoves} Moves`}
                      </button>
                   )}
                </li>
             </ul>
          </ul>
 
-         <section className="sprites-section" aria-labelledby="sprites-heading">
+         <section className="sprites-section body" aria-labelledby="sprites-heading">
             <h2 id="sprites-heading" className="sprites-heading">
                Sprites &amp; Cry
             </h2>

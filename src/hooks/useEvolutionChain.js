@@ -1,3 +1,4 @@
+// AI-assisted - see AI-USAGE.md #9
 
 import { useEffect, useState } from "react";
 
