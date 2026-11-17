@@ -1,7 +1,7 @@
 import NavBar from "./NavBar";
 import { Link } from "react-router-dom";
 
-function Header({ searchQuery, onSearchChange }) {
+function Header({ searchQuery, onSearchChange, showSearch = true }) {
    return (
       <header className="site-header">
          <Link className="site-header__brand" to="/">
@@ -16,31 +16,33 @@ function Header({ searchQuery, onSearchChange }) {
 
          <NavBar />
 
-         <search>
-            <form
-               className="site-search"
-               onSubmit={(event) => event.preventDefault()}
-            >
-               <label htmlFor="site-search" className="visually-hidden">
-                  Search Pokémon
-               </label>
+         {showSearch && (
+            <search>
+               <form
+                  className="site-search"
+                  onSubmit={(event) => event.preventDefault()}
+               >
+                  <label htmlFor="site-search" className="visually-hidden">
+                     Search Pokémon
+                  </label>
 
-               <i
-                  className="fa-solid fa-magnifying-glass"
-                  aria-hidden="true"
-               ></i>
+                  <i
+                     className="fa-solid fa-magnifying-glass"
+                     aria-hidden="true"
+                  ></i>
 
-               <input
-                  type="search"
-                  id="site-search"
-                  name="q"
-                  placeholder="Search Pokémon..."
-                  required
-                  value={searchQuery}
-                  onChange={(event) => onSearchChange(event.target.value)}
-               />
-            </form>
-         </search>
+                     <input
+                        type="search"
+                        id="site-search"
+                        name="q"
+                        placeholder="Search Pokémon..."
+                        required
+                        value={searchQuery}
+                        onChange={(event) => onSearchChange(event.target.value)}
+                     />
+               </form>
+            </search>
+         )}
       </header>
    );
 }
