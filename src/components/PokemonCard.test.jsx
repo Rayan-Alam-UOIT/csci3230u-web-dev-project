@@ -10,11 +10,10 @@ const pikachu = {
     id: 25,
     name: 'pikachu',
     is_favourite: false,
-    sprites: {
-        other: {
-            'official-artwork': { front_default: '/pikachu.png' },
-        },
-    },
+    types: ['electric'],
+    is_legendary: false,
+    is_mythical: false,
+    artwork: { default: '/pikachu.png' },
 }
 
 describe('PokemonCard', () => {

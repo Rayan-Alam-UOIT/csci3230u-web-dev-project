@@ -11,6 +11,8 @@ function filters(overrides = {}) {
         setSelectedGenerations: vi.fn(),
         selectedTypes: [],
         setSelectedTypes: vi.fn(),
+        selectedCategories: [],
+        setSelectedCategories: vi.fn(),
         sort: '',
         setSort: vi.fn(),
         hasActiveFilters: false,
