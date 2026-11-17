@@ -1,3 +1,5 @@
+/* AI-assisted - see AI-USAGE.md #<14> */
+
 import NavBar from "./NavBar";
 import { Link } from "react-router-dom";
 
