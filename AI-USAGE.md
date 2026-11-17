@@ -305,3 +305,25 @@ Before clicking show more we should limit to showing 12 or however many we had s
 ```
 
 - **What it produced & what I changed:** It confirmed PokéAPI includes `version_group_details` for each move (learn method, level and game), and that the data was being dropped when `pokemonMapper.js` reduced each move to `{ name, url }`. It gave me an updated mapper line that keeps those details, and a new `moveUtils.js` with the method order and labels (Level Up, TM / HM, Egg, Tutor), a game ordering so the newest game is the default, and helpers that group moves by game and method. In `DetailPage.jsx` it added a game dropdown, grouped move sections with "Lv. N" on level-up moves, and the supporting CSS. For my follow-up, it made the 12-move limit apply across all categories instead of per category, and reset "Show All" when navigating to another Pokémon. I implemented the changes and fixed two mistakes of my own: the mapper used `pokemon.moves` instead of `rawPokemon.moves`, and `useMemo` was missing from the React import in `DetailPage.jsx`. I kept the 12-move cap shared across categories.
+
+---
+
+## Log
+
+### #14 - Hiding Search Bar on pages
+
+- **Date:** 2026-11-17
+- **Member:** Mason Shipton
+- **Tool / model:** free-tier Claude (Claude Sonnet 5.5)
+- **Files:** `Layout.jsx`, `App.jsx`
+- **Prompt (verbatim):**
+
+```
+Hello
+
+I have this Header component with a search bar
+
+I want that on the Detail Page and Games Page, the search bar is not shown
+```
+
+- **What it produced & what I changed:** It provided an updated `Layout.jsx` that has a new boolean `hideSearch`, which is `true` if the current location is the Detail Page or the Games Page. `hideSearch` is passed into the `Header` component. I did NOT pass Claude `Header.jsx` so it was not able to provide an updated version of the component. However it did say what changes would have to be made. It said to include `showSearch` has a parameter in the `Header` component and to wrap the input around the `showSearch` boolean, both of which I did. One issue I noticed when running the updated app is that while the search bar is no longer shown on the Detail Page or Games Page, the magnifying glass icon to the left of the bar is still shown. I had to change the `Header.jsx` to wrap the entire `search` component around the `showSearch` boolean to remove the icon as well.
