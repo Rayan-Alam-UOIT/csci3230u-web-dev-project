@@ -7,13 +7,17 @@ PokéWeb is an accessible online encyclopedia for Pokémon fans. Browse all
 favourites, and test your knowledge with two built-in games. Data comes
 from [PokéAPI](https://pokeapi.co/).
 
+## Deployment
+
+**Visit the live website:** [PokéWeb: The Ultimate Digital Pokémon Encyclopedia](https://teamrocket-pokeweb.netlify.app/)
+
 ## Description
 
 The website includes a catalog of every Pokémon, with a browsing page that offers filtering by generation, type, alphabetical order, and ID.
 
 ![Browse page](public/images/browse-page.png)
 
-Each Pokémon has a details page showing physical measurements, base stats, moves, and more.
+Each Pokémon has a details page showing physical measurements, base stats, moves, and more!
 
 ![Pokémon details page](public/images/details-page.png)
 
@@ -27,7 +31,45 @@ The games page includes two games: `Pokémon Clues` and `Who's that Pokémon?`
 
 ![Games page](public/images/games-page.png)
 
-**Live site:** Netlify URL (To be added in M3)
+## Project Structure
+
+PokéWeb follows a component-based React architecture, separating pages, reusable UI components, application logic, and styling to keep the codebase organized and maintainable.
+
+```text
+csci3230u-web-dev-project/
+├── css/                  # Page-specific and global stylesheets
+├── public/
+│   ├── images/           # Screenshots, images, and wireframes
+│   └── _redirects        # Netlify routing configuration
+├── src/
+│   ├── components/       # Reusable UI components and component tests
+│   │   └── selectForms/  # Custom dropdown and selection components
+│   ├── constants/        # Shared configuration and fixed values
+│   ├── context/          # Shared Pokémon data context
+│   ├── hooks/            # Custom React hooks for application logic
+│   ├── pages/            # Browse, Details, Favourites, and Games pages
+│   ├── utils/            # Data transformation and helper functions
+│   ├── test/             # Test setup and configuration
+│   ├── App.jsx           # Application routes and layout
+│   └── main.jsx          # React application entry point
+├── AI-USAGE.md           # AI assistance documentation
+├── package.json          # Dependencies and npm scripts
+└── vite.config.js        # Vite and testing configuration
+```
+
+### Key Directories
+
+- **`components/`** — Reusable interface elements such as Pokémon cards, filtering controls, pagination, and navigation.
+- **`pages/`** — Main website pages, each responsible for displaying a specific section of PokéWeb.
+- **`hooks/`** — Custom React hooks managing Pokémon fetching, filtering, pagination, favourites, evolution chains, and game logic.
+- **`context/`** — Provides shared Pokémon data across components.
+- **`utils/`** — Helper functions for processing PokéAPI responses and Pokémon information.
+- **`constants/`** — Centralized configuration for filters, navigation, pagination, and game settings.
+- **`css/`** — Global styling and individual page stylesheets.
+
+### Data Flow
+
+PokéWeb retrieves Pokémon information from **PokéAPI**, transforms API responses into a consistent format, and shares the data through React context. Pages use custom hooks to manage functionality such as searching, filtering, favourites, and navigation, while reusable components handle the user interface.
 
 ## Getting Started
 
@@ -56,11 +98,23 @@ You can use any terminal: Terminal on macOS/Linux, Command Prompt or PowerShell 
 
 ## Testing
 
-You can run our .test.jsx files to test our components with:
+Run the project's component tests using Vitest:
+
 ```bash
-   npm test #<blank or path>
+npm test
 ```
 
+To run a specific test file:
+
+```bash
+npm test -- src/components/PokemonCard.test.jsx
+```
+
+To check for code quality issues and potential errors using ESLint:
+
+```bash
+npm run lint
+```
 
 ## Documentation
 
@@ -72,12 +126,13 @@ You can run our .test.jsx files to test our components with:
 
 - HTML
 - CSS
-- PokéAPI
 - React.js
 - Vite
 - JavaScript
 - Node.js
-- More to be added (M3 onward)
+- PokéAPI (Pokémon data)
+- Vitest (Testing)
+- Netlify (Deployment & Hosting)
 
 ## Team Rocket
 
