@@ -59,14 +59,16 @@ export function useCry(cryPath) {
       audio.addEventListener("playing", onPlaying);
       audio.addEventListener("ended", onEnded);
 
+      const fill = fillRef.current;
+
       return () => {
          stopped = true;
          cancelAnimationFrame(rafRef.current);
          audio.pause();
          audio.removeEventListener("playing", onPlaying);
          audio.removeEventListener("ended", onEnded);
-         if (fillRef.current) {
-            fillRef.current.style.width = "0%";
+         if (fill) {
+            fill.style.width = "0%";
          }
          setIsPlaying(false);
       };

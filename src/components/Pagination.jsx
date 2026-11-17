@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { EDGE_COUNT, SIBLING_COUNT } from "../constants/pagination";
 
 function range(start, end) {
@@ -36,11 +36,6 @@ function getPageItems(page, totalPages) {
 function Pagination({ page, totalPages, onPageChange }) {
   const [pageInput, setPageInput] = useState(String(page));
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    setPageInput(String(page));
-    setError("");
-  }, [page]);
 
   if (totalPages <= 1) return null;
 

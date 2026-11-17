@@ -327,3 +327,78 @@ I want that on the Detail Page and Games Page, the search bar is not shown
 ```
 
 - **What it produced & what I changed:** It provided an updated `Layout.jsx` that has a new boolean `hideSearch`, which is `true` if the current location is the Detail Page or the Games Page. `hideSearch` is passed into the `Header` component. I did NOT pass Claude `Header.jsx` so it was not able to provide an updated version of the component. However it did say what changes would have to be made. It said to include `showSearch` has a parameter in the `Header` component and to wrap the input around the `showSearch` boolean, both of which I did. One issue I noticed when running the updated app is that while the search bar is no longer shown on the Detail Page or Games Page, the magnifying glass icon to the left of the bar is still shown. I had to change the `Header.jsx` to wrap the entire `search` component around the `showSearch` boolean to remove the icon as well.
+
+---
+
+## Log
+
+### #15
+- **Date:** 2026-11-17
+- **Member:** Aryan Kashefi-Aazam
+- **Tool / model:** Google Search AI
+- **Files:** `src/hooks/useEvolutionChain.js`
+- **Prompt (verbatim):**
+
+  ```
+  I just realized this use effect captures a lot more, how to fix this?:
+  <The code in the file>
+  ```
+
+- **What it produced & what I changed:** It produced the code needed to fix the pylint issues. I copied them verbatim and tested that this hook works as intended still
+
+---
+
+## Log
+
+### #16
+- **Date:** 2026-11-17
+- **Member:** Aryan Kashefi-Aazam
+- **Tool / model:** Google Search AI
+- **Files:** `src/hooks/useMediaQuery.js`
+- **Prompt (verbatim):**
+
+  ```
+  <after log #15>
+  Am I doing it right for this?:
+  <The code in the function>
+  ```
+
+- **What it produced & what I changed:** It produced the code needed to fix the pylint issues. I copied them verbatim and tested that this hook works as intended still
+
+---
+
+## Log
+
+### #17
+- **Date:** 2026-11-17
+- **Member:** Aryan Kashefi-Aazam
+- **Tool / model:** Google Search AI
+- **Files:** `src/hooks/useMoveTypes.js`
+- **Prompt (verbatim):**
+
+  ```
+  <after log #16>
+  Please fix the synch set method pylint error here, please:
+  <The code in the file>
+  ```
+
+- **What it produced & what I changed:** It produced the code needed to fix the pylint issues. I copied them verbatim and tested that this hook works as intended still
+
+---
+
+## Log
+
+### #18
+- **Date:** 2026-11-17
+- **Member:** Aryan Kashefi-Aazam
+- **Tool / model:** Google Search AI
+- **Files:** `src/pages/DetailsPage.jsx`
+- **Prompt (verbatim):**
+
+  ```
+  <after log #17>
+  I think I fixed it. I had this:
+  <The code in the function>
+  ```
+
+- **What it produced & what I changed:** It produced the code needed to fix the pylint issues. I copied them verbatim and tested that this hook works as intended still

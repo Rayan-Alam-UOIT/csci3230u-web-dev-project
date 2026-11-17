@@ -24,7 +24,7 @@ function BrowsePage({ searchQuery = "", onSearchChange }) {
    const { pokemonData: pokemon, status, retry } = usePokemon();
    const { isFavourite, toggleFavourite } = useFavourites();
 
-   const { filters, page, setPage, totalPages, pageItems, resultCount } =
+   const { filters, page, totalPages, pageItems, resultCount } =
       usePokemonBrowser(pokemon, searchQuery, onSearchChange, {
          page: routePage,
          onPageChange: goToPage,
@@ -68,6 +68,7 @@ function BrowsePage({ searchQuery = "", onSearchChange }) {
                />
 
                <Pagination
+                  key={page}
                   page={page}
                   totalPages={totalPages}
                   onPageChange={goToPage}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
-import { PokemonProvider } from "./context/PokemonContext";
+import { PokemonProvider } from "./context/PokemonProvider";
 import BrowsePage from "./pages/BrowsePage";
 import FavouritesPage from "./pages/FavouritesPage";
 import GamePage from "./pages/GamePage";

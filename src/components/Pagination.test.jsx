@@ -12,12 +12,12 @@ describe('Pagination', () => {
 
         // 1 Page displays no pagination
         const { rerender } = render(
-            <Pagination page={1} totalPages={1} onPageChange={onPageChange} />
+            <Pagination key={1} page={1} totalPages={1} onPageChange={onPageChange} />
         )
         expect(screen.queryByRole('navigation', { name: 'Pagination' })).not.toBeInTheDocument()
 
         // When 3 pages & on first page, the first page has attribute "aria-current"
-        rerender(<Pagination page={1} totalPages={3} onPageChange={onPageChange} />)
+        rerender(<Pagination key={1} page={1} totalPages={3} onPageChange={onPageChange} />)
 
         expect(screen.getByRole('link', { name: '1' })).toHaveAttribute('aria-current', 'page')
 
@@ -31,7 +31,7 @@ describe('Pagination', () => {
 
         // When 3 pages & on last page (3rd), the last page has attribute "aria-current"
         onPageChange.mockClear()
-        rerender(<Pagination page={3} totalPages={3} onPageChange={onPageChange} />)
+        rerender(<Pagination key={3} page={3} totalPages={3} onPageChange={onPageChange} />)
 
         expect(screen.getByRole('link', { name: '3' })).toHaveAttribute('aria-current', 'page')
 

@@ -82,6 +82,7 @@ function FavouritesPage({ searchQuery = "", onSearchChange }) {
                />
 
                <Pagination
+                  key={page}
                   page={page}
                   totalPages={totalPages}
                   onPageChange={goToPage}
