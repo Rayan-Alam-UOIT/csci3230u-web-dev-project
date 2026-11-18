@@ -1,3 +1,5 @@
+// AI-assisted - see AI-USAGE.md #17
+
 import { useCallback, useEffect, useState } from "react";
 
 const moveTypeCache = new Map();
@@ -16,9 +18,15 @@ async function fetchMoveType(url, signal) {
 }
 
 export function useMoveTypes(moves) {
-   const [moveTypes, setMoveTypes] = useState({});
-   const [status, setStatus] = useState("loading");
    const [attempt, setAttempt] = useState(0);
+   const [result, setResult] = useState({
+      moves: null,
+      attempt: 0,
+      moveTypes: {},
+      status: "loading",
+   });
+
+
 
    const retry = useCallback(() => setAttempt((n) => n + 1), []);
 
@@ -26,9 +34,6 @@ export function useMoveTypes(moves) {
       if (!moves) return;
       const controller = new AbortController();
       const { signal } = controller;
-
-      setMoveTypes({});
-      setStatus("loading");
 
       Promise.allSettled(
          moves.map(({ name, url }) =>
@@ -39,12 +44,24 @@ export function useMoveTypes(moves) {
          const entries = results
             .filter((r) => r.status === "fulfilled")
             .map((r) => r.value);
-         setMoveTypes(Object.fromEntries(entries));
-         setStatus(entries.length < results.length ? "error" : "ok");
+         setResult({
+            moves,
+            attempt,
+            moveTypes: Object.fromEntries(entries),
+            status: entries.length < results.length ? "error" : "ok",
+         });
       });
 
       return () => controller.abort();
    }, [moves, attempt]);
 
-   return { moveTypes, status, retry };
+   if (!moves) {
+      return { moveTypes: {}, status: "idle", retry };
+   }
+
+   if (result.moves !== moves || result.attempt !== attempt) {
+      return { moveTypes: {}, status: "loading", retry };
+   }
+
+   return { moveTypes: result.moveTypes, status: result.status, retry };
 }

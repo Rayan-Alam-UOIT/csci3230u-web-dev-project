@@ -170,7 +170,6 @@
     background: var(--color-surface);
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--radius-md);
-    image-rendering: pixelated;
 }
 
 .artwork-shiny-lightbox:not(:popover-open) {

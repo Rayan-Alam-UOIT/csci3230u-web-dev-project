@@ -1,4 +1,4 @@
-// AI-assisted - see AI-USAGE.md #9
+// AI-assisted - see AI-USAGE.md #<9, 15>
 
 import { useEffect, useState } from "react";
 
@@ -12,21 +12,19 @@ function buildTree(node) {
 }
 
 export function useEvolutionChain(speciesId) {
-  const [chain, setChain] = useState(null);
-  const [status, setStatus] = useState("loading");
+
+  const [result, setResult] = useState({
+    speciesId: null,
+    chain: null,
+    errors: false,
+  });
 
   useEffect(() => {
-    if (!speciesId) {
-      setChain(null);
-      setStatus("idle");
-      return;
-    }
+    if (!speciesId) return;
 
     const controller = new AbortController();
 
     async function loadEvolutions() {
-      setStatus("loading");
-      setChain(null);
 
       try {
         const speciesResponse = await fetch(
@@ -48,12 +46,19 @@ export function useEvolutionChain(speciesId) {
         const data = await chainResponse.json();
 
         if (!controller.signal.aborted) {
-          setChain(buildTree(data.chain));
-          setStatus("ok");
+          setResult({
+            speciesId,
+            chain: buildTree(data.chain),
+            error: false,
+          });
         }
-      } catch (error) {
+      } catch {
         if (!controller.signal.aborted) {
-          setStatus("error");
+          setResult({
+            speciesId,
+            chain: null,
+            error: true,
+          });
         }
       }
     }
@@ -63,5 +68,17 @@ export function useEvolutionChain(speciesId) {
     return () => controller.abort();
   }, [speciesId]);
 
-  return { chain, status };
+  if (!speciesId) {
+    return { chain: null, status: "idle" };
+  }
+
+  if (result.speciesId !== speciesId) {
+    return { chain: null, status: "loading" };
+  }
+
+  if (result.error) {
+    return { chain: null, status: "error" };
+  }
+
+  return { chain: result.chain, status: "ok" };
 }

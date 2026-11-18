@@ -1,4 +1,4 @@
-// AI-assisted - see AI-USAGE.md #<4, 5, 6, 7, 10, 11, 13>
+// AI-assisted - see AI-USAGE.md #18
 
 import { useParams, Link, useLocation } from "react-router-dom";
 import DataStatus from "../components/DataStatus";
@@ -39,7 +39,6 @@ function DetailPage() {
    } = useMoveTypes(pokemon?.moves);
 
    const [showAllMoves, setShowAllMoves] = useState(false);
-
    const [selectedVersion, setSelectedVersion] = useState(null);
 
    const versionGroups = useMemo(
@@ -90,7 +89,7 @@ function DetailPage() {
 
    const formattedName = capitalize(pokemon.name);
 
-   const { types, is_legendary, is_mythical, stats, moves, sprites, artwork } =
+   const { types, is_legendary, is_mythical, stats, moves, artwork } =
       pokemon;
 
    const availableSpriteGroups = SPRITE_GROUPS.map(({ key, label }) => {
@@ -119,15 +118,20 @@ const totalMoves = methodsWithMoves.reduce(
    0,
 );
 
-let remaining = showAllMoves ? Infinity : MOVE_LIMIT;
-const visibleGroups = methodsWithMoves
-   .map((method) => {
+let initialLimit = showAllMoves ? Infinity : MOVE_LIMIT;
+const { visibleGroups } = methodsWithMoves.reduce(
+   (acc, method) => {
       const list = groupedMoves[method];
-      const shown = list.slice(0, remaining);
-      remaining -= shown.length;
-      return { method, list, shown };
-   })
-   .filter(({ shown }) => shown.length > 0);
+      const shown = list.slice(0, acc.remaining);
+
+      if (shown.length > 0) {
+         acc.visibleGroups.push({ method, list, shown });
+      }
+      acc.remaining -= shown.length;
+      return acc;
+   },
+   { visibleGroups: [], remaining: initialLimit}
+)
 
    const abilities = pokemon.abilities.map(titleCase).join(", ");
 

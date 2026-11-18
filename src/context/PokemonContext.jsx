@@ -1,18 +1,6 @@
-import { createContext, useContext, useMemo } from "react";
-import { usePokemonData } from "../hooks/usePokemonData";
+import { createContext, useContext } from "react";
 
-const PokemonContext = createContext(null);
-
-export function PokemonProvider({ children }) {
-   const { pokemonData, status, retry } = usePokemonData();
-
-   const value = useMemo(
-      () => ({ pokemonData, status, retry }),
-      [pokemonData, status, retry],
-   );
-
-   return <PokemonContext.Provider value={value}>{children}</PokemonContext.Provider>;
-}
+export const PokemonContext = createContext(null);
 
 export function usePokemon() {
    const context = useContext(PokemonContext);
