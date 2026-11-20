@@ -284,7 +284,7 @@ const { visibleGroups } = methodsWithMoves.reduce(
 
                <li className="body moves-card">
                   <div className="card-row">
-                     <span className="detail-type">MOVES ({moves.length})</span>
+                     <span className="detail-type">MOVES ({totalMoves})</span>
 
                      {versionGroups.length > 0 && (
                         <select
