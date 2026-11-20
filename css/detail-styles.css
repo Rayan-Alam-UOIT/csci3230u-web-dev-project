@@ -1,4 +1,4 @@
-/* AI-assisted - see AI-USAGE.md #<5, 6, 7, 8, 11, 12, 13> */
+/* AI-assisted - see AI-USAGE.md #<5, 6, 7, 8, 11, 12, 13, 19> */
 
 /* =========================================================
    POKÉWEB - DETAIL PAGE STYLES
@@ -866,22 +866,27 @@
         flex-wrap: wrap;
         align-items: flex-start;
         gap: var(--space-4) var(--space-5);
-        flex: 0 1 auto;
+        flex: 1 1 auto;
     }
 
     .sprite-group {
         flex: 0 0 auto;
+        width: max-content;
+        max-width: 100%;
     }
 
     .sprites-list {
-        display: flex;
-        align-items: flex-start;
+        display: grid;
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        grid-auto-columns: 5rem;
         gap: var(--space-2);
+        width: max-content;
         margin-right: 0;
     }
 
     .sprite-item {
-        flex: 0 0 5rem;
+        min-width: 0;
     }
 
     .sprite-link {
