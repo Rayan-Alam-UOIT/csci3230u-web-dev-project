@@ -402,3 +402,27 @@ I want that on the Detail Page and Games Page, the search bar is not shown
   ```
 
 - **What it produced & what I changed:** It produced the code needed to fix the pylint issues. I copied them verbatim and tested that this hook works as intended still
+
+---
+
+## Log
+
+### #19 - Detail Page Sprites on Firefox
+
+- **Date:** 2026-11-20
+- **Member:** Mason Shipton
+- **Tool / model:** free-tier Claude (Claude Sonnet 5.5)
+- **Files:** `DetailPage.jsx`, `detail-styles.css` (Sprites section only)
+- **Prompt (verbatim):**
+
+```
+Hello
+
+I have this attached Detail Page
+
+With this attached CSS for the sprites section
+
+I am finding that on Firefox, the sprites are being smushed together. I don't seem to have this issue on Chrome. Any ideas what the issue is?
+```
+
+- **What it produced & what I changed:** It suggested that the issue had to do with the `min-width` of sprites components being set to 0. That removes the automatic minimum size that normally stops a flex item from shrinking below its contents. Chrome and Firefox resolve the `max-content` width of nested flex containers a little differently. If Firefox gives a group a width narrower than its non-wrapping `.sprites-list`, the `5rem` items overflow their group and overlap the next one, producing the appearance that the sprites are smushed together. It produced updated CSS for the sprites in the `@media` query. This included changing `flex` in `.sprite-groups` from `0 1 auto` to `1 1 auto`, chagning `flex` in `.sprite-group` from `0 0 auto` to `0 1 auto` and adding `min-width: auto` to `.sprite-group`, adding `flex-wrap: wrap` to `.sprites-list`, and adding `min-width: auto` to `.sprite-item`. However, while this fixed the issue of sprites smushing together, the sprites were still organized differently on Firefox compared to Chrome and the VSCode Integrated Browser. For large screens (laptops and desktops), the sprites are suppose to be organized with two games per row and the sprites in a row beneath each game. This is the case for Chrome and other browsers, but for Firefox, it shows three games per row with the sprites NOT in a row beneath each game. So I had to make some of my own changes after. I reversed the changes to `.sprite-group` and added `width: max-content` and `max-width: 100%`. I made `.sprites-list` a `grid` and added `width: max-content`. I removed `flex` from `.sprite-item` and added `min-width: 0`. This fixed the organization issue while still preventing the sprites from appearing smushed together.
