@@ -60,19 +60,7 @@ function DetailPage() {
       setShowAllMoves(false);
    }
 
-   if (status !== "ok") {
-      return (
-         <div className="page container">
-            <DataStatus
-               status={status}
-               onRetry={retry}
-               loadingText="Loading Pokémon details…"
-            />
-         </div>
-      );
-   }
-
-   if (!pokemon) {
+   if (status === "notFound") {
       return (
          <div className="page container">
             <nav>
@@ -83,6 +71,18 @@ function DetailPage() {
             <section className="empty-state-area" role="alert">
                <p>We couldn't find a Pokémon with that ID.</p>
             </section>
+         </div>
+      );
+   }
+
+   if (status !== "ok") {
+      return (
+         <div className="page container">
+            <DataStatus
+               status={status}
+               onRetry={retry}
+               loadingText="Loading Pokémon details…"
+            />
          </div>
       );
    }
