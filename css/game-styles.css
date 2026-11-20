@@ -18,6 +18,7 @@
 .game-card {
    display: flex;
    flex-direction: column;
+   height: 100%;
    gap: var(--space-2);
    padding: var(--space-3);
    border: var(--border-width) solid var(--color-border);
@@ -57,20 +58,41 @@
    align-self: flex-start;
    display: inline-flex;
    align-items: center;
+   justify-content: center;
    gap: var(--space-2);
-   margin-top: var(--space-1);
-   padding: var(--space-1) var(--space-3);
+   margin-top: auto;
+   padding: var(--space-2) var(--space-3);
    border: var(--border-width) solid var(--color-border);
    border-radius: var(--radius-pill);
-   background: var(--color-bg);
+   background: var(--color-surface);
+   color: var(--color-text);
    font-weight: 700;
    letter-spacing: 0.02em;
    cursor: pointer;
+   transition:
+      background 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
 }
 
 .play-btn:hover {
    border-color: var(--color-primary);
-   color: var(--color-primary);
+   background: var(--color-primary);
+   color: #fff;
+   transform: translateY(-2px);
+   box-shadow: var(--shadow-sm);
+}
+
+.play-btn:active {
+   transform: translateY(0);
+   box-shadow: none;
+}
+
+.play-btn:focus-visible {
+   outline: 2px solid var(--color-primary);
+   outline-offset: 3px;
 }
 
 .play-btn__icon {
@@ -80,8 +102,9 @@
    flex-shrink: 0;
    width: 1.5rem;
    height: 1.5rem;
-   border: var(--border-width) solid var(--color-border);
+   border: var(--border-width) solid currentColor;
    border-radius: 50%;
+   transition: transform 0.2s ease;
 }
 
 .play-btn__icon svg {
@@ -91,10 +114,19 @@
 }
 
 .play-btn:hover .play-btn__icon {
-   border-color: var(--color-primary);
-   color: var(--color-primary);
+   transform: translateX(2px);
 }
 
+@media (prefers-reduced-motion: reduce) {
+   .play-btn,
+   .play-btn__icon {
+      transition: none;
+   }
+
+   .play-btn:hover {
+      transform: none;
+   }
+}
 
 /* ---------- Game Play Area ---------- */
 .section-label {
