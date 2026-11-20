@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { usePokemon } from "../context/PokemonContext";
 
 export function usePokemonNavigation(id, navigationIds) {
-   const { pokemonData: pokemonList, status, retry } = usePokemon();
+   const { pokemonData: pokemonList, status: contextStatus, isLoadingMore, retry } = usePokemon();
 
    const navigation = useMemo(() => {
       const pokemon = pokemonList.find((item) => String(item.id) === id); // AI-assisted - see AI-USAGE.md #10
@@ -21,6 +21,11 @@ export function usePokemonNavigation(id, navigationIds) {
          nextPokemon: list[index + 1] ?? null,
       };
    }, [pokemonList, id, navigationIds]);
+
+   let status = contextStatus;
+   if (contextStatus === "ok" && !navigation.pokemon) {
+      status = isLoadingMore ? "loading" : "notFound";
+   }
 
    return { ...navigation, status, retry };
 }
