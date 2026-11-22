@@ -91,7 +91,7 @@ function EvolutionChain({ speciesId }) {
   const chunkSize = isWide ? Infinity : 2;
 
   return (
-    <section className="evolution-section" aria-labelledby="evolution-heading">
+    <li className="evolution-section" aria-labelledby="evolution-heading">
       <h2 id="evolution-heading" className="detail-type">
         EVOLUTION CHAIN
       </h2>
@@ -104,7 +104,7 @@ function EvolutionChain({ speciesId }) {
           <EvolutionNode node={chain} chunkSize={chunkSize} currentId={speciesId} isRoot />
         </div>
       )}
-    </section>
+    </li>
   );
 }
 

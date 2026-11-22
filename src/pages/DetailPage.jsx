@@ -255,115 +255,117 @@ const { visibleGroups } = methodsWithMoves.reduce(
                </div>
             </li>
 
-            <section className="pokedex-description">
+            <li className="pokedex-description">
                <h2>Pokédex Description</h2>
                <p>
                   {pokemon.description ?? "No Pokédex description available."}
                </p>
-            </section>
+            </li>
 
             <EvolutionChain speciesId={pokemon.speciesId ?? pokemon.id} />
+            
+            <li className="body-wrapper">
+               <ul className="body-list">
+                  <li className="body stats-card">
+                     <div className="card-row">
+                        <span className="detail-type">BASE STATS</span>
+                     </div>
 
-            <ul className="body-list">
-               <li className="body stats-card">
-                  <div className="card-row">
-                     <span className="detail-type">BASE STATS</span>
-                  </div>
+                     <div className="base-stats-grid">
+                        {BASE_STAT_ROWS.map(({ label, stat }) => (
+                           <div className="stat-item" key={stat}>
+                              <span className="stat-label">
+                                 {label.replace(":", "")}
+                              </span>
+                              <span className="stat-value">{stats[stat]}</span>
+                           </div>
+                        ))}
+                     </div>
+                  </li>
 
-                  <div className="base-stats-grid">
-                     {BASE_STAT_ROWS.map(({ label, stat }) => (
-                        <div className="stat-item" key={stat}>
-                           <span className="stat-label">
-                              {label.replace(":", "")}
-                           </span>
-                           <span className="stat-value">{stats[stat]}</span>
-                        </div>
-                     ))}
-                  </div>
-               </li>
+                  <li className="body moves-card">
+                     <div className="card-row">
+                        <span className="detail-type">MOVES ({totalMoves})</span>
 
-               <li className="body moves-card">
-                  <div className="card-row">
-                     <span className="detail-type">MOVES ({totalMoves})</span>
+                        {versionGroups.length > 0 && (
+                           <select
+                              className="moves-version"
+                              value={activeVersion}
+                              onChange={(e) => setSelectedVersion(e.target.value)}
+                              aria-label="Game version"
+                           >
+                              {versionGroups.map((group) => (
+                                 <option key={group} value={group}>
+                                    {titleCase(group)}
+                                 </option>
+                              ))}
+                           </select>
+                        )}
+                     </div>
 
-                     {versionGroups.length > 0 && (
-                        <select
-                           className="moves-version"
-                           value={activeVersion}
-                           onChange={(e) => setSelectedVersion(e.target.value)}
-                           aria-label="Game version"
-                        >
-                           {versionGroups.map((group) => (
-                              <option key={group} value={group}>
-                                 {titleCase(group)}
-                              </option>
-                           ))}
-                        </select>
+                     {moveStatus === "loading" && (
+                        <p role="status" aria-live="polite">
+                           Loading move types…
+                        </p>
                      )}
-                  </div>
 
-                  {moveStatus === "loading" && (
-                     <p role="status" aria-live="polite">
-                        Loading move types…
-                     </p>
-                  )}
+                     {moveStatus === "error" && (
+                        <p role="alert">
+                           Some move types couldn't be loaded.{" "}
+                           <button type="button" onClick={retryMoves}>
+                              Try again
+                           </button>
+                        </p>
+                     )}
 
-                  {moveStatus === "error" && (
-                     <p role="alert">
-                        Some move types couldn't be loaded.{" "}
-                        <button type="button" onClick={retryMoves}>
-                           Try again
-                        </button>
-                     </p>
-                  )}
+                     {visibleGroups.map(({ method, list, shown }) => (
+                        <section key={method} className="moves-group">
+                           <h3 className="moves-group-heading">
+                              {MOVE_METHOD_LABELS[method]} ({list.length})
+                           </h3>
 
-                  {visibleGroups.map(({ method, list, shown }) => (
-                     <section key={method} className="moves-group">
-                        <h3 className="moves-group-heading">
-                           {MOVE_METHOD_LABELS[method]} ({list.length})
-                        </h3>
+                           <div className="moves-grid">
+                              {shown.map((item) => (
+                                 <div className="move-item" key={item.name}>
+                                    <span className="move-name">
+                                       {method === "level-up" && (
+                                          <span className="move-level">Lv. {item.level}</span>
+                                       )}
+                                       {titleCase(item.name)}
+                                    </span>
 
-                        <div className="moves-grid">
-                           {shown.map((item) => (
-                              <div className="move-item" key={item.name}>
-                                 <span className="move-name">
-                                    {method === "level-up" && (
-                                       <span className="move-level">Lv. {item.level}</span>
+                                    {moveTypes[item.name] ? (
+                                       <span
+                                          className={`card-value type type-${moveTypes[item.name]}`}
+                                       >
+                                          {titleCase(moveTypes[item.name])}
+                                       </span>
+                                    ) : (
+                                       <span className="move-type-fallback">
+                                          {moveStatus === "loading" ? "…" : "Unknown"}
+                                       </span>
                                     )}
-                                    {titleCase(item.name)}
-                                 </span>
+                                 </div>
+                              ))}
+                           </div>
+                        </section>
+                     ))}
 
-                                 {moveTypes[item.name] ? (
-                                    <span
-                                       className={`card-value type type-${moveTypes[item.name]}`}
-                                    >
-                                       {titleCase(moveTypes[item.name])}
-                                    </span>
-                                 ) : (
-                                    <span className="move-type-fallback">
-                                       {moveStatus === "loading" ? "…" : "Unknown"}
-                                    </span>
-                                 )}
-                              </div>
-                           ))}
-                        </div>
-                     </section>
-                  ))}
+                     {totalMoves === 0 && <p>No moves available for this game.</p>}
 
-                  {totalMoves === 0 && <p>No moves available for this game.</p>}
-
-                  {totalMoves > MOVE_LIMIT && (
-                     <button
-                        type="button"
-                        className="moves-toggle"
-                        onClick={() => setShowAllMoves((prev) => !prev)}
-                        aria-expanded={showAllMoves}
-                     >
-                        {showAllMoves ? "Show Less" : `Show All ${totalMoves} Moves`}
-                     </button>
-                  )}
-               </li>
-            </ul>
+                     {totalMoves > MOVE_LIMIT && (
+                        <button
+                           type="button"
+                           className="moves-toggle"
+                           onClick={() => setShowAllMoves((prev) => !prev)}
+                           aria-expanded={showAllMoves}
+                        >
+                           {showAllMoves ? "Show Less" : `Show All ${totalMoves} Moves`}
+                        </button>
+                     )}
+                  </li>
+               </ul>
+            </li>
          </ul>
 
          <section className="sprites-section body" aria-labelledby="sprites-heading">
