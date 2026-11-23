@@ -1,5 +1,4 @@
-/* AI-assisted - see AI-USAGE.md #<14> */
-/* AI-assisted - see AI-USAGE.md #20 */
+// AI-assisted - see AI-USAGE.md #<14, 20, 21>
 
 import NavBar from "./NavBar";
 import { Link } from "react-router-dom";

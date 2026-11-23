@@ -1,4 +1,4 @@
-// AI-assisted - see AI-USAGE.md #10
+// AI-assisted - see AI-USAGE.md #<10, 21>
 
 import { Link, useLocation } from "react-router-dom";
 

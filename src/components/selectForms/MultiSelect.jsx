@@ -1,3 +1,5 @@
+// AI-assisted - see AI-USAGE.md #21
+
 import { useEffect, useRef, useState } from "react";
 
 function MultiSelect({ label, options, selected, onChange }) {

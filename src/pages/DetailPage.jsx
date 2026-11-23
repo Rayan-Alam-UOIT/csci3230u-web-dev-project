@@ -1,4 +1,4 @@
-// AI-assisted - see AI-USAGE.md #18
+// AI-assisted - see AI-USAGE.md #<18, 21>
 
 import { useParams, Link, useLocation } from "react-router-dom";
 import DataStatus from "../components/DataStatus";

@@ -1,6 +1,7 @@
-// AI-assisted - see AI-USAGE.md #17
+// AI-assisted - see AI-USAGE.md #<17, 22>
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { BATCH_SIZE } from "../constants/moveTypesConstants"
 
 const moveTypeCache = new Map();
 
@@ -8,13 +9,16 @@ async function fetchMoveType(url, signal) {
    if (moveTypeCache.has(url)) return moveTypeCache.get(url);
 
    const response = await fetch(url, { signal });
+
    if (!response.ok) {
       throw new Error(`Failed to load ${url}: ${response.status}`);
    }
-   const move = await response.json();
 
-   moveTypeCache.set(url, move.type.name);
-   return move.type.name;
+   const move = await response.json();
+   const type = move.type.name;
+
+   moveTypeCache.set(url, type);
+   return type;
 }
 
 export function useMoveTypes(moves) {
@@ -26,42 +30,85 @@ export function useMoveTypes(moves) {
       status: "loading",
    });
 
+   const knownTypes = useMemo(
+      () => Object.fromEntries((moves ?? []).filter((m) => m.type).map((m) => [m.name, m.type])),
+      [moves],
+   );
+   const pendingMoves = useMemo(() => (moves ?? []).filter((m) => !m.type), [moves]);
 
-
-   const retry = useCallback(() => setAttempt((n) => n + 1), []);
+   const retry = useCallback(() => {
+      setAttempt((n) => n + 1);
+   }, []);
 
    useEffect(() => {
-      if (!moves) return;
+      if (!moves || pendingMoves.length === 0) return;
+
       const controller = new AbortController();
       const { signal } = controller;
 
-      Promise.allSettled(
-         moves.map(({ name, url }) =>
-            fetchMoveType(url, signal).then((type) => [name, type]),
-         ),
-      ).then((results) => {
-         if (signal.aborted) return;
-         const entries = results
-            .filter((r) => r.status === "fulfilled")
-            .map((r) => r.value);
+      async function loadMoveTypes() {
+         const moveTypes = {};
+         let failed = false;
+
+         for (let i = 0; i < pendingMoves.length; i += BATCH_SIZE) {
+            if (signal.aborted) return;
+
+            const batch = pendingMoves.slice(i, i + BATCH_SIZE);
+
+            const results = await Promise.allSettled(
+               batch.map(({ name, url }) =>
+                  fetchMoveType(url, signal).then((type) => [name, type])
+               ),
+            );
+
+            if (signal.aborted) return;
+
+            for (const result of results) {
+               if (result.status === "fulfilled") {
+                  const [name, type] = result.value;
+                  moveTypes[name] = type;
+               } else {
+                  failed = true;
+                  console.error("Failed to load move type:", result.reason);
+               }
+            }
+
+            setResult({
+               moves,
+               attempt,
+               moveTypes: { ...moveTypes },
+               status: "loading",
+            });
+         }
+
          setResult({
             moves,
             attempt,
-            moveTypes: Object.fromEntries(entries),
-            status: entries.length < results.length ? "error" : "ok",
+            moveTypes: { ...moveTypes },
+            status: failed ? "error" : "ok",
          });
-      });
+      }
+
+      loadMoveTypes();
 
       return () => controller.abort();
-   }, [moves, attempt]);
+   }, [moves, pendingMoves, attempt]);
 
    if (!moves) {
       return { moveTypes: {}, status: "idle", retry };
    }
 
-   if (result.moves !== moves || result.attempt !== attempt) {
-      return { moveTypes: {}, status: "loading", retry };
+   if (pendingMoves.length === 0) {
+      return { moveTypes: knownTypes, status: "ok", retry };
    }
 
-   return { moveTypes: result.moveTypes, status: result.status, retry };
+   if (result.moves !== moves || result.attempt !== attempt) {
+      return { moveTypes: knownTypes, status: "loading", retry };
+   }
+
+   return {
+      moveTypes: { ...knownTypes, ...result.moveTypes },
+      status: result.status,
+      retry,
+   };
 }

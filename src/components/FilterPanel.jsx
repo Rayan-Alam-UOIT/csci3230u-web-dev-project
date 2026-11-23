@@ -1,3 +1,5 @@
+// AI-assisted - see AI-USAGE.md #21
+
 import MultiSelect from "./selectForms/MultiSelect";
 import SingleSelect from "./selectForms/SingleSelect";
 import { GENERATIONS, TYPES, CATEGORIES, SORT_OPTIONS } from "../constants/filters";

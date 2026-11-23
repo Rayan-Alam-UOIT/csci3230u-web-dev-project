@@ -475,3 +475,50 @@ How can I remake these icons using SVGs?
 ```
 
 - **What it produced & what I changed:** It produced JSX code that makes SVGs (using the `<svg>` and `<path>` tags) for each of the icons. I replaced the icon `<i>` tags in each of my provided JSX files with Claude's SVG-producing code. Furthermore, I had files (`PokemonCard.jsx` and `MultiSelect.jsx`) that used the same font awesome icons as my provided files, so I replaced their icons as well with the SVGs. Claude produces as well necessary CSS for the new SVGs. I changed all the CSS rules for the icons (in `detail-styles.css`, `filter-styles.css`, `global-styles.css`) to reference the SVGs instead (`i` -> `svg`) and added Claude's new necessary CSS rules in there as well. Finally, I removed the font awesome import from `index.html`.
+
+---
+
+## Log
+
+### #22 - Replace REST API with GraphQL
+
+- **Date:** 2026-11-23
+- **Member:** Mason Shipton
+- **Tool / model:** free-tier Claude (Claude Sonnet 5.5)
+- **Files:** `dataUrl.js`, `usePokemonData.js` (first prompt), `useMoveTypes.js`, `usePokemonNavigation.js`, `pokemonMapper.js` (second prompt)
+- **Prompt (verbatim):**
+
+```
+Hello
+
+Currently, my Pokemon app fetches data from PokeAPI using REST API requests. At the startup of the app, two requests have to be made for each Pokemon (1025 Pokemon in total). This is expensive and hurts performance. I learned that PokeAPI offers a GraphQL endpoint that can retrieve a list of Pokemon and specific API fields rather than all. Example query:
+
+query samplePokeAPIquery {
+  gen3_species: pokemonspecies(
+    where: {generation: {name: {_eq: "generation-iii"}}}
+    order_by: {id: asc}
+  ) {
+    name
+    id
+  }
+  generations: generation {
+    name
+    pokemon_species: pokemonspecies_aggregate {
+      aggregate {
+        count
+      }
+    }
+  }
+}
+
+Can we change my usePokemonData.js to retrieve data with GraphQL instead? Can we leave REST API as a fallback since GraphQL has a rate limit?
+```
+
+follow-up prompt:
+
+```
+Can we now change fetching for the Detail page to use GraphQL with REST API as a fallback too? For the Detail page, we use separate requests for the Pokemon move types.
+```
+
+- **What it produced & what I changed:** For the first prompt, it produced an updated `usePokemonData.js` that uses GraphQL to fetch a list of Pokemon with select fields rather than individual queries for each Pokemon with all the fields (with REST API as a fallback). Furthermore, it produced an updated `dataUrl.js` now including `POKEAPI_BASE_URL`, `GRAPHQL_URL`, and `ARTWORK_URL`. Claude's updated `usePokemonData.js` stored the fetched Pokemon data in `localStorage`. I removed this since it's an expensive cache and may cause the user to miss new data. I moved new constants defined by Claude in `usePokemonData.js` (`REST_BATCH_SIZE`, `LIST_QUERY`) to `dataUrl.js`.
+For the second prompt, it produced a new file `usePokemonDetail.js` that, like the updated `usePokemonData.js`, uses GraphQL with REST API as a fallback. Unlike the updated `usePokemonData.js` though, it fetches the data for only a single Pokemon but still does a select list of fields, rather than all of them. It produced a refactored `usePokemonNavigation.js` that uses the new `usePokemonDetail.js` hook. For GraphQL, the move types come with the detail query. So `useMoveTypes.js` was changed only to be used when falling back to the REST API. The utils file `pokemonMapper.js` was changed to handle and map the GraphQL moves and details. Finally, Claude made `graphqlClient.js` which prevents GraphQL from being sent requests if the rate has been hit. For changes I made, I moved the constants it defined in `graphqlClient.js` and `useMoveTypes.js` to their own constants files `graphqlConstants.js` and `moveTypesConstants.js`. Furthermore, I changed `usePokemonData.js` to use the same `graphqlClient.js`. 
