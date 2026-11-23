@@ -41,25 +41,33 @@
 .filters-reset {
    display: inline-flex;
    align-items: center;
+   gap: var(--space-1);
    padding: var(--space-1) var(--space-3);
+   border: var(--border-width) solid transparent;
+   border-radius: var(--radius-pill);
    background: transparent;
-   border: 0;
    color: var(--color-primary);
    font: inherit;
    font-size: var(--font-size-sm);
    font-weight: 600;
-   text-decoration: none;
    cursor: pointer;
+   transition: background-color var(--transition-fast) ease, border-color var(--transition-fast) ease;
 }
 
 .filters-reset:hover {
-   text-decoration: underline;
+   background: var(--color-primary-bg);
+   border-color: var(--color-primary);
+   text-decoration: none;
 }
 
 .filters-reset svg {
-   width: 1.4em;
-   height: 1.4em;
+   width: 1.15em;
+   height: 1.15em;
    flex-shrink: 0;
+   stroke-width: 2.75;
+   stroke-linecap: round;
+   stroke-linejoin: round;
+   transition: transform var(--transition-fast) ease;
 }
 
 /* ---------- Single- & Multi-Select ---------- */
@@ -102,11 +110,14 @@
    right: var(--space-3);
    top: 50%;
    transform: translateY(-50%);
-   font-size: var(--font-size-xs);
-   color: var(--color-text-muted);
+   width: 1.1em;
+   height: 1.1em;
+   color: var(--color-text);          
+   stroke-width: 2.75;                
+   stroke-linecap: round;
+   stroke-linejoin: round;
    pointer-events: none;
-   width: 1.4em;
-   height: 1.4em;
+   transition: transform var(--transition-fast) ease, color var(--transition-fast) ease;
 }
 
 .select-wrapper:hover {
