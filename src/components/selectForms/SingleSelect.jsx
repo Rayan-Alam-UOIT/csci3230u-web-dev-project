@@ -1,3 +1,5 @@
+// AI-assisted - see AI-USAGE.md #21
+
 import { useEffect, useRef, useState } from "react";
 
 function SingleSelect({ label, options, value, onChange, emptyLabel = "None" }) {
@@ -38,7 +40,17 @@ function SingleSelect({ label, options, value, onChange, emptyLabel = "None" }) 
         {selected ? selected.label : emptyLabel}
       </button>
 
-      <i className="fa-solid fa-chevron-down"></i>
+      <svg
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="m6 9 6 6 6-6" />
+      </svg>
 
       {open && (
         <ul className="multi-select__panel">

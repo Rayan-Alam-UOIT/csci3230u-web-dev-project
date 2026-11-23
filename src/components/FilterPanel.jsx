@@ -1,3 +1,5 @@
+// AI-assisted - see AI-USAGE.md #21
+
 import MultiSelect from "./selectForms/MultiSelect";
 import SingleSelect from "./selectForms/SingleSelect";
 import { GENERATIONS, TYPES, CATEGORIES, SORT_OPTIONS } from "../constants/filters";
@@ -47,9 +49,18 @@ function FilterPanel({ filters }) {
         />
 
         {hasActiveFilters && (
-        <button type="button" className="filters-reset" onClick={resetFilters}>
-            <i className="fa-solid fa-xmark" aria-hidden="true"></i>
-            Clear filters
+        <button type="button" className="filters-reset" onClick={resetFilters}>            
+          <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+          >
+            <path d="M18 6 6 18M6 6l12 12" />
+          </svg>
+           Clear filters
         </button>
         )}
     </div>

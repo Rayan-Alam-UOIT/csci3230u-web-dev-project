@@ -1,8 +1,8 @@
-// AI-assisted - see AI-USAGE.md #10
+// AI-assisted - see AI-USAGE.md #<10, 21>
 
 import { Link, useLocation } from "react-router-dom";
 
-function PokemonCard({ pokemon, onToggleFavourite, navigationIds }) {
+function PokemonCard({ pokemon, onToggleFavourite, navigationIds, index=0 }) {
    const location = useLocation();
 
    const formattedName =
@@ -18,7 +18,16 @@ function PokemonCard({ pokemon, onToggleFavourite, navigationIds }) {
                to={`/pokemon/${pokemon.id}`}
                state={{ from: location.pathname, navigationIds }}
             >
-               <img src={pokemon.artwork.default} alt={formattedName} />
+               {/* AI-assisted - see AI-USAGE.md #20 */}
+               <img
+                  src={pokemon.artwork.default}
+                  alt={formattedName}
+                  width={475}
+                  height={475}
+                  loading={index === 0 ? "eager" : "lazy"}
+                  fetchPriority={index === 0 ? "high" : "auto"}
+                  decoding="async"
+               />
             </Link>
          </div>
 
@@ -45,15 +54,27 @@ function PokemonCard({ pokemon, onToggleFavourite, navigationIds }) {
                      onChange={() => onToggleFavourite?.(pokemon.id)}
                   />
 
-                  <i
-                     className="fa-regular fa-heart fav-heart-outline"
+                  <svg
+                     className="fav-heart-outline"
+                     viewBox="0 0 24 24"
                      aria-hidden="true"
-                  ></i>
+                     fill="none"
+                     stroke="currentColor"
+                     strokeWidth="2"
+                     strokeLinecap="round"
+                     strokeLinejoin="round"
+                  >
+                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z" />
+                  </svg>
 
-                  <i
-                     className="fa-solid fa-heart fav-heart-solid"
+                  <svg
+                     className="fav-heart-solid"
+                     viewBox="0 0 24 24"
                      aria-hidden="true"
-                  ></i>
+                     fill="currentColor"
+                  >
+                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z" />
+                  </svg>
                </label>
             </div>
 
