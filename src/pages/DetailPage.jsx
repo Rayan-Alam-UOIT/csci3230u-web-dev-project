@@ -196,15 +196,27 @@ const { visibleGroups } = methodsWithMoves.reduce(
                            onChange={() => toggleFavourite(pokemon.id)}
                         />
 
-                        <i
-                           className="fa-regular fa-heart fav-heart-outline"
+                        <svg
+                           className="fav-heart-outline"
+                           viewBox="0 0 24 24"
                            aria-hidden="true"
-                        ></i>
+                           fill="none"
+                           stroke="currentColor"
+                           strokeWidth="2"
+                           strokeLinecap="round"
+                           strokeLinejoin="round"
+                        >
+                           <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z" />
+                        </svg>
 
-                        <i
-                           className="fa-solid fa-heart fav-heart-solid"
+                        <svg
+                           className="fav-heart-solid"
+                           viewBox="0 0 24 24"
                            aria-hidden="true"
-                        ></i>
+                           fill="currentColor"
+                        >
+                           <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z" />
+                        </svg>
                      </label>
 
                      <span>Favourite</span>
@@ -444,10 +456,31 @@ const { visibleGroups } = methodsWithMoves.reduce(
                            onClick={playCry}
                            aria-label={`Play ${formattedName}'s cry`}
                         >
-                           <i
-                              className={`fa-solid ${isPlaying ? "fa-volume-high" : "fa-play"}`}
-                              aria-hidden="true"
-                           ></i>
+
+                           {isPlaying ? (
+                              <svg
+                                 viewBox="0 0 24 24"
+                                 aria-hidden="true"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 strokeWidth="2"
+                                 strokeLinecap="round"
+                                 strokeLinejoin="round"
+                              >
+                                 <path d="M11 5 6 9H2v6h4l5 4V5Z" />
+                                 <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                                 <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                              </svg>
+                           ) : (
+                              <svg
+                                 viewBox="0 0 24 24"
+                                 aria-hidden="true"
+                                 fill="currentColor"
+                              >
+                                 <path d="M8 5.5a1 1 0 0 1 1.52-.85l10 6.5a1 1 0 0 1 0 1.7l-10 6.5A1 1 0 0 1 8 18.5v-13Z" />
+                              </svg>
+                           )}
+
                            <span>
                               {isPlaying ? "Playing Cry..." : "Play Cry"}
                            </span>

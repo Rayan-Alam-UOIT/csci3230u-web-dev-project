@@ -46,7 +46,17 @@ function MultiSelect({ label, options, selected, onChange }) {
         {summary}
       </button>
 
-      <i className="fa-solid fa-chevron-down"></i>
+      <svg
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="m6 9 6 6 6-6" />
+      </svg>
 
       {open && (
         <ul className="multi-select__panel">

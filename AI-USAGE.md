@@ -453,3 +453,25 @@ Provide specific, code changes for each file rather than rewriting entire compon
 ```
 
 - **What it produced & what I changed:** ChatGPT reviewed the Lighthouse performance results and the relevant application files to identify opportunities for improving initial page loading and rendering performance. It helped with targeted optimizations across the global stylesheet, header, Pokémon cards, grid, and application setup, focusing on resource loading and rendering efficiency. In particular, the Pokémon card images were configured to use lazy loading for non-priority images, eager loading and higher fetch priority for the first card, asynchronous decoding, and explicit image dimensions. The grid passes each card's index to support this loading priority. I applied the relevant changes while preserving the existing website design, navigation, search, filtering, pagination, and favourites functionality. 
+
+---
+
+## Log
+
+### #21 - Replace FontAwesome with SVG
+
+- **Date:** 2026-11-23
+- **Member:** Mason Shipton
+- **Tool / model:** free-tier Claude (Claude Sonnet 5.5)
+- **Files:** `SingleSelect.jsx`, `FilterPanel.jsx`, `Header.jsx`, `DetailPage.jsx` (`<i>` icon tags code only)
+- **Prompt (verbatim):**
+
+```
+Hello
+
+I have the following font awesome icons in my app
+
+How can I remake these icons using SVGs?
+```
+
+- **What it produced & what I changed:** It produced JSX code that makes SVGs (using the `<svg>` and `<path>` tags) for each of the icons. I replaced the icon `<i>` tags in each of my provided JSX files with Claude's SVG-producing code. Furthermore, I had files (`PokemonCard.jsx` and `MultiSelect.jsx`) that used the same font awesome icons as my provided files, so I replaced their icons as well with the SVGs. Claude produces as well necessary CSS for the new SVGs. I changed all the CSS rules for the icons (in `detail-styles.css`, `filter-styles.css`, `global-styles.css`) to reference the SVGs instead (`i` -> `svg`) and added Claude's new necessary CSS rules in there as well. Finally, I removed the font awesome import from `index.html`.
