@@ -766,3 +766,8 @@ select:focus-visible,
    border-radius: var(--radius-md);
    background: var(--color-bg);
 }
+
+/* ---------- Reserve space during initial Pokémon loading ---------- */
+#main-content > .page:has(.spinner) { /* AI-assisted - see AI-USAGE.md #20 */
+   min-height: 100vh;
+}

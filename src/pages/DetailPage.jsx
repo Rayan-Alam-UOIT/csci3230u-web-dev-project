@@ -89,7 +89,7 @@ function DetailPage() {
 
    const formattedName = capitalize(pokemon.name);
 
-   const { types, is_legendary, is_mythical, stats, moves, artwork } =
+   const { types, is_legendary, is_mythical, stats, artwork } =
       pokemon;
 
    const availableSpriteGroups = SPRITE_GROUPS.map(({ key, label }) => {

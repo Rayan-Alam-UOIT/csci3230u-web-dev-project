@@ -104,7 +104,7 @@ Run the project's component tests using Vitest:
 npm test
 ```
 
-To run a specific test file:
+To run a specific test file (4 in total):
 
 ```bash
 npm test -- src/components/PokemonCard.test.jsx
@@ -115,6 +115,22 @@ To check for code quality issues and potential errors using ESLint:
 ```bash
 npm run lint
 ```
+
+## Performance & Accessibility
+
+To build the application for production and preview it locally:
+
+```bash
+npm run build
+npm run preview
+```
+
+The application can be evaluated using:
+
+- **[Google Lighthouse](https://developer.chrome.com/docs/lighthouse/overview)** — Audits performance, accessibility, best practices, and SEO.
+- **[axe DevTools](https://www.deque.com/axe/devtools/)** — Checks for accessibility issues and potential WCAG violations.
+
+These tools can be used to assess the website on desktop and mobile and identify areas for improvement.
 
 ## Documentation
 

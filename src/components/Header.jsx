@@ -1,4 +1,5 @@
 /* AI-assisted - see AI-USAGE.md #<14> */
+/* AI-assisted - see AI-USAGE.md #20 */
 
 import NavBar from "./NavBar";
 import { Link } from "react-router-dom";
@@ -13,6 +14,8 @@ function Header({ searchQuery, onSearchChange, showSearch = true }) {
                className="site-header__icon-img"
                src="/images/Poké_Ball_icon.svg"
                alt=""
+               width={28}
+               height={28}
             />
          </Link>
 

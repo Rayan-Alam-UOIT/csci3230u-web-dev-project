@@ -2,7 +2,7 @@
 
 import { Link, useLocation } from "react-router-dom";
 
-function PokemonCard({ pokemon, onToggleFavourite, navigationIds }) {
+function PokemonCard({ pokemon, onToggleFavourite, navigationIds, index=0 }) {
    const location = useLocation();
 
    const formattedName =
@@ -18,7 +18,16 @@ function PokemonCard({ pokemon, onToggleFavourite, navigationIds }) {
                to={`/pokemon/${pokemon.id}`}
                state={{ from: location.pathname, navigationIds }}
             >
-               <img src={pokemon.artwork.default} alt={formattedName} />
+               {/* AI-assisted - see AI-USAGE.md #20 */}
+               <img
+                  src={pokemon.artwork.default}
+                  alt={formattedName}
+                  width={475}
+                  height={475}
+                  loading={index === 0 ? "eager" : "lazy"}
+                  fetchPriority={index === 0 ? "high" : "auto"}
+                  decoding="async"
+               />
             </Link>
          </div>
 

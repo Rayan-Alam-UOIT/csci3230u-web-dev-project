@@ -426,3 +426,30 @@ I am finding that on Firefox, the sprites are being smushed together. I don't se
 ```
 
 - **What it produced & what I changed:** It suggested that the issue had to do with the `min-width` of sprites components being set to 0. That removes the automatic minimum size that normally stops a flex item from shrinking below its contents. Chrome and Firefox resolve the `max-content` width of nested flex containers a little differently. If Firefox gives a group a width narrower than its non-wrapping `.sprites-list`, the `5rem` items overflow their group and overlap the next one, producing the appearance that the sprites are smushed together. It produced updated CSS for the sprites in the `@media` query. This included changing `flex` in `.sprite-groups` from `0 1 auto` to `1 1 auto`, chagning `flex` in `.sprite-group` from `0 0 auto` to `0 1 auto` and adding `min-width: auto` to `.sprite-group`, adding `flex-wrap: wrap` to `.sprites-list`, and adding `min-width: auto` to `.sprite-item`. However, while this fixed the issue of sprites smushing together, the sprites were still organized differently on Firefox compared to Chrome and the VSCode Integrated Browser. For large screens (laptops and desktops), the sprites are suppose to be organized with two games per row and the sprites in a row beneath each game. This is the case for Chrome and other browsers, but for Firefox, it shows three games per row with the sprites NOT in a row beneath each game. So I had to make some of my own changes after. I reversed the changes to `.sprite-group` and added `width: max-content` and `max-width: 100%`. I made `.sprites-list` a `grid` and added `width: max-content`. I removed `flex` from `.sprite-item` and added `min-width: 0`. This fixed the organization issue while still preventing the sprites from appearing smushed together.
+
+---
+
+## Log
+
+### #20 - Minor Lighthouse Performance Optimizations
+
+- **Date:** 2026-11-22
+- **Member:** Rayan Alam
+- **Tool / model:** free-tier ChatGPT (GPT-5.6 Luna)
+- **Files:** `css/global-styles.css`, `src/components/Header.jsx`, `src/components/PokemonCard.jsx`, `src/components/PokemonGrid.jsx`, `src/App.jsx`
+
+- **Prompt (verbatim):**
+
+```text
+I ran a Lighthouse performance audit on the production preview of our Pokéweb application and noticed that the mobile performance score was quite low.
+
+I want to improve the Lighthouse performance score without significantly changing the application's existing functionality, design, or overall structure.
+
+I will provide the relevant files, including global-styles.css, Header.jsx, PokemonCard.jsx, PokemonGrid.jsx, and App.jsx, along with the Lighthouse performance results.
+
+Please review these files and identify the most effective initial optimizations, particularly for render-blocking resources, image loading, and unnecessary JavaScript execution.
+
+Provide specific, code changes for each file rather than rewriting entire components. Preserve the existing search, filtering, pagination, favourites, navigation, and responsive layout.
+```
+
+- **What it produced & what I changed:** ChatGPT reviewed the Lighthouse performance results and the relevant application files to identify opportunities for improving initial page loading and rendering performance. It helped with targeted optimizations across the global stylesheet, header, Pokémon cards, grid, and application setup, focusing on resource loading and rendering efficiency. In particular, the Pokémon card images were configured to use lazy loading for non-priority images, eager loading and higher fetch priority for the first card, asynchronous decoding, and explicit image dimensions. The grid passes each card's index to support this loading priority. I applied the relevant changes while preserving the existing website design, navigation, search, filtering, pagination, and favourites functionality. 
