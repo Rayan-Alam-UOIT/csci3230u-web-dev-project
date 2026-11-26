@@ -8,7 +8,7 @@ import "../css/list-styles.css";
 import "../css/favourite-styles.css";
 import "../css/game-styles.css";
 import "../css/detail-styles.css";
-
+import "./i18n";
 import App from "./App.jsx";
 
 createRoot(document.getElementById("root")).render(
