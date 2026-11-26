@@ -782,3 +782,94 @@ select:focus-visible,
 #main-content > .page:has(.spinner) { /* AI-assisted - see AI-USAGE.md #20 */
    min-height: 100vh;
 }
+
+/* ---------- Language Switcher ---------- */
+.site-header__actions {
+   display: flex;
+   align-items: center;
+   justify-content: flex-end;
+   gap: 0.5rem;
+   width: 100%;
+   min-width: 0;
+}
+
+.site-header__actions > search {
+   flex: 1;
+   min-width: 0;
+}
+
+.site-header__actions .site-search {
+   width: 100%;
+}
+
+.site-header__actions .site-search input {
+   min-width: 0;
+   width: 100%;
+}
+
+.language-switcher {
+   display: flex;
+   align-items: center;
+   flex-shrink: 0;
+}
+
+.language-switcher__select {
+   appearance: none;
+   background-color: rgba(255, 255, 255, 0.15);
+   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='white' stroke-width='2'/></svg>");
+   background-repeat: no-repeat;
+   background-position: right 0.75rem center;
+   color: #fff;
+   border: 1px solid rgba(255, 255, 255, 0.6);
+   border-radius: 999px;
+   padding: 0.4rem 1.75rem 0.4rem 0.75rem;
+   font: inherit;
+   font-size: 0.875rem;
+   cursor: pointer;
+   white-space: nowrap;
+   transition: background-color var(--transition-quick) ease;
+}
+
+.language-switcher__select:hover {
+   background-color: rgba(255, 255, 255, 0.25);
+}
+
+.language-switcher__select:focus-visible {
+   outline: 2px solid #fff;
+   outline-offset: 2px;
+}
+
+.language-switcher__select option {
+   color: #222;
+   background: #fff;
+}
+
+@media (min-width: 25em) {
+   .site-header__actions {
+      gap: 0.75rem;
+   }
+}
+
+@media (min-width: 48.0625em) {
+   .language-switcher__select {
+      padding: 0.5rem 2rem 0.5rem 1rem;
+   }
+}
+
+@media (min-width: 50em) {
+   .site-header__actions {
+      width: auto;
+   }
+
+   .site-header__actions > search {
+      flex: 0 1 auto;
+   }
+
+   .site-header__actions .site-search {
+      width: auto;
+   }
+
+   .site-header__actions .site-search input {
+      width: auto;
+   }
+}
