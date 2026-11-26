@@ -1,0 +1,64 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "browse": "Parcourir",
+    "favourites": "Favoris",
+    "games": "Jeux",
+    "search": "Rechercher",
+    "language": "Langue"
+  },
+  "favourites": {
+    "title": "Vos favoris",
+    "empty": "Vous n'avez encore aucun Pokémon favori.",
+    "add": "Ajouter aux favoris",
+    "remove": "Retirer des favoris",
+    "count_one": "{{count}} favori",
+    "count_other": "{{count}} favoris"
+  },
+  "search": {
+    "placeholder": "Rechercher un Pokémon...",
+    "noResults": "Aucun Pokémon trouvé.",
+    "clear": "Effacer la recherche"
+  },
+  "browse": {
+    "title": "Catalogue des Pokémon",
+    "filters": {
+      "generation": "Génération",
+      "type": "Type",
+      "region": "Région",
+      "sort": "Trier",
+      "reset": "Réinitialiser les filtres",
+      "selectAll": "Tout sélectionner",
+      "clearAll": "Tout effacer"
+    },
+    "sortOptions": {
+      "numberAsc": "Numéro (croissant)",
+      "numberDesc": "Numéro (décroissant)",
+      "nameAsc": "Nom (A–Z)",
+      "nameDesc": "Nom (Z–A)"
+    },
+    "loading": "Chargement des Pokémon...",
+    "error": "Une erreur est survenue lors du chargement des Pokémon."
+  },
+  "detail": {
+    "pokedexData": "Données du Pokédex",
+    "baseStats": "Statistiques de base",
+    "moves": "Capacités",
+    "abilities": "Talents",
+    "types": "Type",
+    "height": "Taille",
+    "weight": "Poids",
+    "spritesAndCry": "Sprites et cri",
+    "playCry": "Jouer le cri",
+    "evolutions": "Évolutions",
+    "back": "Retour au catalogue"
+  },
+  "games": {
+    "title": "Jeux",
+    "start": "Commencer",
+    "playAgain": "Rejouer",
+    "score": "Score",
+    "correct": "Correct !",
+    "incorrect": "Pas tout à fait !"
+  }
+}

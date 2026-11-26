@@ -1,0 +1,63 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "browse": "ポケモンを探す",
+    "favourites": "お気に入り",
+    "games": "ゲーム",
+    "search": "検索",
+    "language": "言語"
+  },
+  "favourites": {
+    "title": "お気に入り",
+    "empty": "お気に入りのポケモンはまだいません。",
+    "add": "お気に入りに追加",
+    "remove": "お気に入りから削除",
+    "count_other": "お気に入り {{count}} 件"
+  },
+  "search": {
+    "placeholder": "ポケモンを検索...",
+    "noResults": "ポケモンが見つかりませんでした。",
+    "clear": "検索をクリア"
+  },
+  "browse": {
+    "title": "ポケモン図鑑",
+    "filters": {
+      "generation": "世代",
+      "type": "タイプ",
+      "region": "地方",
+      "sort": "並び替え",
+      "reset": "フィルターをリセット",
+      "selectAll": "すべて選択",
+      "clearAll": "すべて解除"
+    },
+    "sortOptions": {
+      "numberAsc": "番号（昇順）",
+      "numberDesc": "番号（降順）",
+      "nameAsc": "名前（昇順）",
+      "nameDesc": "名前（降順）"
+    },
+    "loading": "ポケモンを読み込み中...",
+    "error": "ポケモンの読み込み中にエラーが発生しました。"
+  },
+  "detail": {
+    "pokedexData": "図鑑データ",
+    "baseStats": "種族値",
+    "moves": "わざ",
+    "abilities": "とくせい",
+    "types": "タイプ",
+    "height": "たかさ",
+    "weight": "おもさ",
+    "spritesAndCry": "スプライトと鳴き声",
+    "playCry": "鳴き声を再生",
+    "evolutions": "進化",
+    "back": "図鑑に戻る"
+  },
+  "games": {
+    "title": "ゲーム",
+    "start": "スタート",
+    "playAgain": "もう一度遊ぶ",
+    "score": "スコア",
+    "correct": "正解！",
+    "incorrect": "残念！"
+  }
+}

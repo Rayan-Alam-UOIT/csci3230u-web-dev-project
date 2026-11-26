@@ -1,0 +1,64 @@
+{
+  "nav": {
+    "home": "Home",
+    "browse": "Browse",
+    "favourites": "Favourites",
+    "games": "Games",
+    "search": "Search",
+    "language": "Language"
+  },
+  "favourites": {
+    "title": "Your Favourites",
+    "empty": "You haven't favourited any Pokémon yet.",
+    "add": "Add to favourites",
+    "remove": "Remove from favourites",
+    "count_one": "{{count}} favourite",
+    "count_other": "{{count}} favourites"
+  },
+  "search": {
+    "placeholder": "Search Pokémon...",
+    "noResults": "No Pokémon found.",
+    "clear": "Clear search"
+  },
+  "browse": {
+    "title": "Pokémon Catalogue",
+    "filters": {
+      "generation": "Generation",
+      "type": "Type",
+      "region": "Region",
+      "sort": "Sort",
+      "reset": "Reset filters",
+      "selectAll": "Select all",
+      "clearAll": "Clear all"
+    },
+    "sortOptions": {
+      "numberAsc": "Number (low to high)",
+      "numberDesc": "Number (high to low)",
+      "nameAsc": "Name (A–Z)",
+      "nameDesc": "Name (Z–A)"
+    },
+    "loading": "Loading Pokémon...",
+    "error": "Something went wrong loading Pokémon."
+  },
+  "detail": {
+    "pokedexData": "Pokédex data",
+    "baseStats": "Base stats",
+    "moves": "Moves",
+    "abilities": "Abilities",
+    "types": "Type",
+    "height": "Height",
+    "weight": "Weight",
+    "spritesAndCry": "Sprites & Cry",
+    "playCry": "Play cry",
+    "evolutions": "Evolutions",
+    "back": "Back to catalogue"
+  },
+  "games": {
+    "title": "Games",
+    "start": "Start",
+    "playAgain": "Play again",
+    "score": "Score",
+    "correct": "Correct!",
+    "incorrect": "Not quite!"
+  }
+}
