@@ -96,6 +96,27 @@
     "playAgain": "Play again",
     "score": "Score",
     "correct": "Correct!",
-    "incorrect": "Not quite!"
+    "incorrect": "Not quite!",
+    "submit": "Submit",
+    "next": "Next",
+    "seeResults": "See results",
+    "gameOver": "Game over! You scored <strong>{{score}} / {{max}}</strong>.",
+    "bestScore": "Best score: {{score}} / {{max}}",
+    "silhouette": {
+      "name": "Who's That Pokémon?",
+      "description": "Identify the Pokémon shown from its silhouette or image.",
+      "cardAlt": "A Pokémon silhouette next to a question mark, in the style of the \"Who's That Pokémon?\" TV segment",
+      "progress": "Round {{current}} of {{total}} · Score: {{score}}",
+      "prompt": "Who's that Pokémon?",
+      "hiddenAlt": "Silhouette of a hidden Pokémon",
+      "answerChoices": "Answer choices",
+      "correct": "Correct! It's {{name}}!",
+      "incorrect": "Not quite. It's {{name}}."
+    },
+    "documentTitle": "Pokéweb - Games",
+    "subtitle": "Choose a game to play.",
+    "play": "PLAY",
+    "playArea": "Game play area",
+    "selectPrompt": "Select a game above to start playing."
   }
 }
