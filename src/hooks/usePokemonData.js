@@ -3,12 +3,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { POKEAPI_BASE_URL, POKEMON_LIMIT, ARTWORK_URL, REST_BATCH_SIZE, LIST_QUERY } from "../constants/dataUrl";
 import { graphqlRequest } from "../utils/graphqlClient";
-import { toPokemon } from "../utils/pokemonMapper";
+import { toPokemon, buildLocalizedNames } from "../utils/pokemonMapper";
 
 function fromGraphql(row) {
    return {
       id: row.id,
       name: row.name,
+      names: buildLocalizedNames(row.pokemonspecy.pokemonspeciesnames),
       generation: row.pokemonspecy.generation.name,
       types: row.pokemontypes.map((t) => t.type.name),
       is_legendary: row.pokemonspecy.is_legendary,
@@ -23,6 +24,7 @@ function toListItem(full) {
    return {
       id: full.id,
       name: full.name,
+      names: full.names,
       generation: full.generation,
       types: full.types,
       is_legendary: full.is_legendary,

@@ -1,7 +1,19 @@
-// AI-assisted - see AI-USAGE.md #<5, 13, 22>
+// AI-assisted - see AI-USAGE.md #<5, 13, 22, 26>
 
 import { POKEAPI_BASE_URL, ARTWORK_URL, SPRITES_BASE_URL, CRY_URL } from "../constants/dataUrl";
 import { SPRITE_KEYS } from "../constants/detailConstants";
+
+export function buildLocalizedNames(entries = []) {
+    const byLang = Object.fromEntries(
+        entries.map((entry) => [entry.language.name, entry.name]),
+    );
+
+    return {
+        en: byLang.en ?? null,
+        fr: byLang.fr ?? null,
+        ja: byLang.ja ?? byLang["ja-Hrkt"] ?? null,
+    };
+}
 
 function makeSpriteSet(game, fallback = {}) {
     return Object.fromEntries(SPRITE_KEYS.map((key) => [key, game?.[key] ?? fallback?.[key] ?? null]));
@@ -47,6 +59,7 @@ export function toPokemon(rawPokemon, rawSpecies) {
     return {
         id: rawPokemon.id,
         name: rawPokemon.name,
+        names: buildLocalizedNames(rawSpecies.names),
         generation: rawSpecies.generation.name,
         types: rawPokemon.types.map((t) => t.type.name),
         is_legendary: rawSpecies.is_legendary,

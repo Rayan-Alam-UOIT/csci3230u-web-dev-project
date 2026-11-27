@@ -1,8 +1,11 @@
-// AI-assisted - see AI-USAGE.md #21
+// AI-assisted - see AI-USAGE.md #<21, 25>
 
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-function MultiSelect({ label, options, selected, onChange }) {
+function MultiSelect({ label, options, selected, onChange,  getLabel = (value) => value }) {
+  const { t } = useTranslation();
+
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -27,10 +30,10 @@ function MultiSelect({ label, options, selected, onChange }) {
 
   const summary =
     selected.length === 0
-      ? "All"
+      ? t("browse.filters.all")
       : selected.length === 1
-        ? selected[0]
-        : `${selected.length} selected`;
+        ? getLabel(selected[0])
+        : t("browse.filters.selected", { count: selected.length });
 
   return (
     <div
@@ -70,7 +73,7 @@ function MultiSelect({ label, options, selected, onChange }) {
                   checked={selected.includes(option)}
                   onChange={() => toggle(option)}
                 />
-                {option}
+                {getLabel(option)}
               </label>
             </li>
           ))}

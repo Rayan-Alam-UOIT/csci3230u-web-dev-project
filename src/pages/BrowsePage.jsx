@@ -1,3 +1,5 @@
+// AI-assisted - see AI-USAGE.md #25
+
 import DataStatus from "../components/DataStatus";
 import FilterPanel from "../components/FilterPanel";
 import Pagination from "../components/Pagination";
@@ -8,6 +10,7 @@ import { useFavourites } from "../hooks/useFavourites";
 import { usePokemonBrowser } from "../hooks/usePokemonBrowser";
 import { useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function BrowsePage({ searchQuery = "", onSearchChange }) {
    const { page: pageParam } = useParams();
@@ -19,7 +22,9 @@ function BrowsePage({ searchQuery = "", onSearchChange }) {
       [navigate],
    );
 
-   useDocumentTitle("Pokéweb - Browse Pokémon");
+   const { t } = useTranslation();
+
+   useDocumentTitle(t("browse.documentTitle"));
 
    const { pokemonData: pokemon, status, retry } = usePokemon();
    const { isFavourite, toggleFavourite } = useFavourites();
@@ -50,15 +55,15 @@ function BrowsePage({ searchQuery = "", onSearchChange }) {
          <FilterPanel filters={filters} />
 
          <h1 className="results-heading">
-            Pokémon <span aria-hidden="true">•</span> {resultCount} results
+            {t("browse.heading")} <span aria-hidden="true">•</span> {t("browse.results", { count: resultCount })}
          </h1>
 
          {!hasResults ? (
             <section
                className="empty-state-area"
-               aria-label="No matching favourites"
+               aria-label={t("browse.emptyLabel")}
             >
-               <p>No Pokémon match your filters.</p>
+               <p>{t("browse.empty")}</p>
             </section>
          ) : (
             <>

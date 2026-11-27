@@ -1,7 +1,11 @@
+// AI-assisted - see AI-USAGE.md #24
+
 import { Link, matchPath, useLocation } from "react-router-dom";
 import { LINKS } from "../constants/navLinks";
+import { useTranslation } from "react-i18next";
 
 function NavBar() {
+   const { t } = useTranslation();
    const { pathname, state } = useLocation();
 
    const onDetail = Boolean(matchPath("/pokemon/:id", pathname));
@@ -32,7 +36,7 @@ function NavBar() {
 
    return (
       <nav className="site-nav__list">
-         {LINKS.map(({ to, label }) => {
+         {LINKS.map(({ to, labelKey }) => {
             const active = isActive(to);
 
             return (
@@ -42,7 +46,7 @@ function NavBar() {
                   className={`site-nav__link${active ? " active" : ""}`}
                   aria-current={active ? "page" : undefined}
                >
-                  {label}
+                  {t(labelKey)}
                </Link>
             );
          })}

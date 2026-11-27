@@ -522,3 +522,148 @@ Can we now change fetching for the Detail page to use GraphQL with REST API as a
 
 - **What it produced & what I changed:** For the first prompt, it produced an updated `usePokemonData.js` that uses GraphQL to fetch a list of Pokemon with select fields rather than individual queries for each Pokemon with all the fields (with REST API as a fallback). Furthermore, it produced an updated `dataUrl.js` now including `POKEAPI_BASE_URL`, `GRAPHQL_URL`, and `ARTWORK_URL`. Claude's updated `usePokemonData.js` stored the fetched Pokemon data in `localStorage`. I removed this since it's an expensive cache and may cause the user to miss new data. I moved new constants defined by Claude in `usePokemonData.js` (`REST_BATCH_SIZE`, `LIST_QUERY`) to `dataUrl.js`.
 For the second prompt, it produced a new file `usePokemonDetail.js` that, like the updated `usePokemonData.js`, uses GraphQL with REST API as a fallback. Unlike the updated `usePokemonData.js` though, it fetches the data for only a single Pokemon but still does a select list of fields, rather than all of them. It produced a refactored `usePokemonNavigation.js` that uses the new `usePokemonDetail.js` hook. For GraphQL, the move types come with the detail query. So `useMoveTypes.js` was changed only to be used when falling back to the REST API. The utils file `pokemonMapper.js` was changed to handle and map the GraphQL moves and details. Finally, Claude made `graphqlClient.js` which prevents GraphQL from being sent requests if the rate has been hit. For changes I made, I moved the constants it defined in `graphqlClient.js` and `useMoveTypes.js` to their own constants files `graphqlConstants.js` and `moveTypesConstants.js`. Furthermore, I changed `usePokemonData.js` to use the same `graphqlClient.js`. 
+
+
+---
+
+## Log
+
+### #23 - Install and Configure react-i18next
+
+- **Date:** 2026-11-26
+- **Member:** Rayan Alam
+- **Tool / model:** free-tier Claude (Claude Sonnet 5.5)
+- **Files:** `package.json`, `package-lock.json`, `src/i18n.js` (new), `src/locales/en.json` (new), `src/locales/fr.json` (new), `src/locales/ja.json` (new), `src/main.jsx`
+- **Prompt (verbatim):**
+
+```
+Install and configure react-i18next.
+Install the packages, create src/i18n.js, set up the src/locales/ folder (en.json, fr.json, ja.json) with an agreed key structure (nav.*, favourites.*, search.*, browse.*, detail.*, games.*), and set fallbackLng.
+Confirm the build and the Netlify deploy still work. give me step by step
+```
+
+follow-up prompts:
+
+```
+can u give the contents for the three json files
+```
+
+```
+how do i test and with run dev to ensure everything works before pushing
+```
+
+- **What it produced & what I changed:** It gave step-by-step instructions to install `i18next` and `react-i18next`, a `src/i18n.js` config with `fallbackLng: "en"`, and an import for `main.jsx` so i18n initializes before the app renders. It produced starter `en.json`, `fr.json` and `ja.json` files using the agreed key structure, including plural keys (`_one` / `_other`, with only `_other` for Japanese). For testing, it gave me a temporary test component with EN/FR/JA buttons, steps for testing the English fallback by deleting a key, and a `check-keys.mjs` script that compares the keys across the three files. I added the test component to `App.jsx`, confirmed the language switching, plurals and fallback worked, then removed the test component and reverted `App.jsx` before committing. I ran `npm run build` and checked the Netlify deploy preview.
+
+---
+
+## Log
+
+### #24 - Language Switcher in the Navbar
+
+- **Date:** 2026-11-26
+- **Member:** Rayan Alam
+- **Tool / model:** free-tier Claude (Claude Sonnet 5.5)
+- **Files:** `src/i18n.js`, `src/constants/languages.js` (new), `src/components/LanguageSwitcher.jsx` (new), `src/components/Header.jsx`, `src/components/NavBar.jsx`, `src/constants/navLinks.js`, `css/global-styles.css`, `src/locales/*.json`
+- **Prompt (verbatim):**
+
+```
+Build the LanguageSwitcher in the navbar.
+Dropdown with native language names, using resolvedLanguage, with persistence and <html lang> syncing.
+Style it responsively.
+<NavBar.jsx code>
+```
+
+follow-up prompts:
+
+```
+<Header.jsx code> so in here or navbar works better
+```
+
+```
+switching languge doenst do anything, and the search bar shouldnt change position, the language switcher should be to the left of it, and not make the search bar move
+```
+
+```
+<CSS code> the styling needs to be fixed. the search bar is pushed away from the left side, it should not change position, the language siwtcher should be just placed to the left of the search bar , and we need to follow mobile first responsivness, so min-width
+```
+
+```
+how do i get the switch language button in the nav bar to show in games and details page
+```
+
+```
+could we improve the style of the language switcher button a bit
+```
+
+```
+it got all smushed and is not the same height as the search bar
+```
+
+- **What it produced & what I changed:** It added `i18next-browser-languagedetector` to `i18n.js` for persistence in `localStorage`, with `supportedLngs` and `load: "languageOnly"` so `resolvedLanguage` always matches one of our three languages, plus a `languageChanged` listener that keeps `<html lang>` in sync. It produced a `LANGUAGES` constant with native names (English, Français, 日本語) and a `LanguageSwitcher` component using a native `<select>` with a visually hidden label. It recommended putting the switcher in `Header.jsx` rather than `NavBar.jsx`, since it isn't a route link. When switching appeared to do nothing, it explained that the UI text was still hardcoded, so I changed `navLinks.js` to use `labelKey` values, translated them with `t()` in `NavBar.jsx`, and translated the search label and placeholder in `Header.jsx`. I placed the switcher before the search bar in the JSX and wrote my own version of the header actions CSS, then asked Claude to convert my `max-width` queries to mobile-first `min-width` queries. I moved the switcher outside the `showSearch` condition so it appears on the Games and Detail pages. For the styling, it added a globe icon and an SVG chevron. The first version was squashed because of a duplicate media query in my CSS and a hardcoded height, so the final version stretches the switcher to the search bar's height and uses our design tokens.
+
+---
+
+## Log
+
+### #25 - Translate the Search and Filter UI
+
+- **Date:** 2026-11-26
+- **Member:** Rayan Alam
+- **Tool / model:** free-tier Claude (Claude Sonnet 5.5)
+- **Files:** `src/locales/*.json`, `src/constants/filters.js`, `src/components/FilterPanel.jsx`, `src/components/selectForms/MultiSelect.jsx`, `src/components/selectForms/SingleSelect.jsx`, `src/pages/BrowsePage.jsx`, `src/components/Header.jsx`
+- **Prompt (verbatim):**
+
+```
+<FilterPanel.jsx and BrowsePage.jsx code> 
+new task: Translate the Search and Filter UI.
+Cover the SearchBar placeholder, FilterPanel labels, and the localized type, generation and region names in the filters, plus result counts and empty states.
+```
+
+follow-up prompts:
+
+```
+so what are the exact changes, which files specifically
+```
+
+```
+<filters.js, MultiSelect.jsx, SingleSelect.jsx and Header.jsx code>
+```
+
+```
+header isnt changing for some reason
+```
+
+- **What it produced & what I changed:** It explained that our filter state stores display strings (`"Fire"`, `"I · Kanto"`, `"Legendary"`) that `usePokemonFilters` compares against, so translating those arrays would break filtering when the language changes. Instead, it added a `getLabel` prop to `MultiSelect` so options are translated only when rendered, and changed `SORT_OPTIONS` to use `labelKey` with the same `value`s. It added `GENERATION_REGION_KEYS` to `filters.js` so generations show as the numeral plus the translated region name. It produced locale keys for the filter labels, all 18 types (using official French and Japanese names), the regions, the categories, the "N selected" summary, the result count plurals and the empty state, and translated the document title, heading, count and empty state in `BrowsePage.jsx`. I applied the changes. Category options at first didn't translate because I had placed `selected` and `categories` outside `browse.filters` in the locale files, so I moved them, and I added a missing `nav.pokemon` key to the Japanese file. I confirmed that filters selected in English stay selected after switching to French.
+
+---
+
+## Log
+
+### #26 - Search by Localized Pokémon Names
+
+- **Date:** 2026-11-26
+- **Member:** Rayan Alam
+- **Tool / model:** free-tier Claude (Claude Sonnet 5.5)
+- **Files:** `src/constants/dataUrl.js`, `src/utils/pokemonMapper.js`, `src/hooks/usePokemonData.js`, `src/hooks/usePokemonFilters.js`, `src/utils/search.js` (new)
+- **Prompt (verbatim):**
+
+```
+Make search work with localized names.
+At minimum, search the localized names of loaded Pokémon, and keep English and slug search working. how to do this, what does this mean, or does the browsepage and the individual cards need to be updated with translations first
+```
+
+follow-up prompts:
+
+```
+<usePokemonData.js, PokemonProvider.jsx and dataUrl.js code>
+```
+
+```
+<usePokemonBrowser.js code>
+```
+
+```
+<usePokemonFilters.js code>
+```
+
+- **What it produced & what I changed:** It explained that Pokémon names come from PokéAPI species data rather than our locale files, and that the cards don't need to be translated first. It added `pokemonspeciesnames` for `en`, `fr`, `ja` and `ja-Hrkt` to `LIST_QUERY`, and a `buildLocalizedNames` helper in `pokemonMapper.js` that works for both the GraphQL and REST data, since the REST fallback already fetches the species object. It added `names` to `fromGraphql`, `toPokemon` and `toListItem`. It produced a new `utils/search.js` with a `normalize` function that ignores Latin accents only (so "evoli" matches "Évoli" without breaking Japanese characters) and a `matchesSearch` function that checks the slug, English name and current-language name. In `usePokemonFilters.js`, I imported it as `matchesQuery` because the hook already had a local `matchesSearch` variable, kept the existing number search (`25` / `#25`), and added `lang` to the `useMemo` dependencies so results update when the language changes. I tested French and Japanese names plus English, slug and number search. Cards and the Detail page still show English names, which is out of scope for this issue.
