@@ -89,11 +89,32 @@
     "back": "図鑑に戻る"
   },
   "games": {
+    "documentTitle": "Pokéweb - ゲーム",
+    "subtitle": "遊ぶゲームを選んでください。",
+    "play": "プレイ",
+    "playArea": "ゲームエリア",
+    "selectPrompt": "上のゲームを選んでスタートしよう。",
     "title": "ゲーム",
     "start": "スタート",
     "playAgain": "もう一度遊ぶ",
     "score": "スコア",
     "correct": "正解！",
-    "incorrect": "残念！"
+    "incorrect": "残念！",
+    "submit": "決定",
+    "next": "次へ",
+    "seeResults": "結果を見る",
+    "gameOver": "ゲーム終了！スコアは <strong>{{score}} / {{max}}</strong> でした。",
+    "bestScore": "ベストスコア: {{score}} / {{max}}",
+    "silhouette": {
+      "name": "だれだ？",
+      "description": "シルエットや画像からポケモンを当てよう。",
+      "cardAlt": "テレビの「だれだ？」コーナー風に、ポケモンのシルエットとはてなマークが並んだ画像",
+      "progress": "ラウンド {{current}} / {{total}} · スコア: {{score}}",
+      "prompt": "このポケモン、だれだ？",
+      "hiddenAlt": "隠れたポケモンのシルエット",
+      "answerChoices": "回答の選択肢",
+      "correct": "正解！{{name}}だ！",
+      "incorrect": "残念！正解は{{name}}。"
+    }
   }
 }

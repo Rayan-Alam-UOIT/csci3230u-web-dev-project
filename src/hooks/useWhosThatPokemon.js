@@ -1,4 +1,4 @@
-// AI-assisted - see AI-USAGE.md #<3>
+// AI-assisted - see AI-USAGE.md #<3, 27>
 
 import { useState } from "react";
 import { SILHOUETTE_DISTRACTOR_COUNT, SILHOUETTE_BEST_SCORE_KEY } from "../constants/gameConstants";
@@ -91,11 +91,14 @@ export function createSilhouetteRounds(pokemonList, count) {
             SILHOUETTE_DISTRACTOR_COUNT,
       );
 
+      const choices = shuffle([pokemon, ...distractors]);
+
       return {
             name: capitalize(pokemon.name),
             image: pokemon.artwork.default,
-            options: shuffle([pokemon, ...distractors]).map((p) =>
-               capitalize(p.name),
+            options: choices.map((p) => capitalize(p.name)),
+            localizedNames: Object.fromEntries(
+               choices.map((p) => [capitalize(p.name), p.names ?? {}]),
             ),
       };
    });

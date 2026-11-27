@@ -1,4 +1,4 @@
-// AI-assisted - see AI-USAGE.md #<3>
+// AI-assisted - see AI-USAGE.md #<3, 27>
 
 import { useMemo, useState } from "react";
 import DataStatus from "../components/DataStatus";
@@ -9,9 +9,12 @@ import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { useGuessAutocomplete } from "../hooks/useGuessAutocomplete";
 import { useWhosThatPokemon, createSilhouetteRounds } from "../hooks/useWhosThatPokemon";
 import { capitalize, chooseRandomPokemon } from "../utils/pokemonUtils";
+import { Trans, useTranslation } from "react-i18next";
 
 function GamePage() {
-   useDocumentTitle("Pokéweb - Games");
+   const { t, i18n } = useTranslation();
+
+   useDocumentTitle(t("games.documentTitle"));
 
    const [activeGame, setActiveGame] = useState(null);
 
@@ -46,6 +49,9 @@ function GamePage() {
 
    const { currentRound: round, selected, revealed, isCorrect } = silhouetteGame;
 
+   const displayName = (option) =>
+      round?.localizedNames?.[option]?.[i18n.resolvedLanguage] ?? option;
+
    const pointsAvailable = cluesGame.clueCount - cluesGame.guesses.length;
    const guesses = cluesGame.guesses;
 
@@ -78,20 +84,20 @@ function GamePage() {
 
    return (
       <div className="page container">
-         <h1 className="page-title">Games</h1>
-         <p className="page-subtitle">Choose a game to play.</p>
+         <h1 className="page-title">{t("games.title")}</h1>
+         <p className="page-subtitle">	{t("games.subtitle")}</p>
 
          <ul className="games-grid">
             <li className="game-card">
                <div className="game-card__image">
                   <img
                      src="/images/pokemon-game-1.png"
-                     alt={`A Pokémon silhouette next to a question mark, in the style of the "Who's That Pokémon?" TV segment`}
+                     alt={t("games.silhouette.cardAlt")}
                   />
                </div>
-               <h2 className="game-card__name">{"Who's That Pokémon?"}</h2>
+               <h2 className="game-card__name">{t("games.silhouette.name")}</h2>
                <p className="game-card__desc">
-                  Identify the Pokémon shown from its silhouette or image.
+                  {t("games.silhouette.description")}
                </p>
                <button
                   className="play-btn"
@@ -99,7 +105,7 @@ function GamePage() {
                   data-game="silhouette"
                   onClick={() => startGame("silhouette")}
                >
-                  <span>PLAY</span>
+                  <span>{t("games.play")}</span>
                   <span className="play-btn__icon" aria-hidden="true">
                      <svg
                         viewBox="0 0 16 16"
@@ -142,33 +148,33 @@ function GamePage() {
             </li>
          </ul>
 
-         <h2 className="section-label">Game play area</h2>
+         <h2 className="section-label">{t("games.playArea")}</h2>
 
-         <section className="game-play-area" aria-label="Game play area">
+         <section className="game-play-area" aria-label={t("games.playArea")}>
             {!activeGame && (
                <p className="game-play-area__prompt">
-                  Select a game above to start playing.
+                  {t("games.selectPrompt")}
                </p>
             )}
 
             {activeGame && isFinished && (
                <div>
                   <p className="game-play-area__prompt">
-                     Game over! You scored{" "}
-                     <strong>
-                        {activeState.score} / {maxScore}
-                     </strong>
-                     .
+                     <Trans
+                        i18nKey="games.gameOver"
+                        values={{ score: activeState.score, max: maxScore }}
+                        components={{ strong: <strong /> }}
+                     />
                   </p>
                   <p className="game-play-area__prompt">
-                     Best score: {activeState.bestScore} / {maxScore}
+                     {t("games.bestScore", { score: activeState.bestScore, max: maxScore })}
                   </p>
                   <button
                      className="submit-btn"
                      type="button"
                      onClick={() => startGame(activeGame)}
                   >
-                     Play again
+                     {t("games.playAgain")}
                   </button>
                </div>
             )}
@@ -176,11 +182,15 @@ function GamePage() {
             {activeGame === "silhouette" && !isFinished && (
                <div>
                   <p className="silhouette__progress">
-                     Round {silhouetteGame.roundIndex + 1} of {silhouetteGame.roundCount} · Score: {silhouetteGame.score}
+                     {t("games.silhouette.progress", {
+                        current: silhouetteGame.roundIndex + 1,
+                        total: silhouetteGame.roundCount,
+                        score: silhouetteGame.score,
+                     })}
                   </p>
 
                   <p className="game-play-area__prompt">
-                     {"Who's that Pokémon?"}
+                     {t("games.silhouette.prompt")}
                   </p>
 
                   <div className="silhouette__stage">
@@ -193,14 +203,14 @@ function GamePage() {
                         src={round.image}
                         alt={
                            revealed
-                              ? round.name
-                              : "Silhouette of a hidden Pokémon"
+                              ? displayName(round.name)
+                              : t("games.silhouette.hiddenAlt")
                         }
                      />
                   </div>
 
                   <fieldset className="silhouette__options" disabled={revealed}>
-                     <legend className="visually-hidden">Answer choices</legend>
+                     <legend className="visually-hidden">{t("games.silhouette.answerChoices")}</legend>
                      {round.options.map((option) => {
                         let state = "";
                         if (revealed && option === round.name)
@@ -226,7 +236,7 @@ function GamePage() {
                                  checked={selected === option}
                                  onChange={() => silhouetteGame.select(option)}
                               />
-                              <span>{option}</span>
+                              <span>{displayName(option)}</span>
                            </label>
                         );
                      })}
@@ -242,9 +252,9 @@ function GamePage() {
                         }
                         role="status"
                      >
-                        {isCorrect
-                           ? `Correct! It's ${round.name}!`
-                           : `Not quite. It's ${round.name}.`}
+                        {t(isCorrect ? "games.silhouette.correct" : "games.silhouette.incorrect", {
+                           name: displayName(round.name),
+                        })}
                      </p>
                   )}
 
@@ -255,7 +265,7 @@ function GamePage() {
                         onClick={silhouetteGame.submit}
                         disabled={!selected}
                      >
-                        Submit
+                        {t("games.submit")}
                      </button>
                   ) : (
                      <button
@@ -264,8 +274,8 @@ function GamePage() {
                         onClick={silhouetteGame.nextRound}
                      >
                         {silhouetteGame.roundIndex === silhouetteGame.roundCount - 1
-                           ? "See results"
-                           : "Next"}
+                           ? t("games.seeResults")
+                           : t("games.next")}
                      </button>
                   )}
                </div>

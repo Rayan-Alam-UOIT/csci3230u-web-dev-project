@@ -667,3 +667,49 @@ follow-up prompts:
 ```
 
 - **What it produced & what I changed:** It explained that Pokémon names come from PokéAPI species data rather than our locale files, and that the cards don't need to be translated first. It added `pokemonspeciesnames` for `en`, `fr`, `ja` and `ja-Hrkt` to `LIST_QUERY`, and a `buildLocalizedNames` helper in `pokemonMapper.js` that works for both the GraphQL and REST data, since the REST fallback already fetches the species object. It added `names` to `fromGraphql`, `toPokemon` and `toListItem`. It produced a new `utils/search.js` with a `normalize` function that ignores Latin accents only (so "evoli" matches "Évoli" without breaking Japanese characters) and a `matchesSearch` function that checks the slug, English name and current-language name. In `usePokemonFilters.js`, I imported it as `matchesQuery` because the hook already had a local `matchesSearch` variable, kept the existing number search (`25` / `#25`), and added `lang` to the `useMemo` dependencies so results update when the language changes. I tested French and Japanese names plus English, slug and number search. Cards and the Detail page still show English names, which is out of scope for this issue.
+
+## Log
+
+### #27 - Translate the Who's That Pokémon? UI
+
+- **Date:** 2026-11-26
+- **Member:** Rayan Alam
+- **Tool / model:** free-tier Claude (Claude Sonnet 5.5)
+- **Files:** `src/pages/GamePage.jsx`, `src/hooks/useWhosThatPokemon.js`, `src/locales/en.json`, `src/locales/fr.json`, `src/locales/ja.json`
+- **Prompt (verbatim):**
+
+```
+<GamePage.jsx code>
+Continuing off the last chat: I want to do this: Translate the Who's That Pokémon? UI.
+Cover the silhouette screen text, reveal, and correct/incorrect feedback and score text.
+```
+
+follow-up prompts:
+
+```
+I just want you to tell me the steps for making the Who's That Pokémon game UI (cover the silhouette screen text, reveal, and correct/incorrect feedback and score text) use our new react-i18next translation framework.
+```
+
+```
+<GamePage.jsx code>
+So what am I changing in GamePage.jsx exactly? And I need the French and Japanese versions for <new en.json game keys>.
+```
+
+```
+<Games page text: game card title, description, PLAY, page title, subtitle, "Game play area">
+These things need to translate as well.
+```
+
+```
+Do I need to add "Play again" as well? And do I need to translate the Pokémon names on the Games page, or is someone else doing that when they translate all the names from the data for the Browse and Details pages?
+```
+
+```
+So could I just easily add it right now for the Who's That Pokémon game?
+```
+
+```
+<GamePage.jsx and useWhosThatPokemon.js code>
+```
+
+- **What it produced & what I changed:** It gave me step-by-step instructions instead of code. These covered new locale keys under `games` (`submit`, `next`, `seeResults`, `gameOver`, `bestScore`, `play`, `playArea`, `selectPrompt`, `subtitle`, `documentTitle`) and a nested `games.silhouette` object (`name`, `description`, `cardAlt`, `progress`, `prompt`, `hiddenAlt`, `answerChoices`, `correct`, `incorrect`), with French and Japanese translations and `{{placeholders}}` for the round, score and Pokémon name. It explained replacing each hardcoded string in `GamePage.jsx` with `t()`. For the game-over text, it said to use the `<Trans>` component so the score can stay inside `<strong>`. It pointed out that `games.playAgain` already existed. Since `pokemonData` already has `names.en/fr/ja` from the localized search work, it suggested adding a `localizedNames` map to each round in `createSilhouetteRounds` and a `displayName` helper in `GamePage.jsx`. The helper is used only for the visible option labels, the revealed alt text and the feedback, so options and scoring still compare English names. I made all the edits myself. I also translated the Clues card's PLAY button because it uses the shared `games.play` key, and left the rest of the Clues UI untranslated. I tested all three languages, switched language mid-round, and checked that a correct answer still scores in French and Japanese.

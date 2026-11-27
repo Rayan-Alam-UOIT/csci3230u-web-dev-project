@@ -91,11 +91,32 @@
     "back": "Retour au catalogue"
   },
   "games": {
+    "documentTitle": "Pokéweb - Jeux",
+    "subtitle": "Choisissez un jeu.",
+    "play": "JOUER",
+    "playArea": "Zone de jeu",
+    "selectPrompt": "Sélectionnez un jeu ci-dessus pour commencer.",
     "title": "Jeux",
     "start": "Commencer",
     "playAgain": "Rejouer",
     "score": "Score",
     "correct": "Correct !",
-    "incorrect": "Pas tout à fait !"
+    "incorrect": "Pas tout à fait !",
+    "submit": "Valider",
+    "next": "Suivant",
+    "seeResults": "Voir les résultats",
+    "gameOver": "Partie terminée ! Votre score : <strong>{{score}} / {{max}}</strong>.",
+    "bestScore": "Meilleur score : {{score}} / {{max}}",
+    "silhouette": {
+      "name": "Quel est ce Pokémon ?",
+      "description": "Identifiez le Pokémon à partir de sa silhouette ou de son image.",
+      "cardAlt": "Une silhouette de Pokémon à côté d'un point d'interrogation, dans le style de la séquence télévisée « Quel est ce Pokémon ? »",
+      "progress": "Manche {{current}} sur {{total}} · Score : {{score}}",
+      "prompt": "Quel est ce Pokémon ?",
+      "hiddenAlt": "Silhouette d'un Pokémon caché",
+      "answerChoices": "Choix de réponses",
+      "correct": "Correct ! C'est {{name}} !",
+      "incorrect": "Pas tout à fait. C'est {{name}}."
+    }
   }
 }
