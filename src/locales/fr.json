@@ -1,6 +1,7 @@
 {
   "nav": {
     "home": "Accueil",
+    "pokemon": "Pokémon",
     "browse": "Parcourir",
     "favourites": "Favoris",
     "games": "Jeux",
@@ -18,28 +19,64 @@
   "search": {
     "placeholder": "Rechercher un Pokémon...",
     "noResults": "Aucun Pokémon trouvé.",
-    "clear": "Effacer la recherche"
+    "clear": "Effacer la recherche",
+    "label": "Rechercher un Pokémon"
   },
   "browse": {
-    "title": "Catalogue des Pokémon",
-    "filters": {
-      "generation": "Génération",
-      "type": "Type",
-      "region": "Région",
-      "sort": "Trier",
-      "reset": "Réinitialiser les filtres",
-      "selectAll": "Tout sélectionner",
-      "clearAll": "Tout effacer"
+  "title": "Catalogue des Pokémon",
+  "heading": "Pokémon",
+  "results_one": "{{count}} résultat",
+  "results_other": "{{count}} résultats",
+  "empty": "Aucun Pokémon ne correspond à vos filtres.",
+  "emptyLabel": "Aucun Pokémon correspondant",
+  "documentTitle": "Pokéweb - Parcourir les Pokémon",
+  "loading": "Chargement des Pokémon...",
+  "error": "Une erreur est survenue lors du chargement des Pokémon.",
+  "filters": {
+    "label": "Filtres",
+    "heading": "Filtres",
+    "tagline": "Attrapez-les tous !",
+    "generation": "Génération",
+    "type": "Type",
+    "region": "Région",
+    "category": "Catégorie",
+    "sort": "Trier",
+    "all": "Tous",
+    "none": "Aucun",
+    "reset": "Effacer les filtres",
+    "selectAll": "Tout sélectionner",
+    "clearAll": "Tout effacer",
+    "types": {
+      "normal": "Normal", "fire": "Feu", "water": "Eau", "grass": "Plante",
+      "electric": "Électrik", "ice": "Glace", "fighting": "Combat", "poison": "Poison",
+      "ground": "Sol", "flying": "Vol", "psychic": "Psy", "bug": "Insecte",
+      "rock": "Roche", "ghost": "Spectre", "dragon": "Dragon", "dark": "Ténèbres",
+      "steel": "Acier", "fairy": "Fée"
     },
-    "sortOptions": {
-      "numberAsc": "Numéro (croissant)",
-      "numberDesc": "Numéro (décroissant)",
-      "nameAsc": "Nom (A–Z)",
-      "nameDesc": "Nom (Z–A)"
+    "generations": {
+      "1": "Génération 1", "2": "Génération 2", "3": "Génération 3",
+      "4": "Génération 4", "5": "Génération 5", "6": "Génération 6",
+      "7": "Génération 7", "8": "Génération 8", "9": "Génération 9"
     },
-    "loading": "Chargement des Pokémon...",
-    "error": "Une erreur est survenue lors du chargement des Pokémon."
+    "regions": {
+      "kanto": "Kanto", "johto": "Johto", "hoenn": "Hoenn", "sinnoh": "Sinnoh",
+      "unova": "Unys", "kalos": "Kalos", "alola": "Alola", "galar": "Galar",
+      "paldea": "Paldea"
+    },
+    "categories": {
+      "legendary": "Légendaire",
+      "mythical": "Fabuleux"
+    }
   },
+  "sortOptions": {
+    "none": "Aucun",
+    "numberAsc": "Numéro (croissant)",
+    "numberDesc": "Numéro (décroissant)",
+    "nameAsc": "Nom (A–Z)",
+    "nameDesc": "Nom (Z–A)"
+  },
+  "selected": "{{count}} sélectionnés"
+},
   "detail": {
     "pokedexData": "Données du Pokédex",
     "baseStats": "Statistiques de base",

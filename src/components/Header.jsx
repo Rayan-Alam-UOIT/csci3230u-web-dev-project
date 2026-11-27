@@ -1,10 +1,13 @@
-// AI-assisted - see AI-USAGE.md #<14, 20, 21>
+// AI-assisted - see AI-USAGE.md #<14, 20, 21, 24, 25>
 
 import NavBar from "./NavBar";
 import { Link } from "react-router-dom";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 
 function Header({ searchQuery, onSearchChange, showSearch = true }) {
+   const { t } = useTranslation();
+
    return (
       <header className="site-header">
          <Link className="site-header__brand" to="/">
@@ -21,44 +24,45 @@ function Header({ searchQuery, onSearchChange, showSearch = true }) {
 
          <NavBar />
 
-         {showSearch && (
-            <div className="site-header__actions">
+         <div className="site-header__actions">
                <LanguageSwitcher />
-               <search>
-                  <form
-                     className="site-search"
-                     onSubmit={(event) => event.preventDefault()}
-                  >
-                     <label htmlFor="site-search" className="visually-hidden">
-                        Search Pokémon
-                     </label>
 
-                     <svg
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                     >
-                        <circle cx="11" cy="11" r="8" />
-                        <path d="m21 21-4.35-4.35" />
-                     </svg>
+               {showSearch && (
+                     <search>
+                        <form
+                           className="site-search"
+                           onSubmit={(event) => event.preventDefault()}
+                        >
+                           <label htmlFor="site-search" className="visually-hidden">
+                              {t("search.label")}
+                           </label>
 
-                     <input
-                        type="search"
-                        id="site-search"
-                        name="q"
-                        placeholder="Search Pokémon..."
-                        required
-                        value={searchQuery}
-                        onChange={(event) => onSearchChange(event.target.value)}
-                     />
-                  </form>
-               </search>
-            </div>
-         )}
+                           <svg
+                              viewBox="0 0 24 24"
+                              aria-hidden="true"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                           >
+                              <circle cx="11" cy="11" r="8" />
+                              <path d="m21 21-4.35-4.35" />
+                           </svg>
+
+                           <input
+                              type="search"
+                              id="site-search"
+                              name="q"
+                              placeholder={t("search.placeholder")}
+                              required
+                              value={searchQuery}
+                              onChange={(event) => onSearchChange(event.target.value)}
+                           />
+                        </form>
+                     </search>
+               )}
+         </div>
       </header>
    );
 }

@@ -1,7 +1,14 @@
+// AI-assisted - see AI-USAGE.md #26
+
 import { useState, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { GENERATION_INFO } from "../constants/filters";
+import { matchesSearch as matchesQuery } from "../utils/searchUtils";
 
 export function usePokemonFilters(pokemon, searchQuery = "", onSearchChange) {
+  const { i18n } = useTranslation();
+  const lang = i18n.resolvedLanguage;
+
   const [selectedGenerations, setSelectedGenerations] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -32,7 +39,7 @@ export function usePokemonFilters(pokemon, searchQuery = "", onSearchChange) {
 
         const matchesSearch =
           query === "" ||
-          item.name.toLowerCase().includes(query) ||
+          matchesQuery(item, searchQuery, lang) ||
           String(item.id) === query.replace("#", "");
 
         const matchesGeneration =
@@ -61,7 +68,7 @@ export function usePokemonFilters(pokemon, searchQuery = "", onSearchChange) {
           default:            return 0;
         }
       });
-  }, [pokemon, searchQuery, selectedGenerations, selectedTypes, selectedCategories, sort]);
+  }, [pokemon, searchQuery, selectedGenerations, selectedTypes, selectedCategories, sort, lang]);
 
   return {
     selectedGenerations, setSelectedGenerations,

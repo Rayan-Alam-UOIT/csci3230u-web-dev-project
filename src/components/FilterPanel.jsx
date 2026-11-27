@@ -1,10 +1,20 @@
-// AI-assisted - see AI-USAGE.md #21
+// AI-assisted - see AI-USAGE.md #<21, 25>
 
 import MultiSelect from "./selectForms/MultiSelect";
 import SingleSelect from "./selectForms/SingleSelect";
-import { GENERATIONS, TYPES, CATEGORIES, SORT_OPTIONS } from "../constants/filters";
+import { GENERATIONS, TYPES, CATEGORIES, SORT_OPTIONS, GENERATION_REGION_KEYS, } from "../constants/filters";
+import { useTranslation } from "react-i18next";
 
 function FilterPanel({ filters }) {
+  const { t } = useTranslation();
+  const typeLabel = (type) => t(`browse.filters.types.${type.toLowerCase()}`);
+  const categoryLabel = (category) =>
+    t(`browse.filters.categories.${category.toLowerCase()}`);
+  const generationLabel = (generation) => {
+    const numeral = generation.split(" · ")[0];
+    return `${numeral} · ${t(`browse.filters.regions.${GENERATION_REGION_KEYS[generation]}`)}`;
+  };
+
   const {
     selectedGenerations, setSelectedGenerations,
     selectedTypes, setSelectedTypes,
@@ -14,38 +24,42 @@ function FilterPanel({ filters }) {
   } = filters;
 
   return (
-    <section className="filters" aria-label="Filters">
-    <h2 className="filters-title">
-        FILTERS <span className="filters-tagline">· Gotta filter 'em all!</span>
-    </h2>
+    <section className="filters" aria-label={t("browse.filters.label")}>
+      <h2 className="filters-title">
+        {t("browse.filters.heading")}{" "}
+        <span className="filters-tagline">· {t("browse.filters.tagline")}</span>
+      </h2>
 
-    <div className="filters-row">
+      <div className="filters-row">
         <MultiSelect
-        label="Generation"
-        options={GENERATIONS}
-        selected={selectedGenerations}
-        onChange={setSelectedGenerations}
+          label={t("browse.filters.generation")}
+          options={GENERATIONS}
+          selected={selectedGenerations}
+          onChange={setSelectedGenerations}
+          getLabel={generationLabel}
         />
 
         <MultiSelect
-        label="Type"
-        options={TYPES}
-        selected={selectedTypes}
-        onChange={setSelectedTypes}
+          label={t("browse.filters.type")}
+          options={TYPES}
+          selected={selectedTypes}
+          onChange={setSelectedTypes}
+          getLabel={typeLabel}
         />
 
         <MultiSelect
-          label="Category"
+          label={t("browse.filters.category")}
           options={CATEGORIES}
           selected={selectedCategories}
           onChange={setSelectedCategories}
+          getLabel={categoryLabel}
         />
 
         <SingleSelect
-        label="Sort"
-        options={SORT_OPTIONS}
-        value={sort}
-        onChange={setSort}
+          label={t("browse.filters.sort")}
+          options={SORT_OPTIONS}
+          value={sort}
+          onChange={setSort}
         />
 
         {hasActiveFilters && (
@@ -60,7 +74,7 @@ function FilterPanel({ filters }) {
           >
             <path d="M18 6 6 18M6 6l12 12" />
           </svg>
-           Clear filters
+           {t("browse.filters.reset")}
         </button>
         )}
     </div>

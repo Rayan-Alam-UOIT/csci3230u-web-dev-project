@@ -1,6 +1,7 @@
 {
   "nav": {
     "home": "ホーム",
+    "pokemon": "ポケモン",
     "browse": "ポケモンを探す",
     "favourites": "お気に入り",
     "games": "ゲーム",
@@ -17,28 +18,63 @@
   "search": {
     "placeholder": "ポケモンを検索...",
     "noResults": "ポケモンが見つかりませんでした。",
-    "clear": "検索をクリア"
+    "clear": "検索をクリア",
+    "label": "ポケモンを検索"
   },
   "browse": {
-    "title": "ポケモン図鑑",
-    "filters": {
-      "generation": "世代",
-      "type": "タイプ",
-      "region": "地方",
-      "sort": "並び替え",
-      "reset": "フィルターをリセット",
-      "selectAll": "すべて選択",
-      "clearAll": "すべて解除"
+  "title": "ポケモン図鑑",
+  "heading": "ポケモン",
+  "results_other": "{{count}} 件",
+  "empty": "条件に一致するポケモンはいません。",
+  "emptyLabel": "一致するポケモンなし",
+  "documentTitle": "ポケウェブ - ポケモンを探す",
+  "loading": "ポケモンを読み込み中...",
+  "error": "ポケモンの読み込み中にエラーが発生しました。",
+  "filters": {
+    "label": "フィルター",
+    "heading": "フィルター",
+    "tagline": "ぜんぶフィルターだぜ！",
+    "generation": "世代",
+    "type": "タイプ",
+    "region": "地方",
+    "category": "カテゴリー",
+    "sort": "並び替え",
+    "all": "すべて",
+    "none": "なし",
+    "reset": "フィルターをクリア",
+    "selectAll": "すべて選択",
+    "clearAll": "すべて解除",
+    "types": {
+      "normal": "ノーマル", "fire": "ほのお", "water": "みず", "grass": "くさ",
+      "electric": "でんき", "ice": "こおり", "fighting": "かくとう", "poison": "どく",
+      "ground": "じめん", "flying": "ひこう", "psychic": "エスパー", "bug": "むし",
+      "rock": "いわ", "ghost": "ゴースト", "dragon": "ドラゴン", "dark": "あく",
+      "steel": "はがね", "fairy": "フェアリー"
     },
-    "sortOptions": {
-      "numberAsc": "番号（昇順）",
-      "numberDesc": "番号（降順）",
-      "nameAsc": "名前（昇順）",
-      "nameDesc": "名前（降順）"
+    "generations": {
+      "1": "第1世代", "2": "第2世代", "3": "第3世代",
+      "4": "第4世代", "5": "第5世代", "6": "第6世代",
+      "7": "第7世代", "8": "第8世代", "9": "第9世代"
     },
-    "loading": "ポケモンを読み込み中...",
-    "error": "ポケモンの読み込み中にエラーが発生しました。"
+    "regions": {
+      "kanto": "カントー", "johto": "ジョウト", "hoenn": "ホウエン", "sinnoh": "シンオウ",
+      "unova": "イッシュ", "kalos": "カロス", "alola": "アローラ", "galar": "ガラル",
+      "paldea": "パルデア"
+    },
+    "categories": {
+      "legendary": "伝説のポケモン",
+      "mythical": "幻のポケモン"
+    }
   },
+  "sortOptions": {
+    "none": "なし",
+    "numberAsc": "番号（昇順）",
+    "numberDesc": "番号（降順）",
+    "nameAsc": "名前（昇順）",
+    "nameDesc": "名前（降順）"
+  },
+  "selected": "{{count}} 件選択"
+},
   "detail": {
     "pokedexData": "図鑑データ",
     "baseStats": "種族値",

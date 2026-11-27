@@ -1,4 +1,4 @@
-// AI-assisted - see AI-USAGE.md #22
+// AI-assisted - see AI-USAGE.md #<22, 26>
 
 // export const POKEMON_DATA_URL = "/data/sample.json";
 export const POKEMON_LIMIT = 1025;
@@ -15,7 +15,17 @@ export const LIST_QUERY = `
          height
          weight
          pokemontypes(order_by: { slot: asc }) { type { name } }
-         pokemonspecy { is_legendary is_mythical generation { name } }
+         pokemonspecy {
+            is_legendary
+            is_mythical
+            generation { name }
+            pokemonspeciesnames(
+               where: { language: { name: { _in: ["en", "fr", "ja", "ja-Hrkt"] } } }
+            ) {
+               name
+               language { name }
+            }
+         }
       }
    }
 `;

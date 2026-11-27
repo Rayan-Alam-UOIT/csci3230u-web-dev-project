@@ -1,8 +1,12 @@
-// AI-assisted - see AI-USAGE.md #21
+// AI-assisted - see AI-USAGE.md #<21, 25>
 
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-function SingleSelect({ label, options, value, onChange, emptyLabel = "None" }) {
+function SingleSelect({ label, options, value, onChange, emptyLabel }) {
+  const { t } = useTranslation();
+  const emptyText = emptyLabel ?? t("browse.filters.none");
+
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -37,7 +41,7 @@ function SingleSelect({ label, options, value, onChange, emptyLabel = "None" }) 
         aria-expanded={open}
         onClick={() => setOpen((current) => !current)}
       >
-        {selected ? selected.label : emptyLabel}
+        {selected ? t(selected.labelKey) : emptyText}
       </button>
 
       <svg
@@ -63,7 +67,7 @@ function SingleSelect({ label, options, value, onChange, emptyLabel = "None" }) 
                 onChange={() => choose("")}
                 onClick={() => setOpen(false)}
               />
-              {emptyLabel}
+              {emptyText}
             </label>
           </li>
 
@@ -77,7 +81,7 @@ function SingleSelect({ label, options, value, onChange, emptyLabel = "None" }) 
                   onChange={() => choose(option.value)}
                   onClick={() => setOpen(false)}
                 />
-                {option.label}
+                {t(option.labelKey)}
               </label>
             </li>
           ))}

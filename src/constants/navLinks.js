@@ -1,5 +1,7 @@
+	// AI-assisted - see AI-USAGE.md #24
+   
 export const LINKS = [
-   { to: "/", label: "Pokémon" },
-   { to: "/favourites", label: "Favourites" },
-   { to: "/games", label: "Games" },
+   { to: "/", labelKey: "nav.pokemon" },
+   { to: "/favourites", labelKey: "nav.favourites" },
+   { to: "/games", labelKey: "nav.games" },
 ];
